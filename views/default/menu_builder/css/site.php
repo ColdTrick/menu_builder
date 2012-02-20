@@ -13,6 +13,7 @@
 	-moz-border-radius: 0 0 4px 4px;
 	border-radius: 0 0 4px 4px;   
 
+	min-width: 100%;
     left: -1px;
     position: absolute;
 }
@@ -48,6 +49,11 @@
 	background: none;
 	padding-left: 3px;
 	padding-right: 3px;
+	
+	 -webkit-box-shadow: 0px 0px;
+	-moz-box-shadow: 0px 0px;
+	box-shadow: 0px 0px;
+    
 }
 
 .menu-builder-edit-menu-item {

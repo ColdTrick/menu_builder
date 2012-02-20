@@ -1,10 +1,7 @@
 <?php 
-
-	global $CONFIG;
-
 	$guid = get_input("guid");
 	
-	if(isadminloggedin() &&	$_SESSION["menu_builder_edit_mode"]){
+	if(elgg_is_admin_logged_in() &&	$_SESSION["menu_builder_edit_mode"]){
 
 		if($guid && $menu_item = get_entity($guid)){
 			$title = $menu_item->title;
@@ -60,10 +57,10 @@
 			$delete_js = "onclick='if(confirm(\"" . elgg_echo("question:areyousure") . "\")){ menu_builder_menu_item_delete(); }'";
 			
 			$form_body .= " ";
-			$form_body .= elgg_view("input/button", array("type" => "button","value" => elgg_echo("delete"), "js" => $delete_js));
+			$form_body .= elgg_view("input/button", array("type" => "button", "class" => "elgg-button-delete","value" => elgg_echo("delete"), "js" => $delete_js));
 		}
 		
-		$form = elgg_view("input/form", array("action" => $CONFIG->wwwroot . "action/menu_builder/edit", "body" => $form_body, "id" => "menu_builder_add_form"));
+		$form = elgg_view("input/form", array("action" => "action/menu_builder/edit", "body" => $form_body, "id" => "menu_builder_add_form"));
 
 		echo elgg_view_module("info", elgg_echo("menu_builder:add:title"), $form);
 		
@@ -82,7 +79,7 @@
 			<?php } else { ?>
 
 			function menu_builder_menu_item_delete(){
-				$.post("<?php echo $CONFIG->wwwroot; ?>action/menu_builder/delete", $('#menu_builder_add_form').serialize(), function(data){
+				$.elgg.action("menu_builder/delete", $('#menu_builder_add_form').serialize(), function(data){
 					$("#<?php echo $guid;?>").remove();
 				});
 				$.fancybox.close();

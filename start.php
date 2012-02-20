@@ -41,15 +41,14 @@
 				}
 				
 				include(dirname(__FILE__) . "/pages/edit.php");
-				break;
+				return true;
 			case "reorder":
 				include(dirname(__FILE__) . "/procedures/reorder.php");
-				break;
+				return true;
 			default:
 				return false;
 				break;
 		}
-		return true;
 	}
 	
 	function menu_builder_pagesetup(){

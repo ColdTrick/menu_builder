@@ -124,13 +124,9 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 
 	$return["default"] = $ordered;
 
-
 	// add edit buttons
 	if(elgg_is_admin_logged_in()){
 		if($_SESSION["menu_builder_edit_mode"]){
-	
-				
-				
 			$item = ElggMenuItem::factory(array(
 								"name" => 'menu_builder_add', 
 								"text" => elgg_view_icon("round-plus"), 

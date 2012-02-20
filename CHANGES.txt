@@ -1,5 +1,9 @@
 = Version Information =
 
+1.0 (2012-02-20):
+- changed: more code cleanup and elgg code standardization
+- fixed: some minor issues	
+
 1.0 beta (2012-02-06):
 
 - changed: updated for 1.8

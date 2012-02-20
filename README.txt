@@ -1,11 +1,11 @@
 = Features =
 
-- Build your custom header menu (admin only)
-- Integrate it in your template or extend the default elgg header (admin setting)
+- Build your custom site menu (admin only)
 - drag and drop reordering
-- Autodetection of selected menu item for highlighting
-- Menu items for public, logged in or admin only
+- Set access on menu items for public, logged in or admin only
+- hides admin page for editing site menu because menu is managed on site
 
 = TODO = 
 
-- Replace appearance:menu_items page with a notice
+- Replace appearance:menu_items page with a notice or forward
+- setSelected on submenu and parent + partial selection state.
