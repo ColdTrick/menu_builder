@@ -1,0 +1,92 @@
+<?php 
+	define("MENU_BUILDER_SUBTYPE", "menu_builder_menu_item");
+	
+	require_once(dirname(__FILE__) . "/lib/functions.php");
+	require_once(dirname(__FILE__) . "/lib/hooks.php");
+	require_once(dirname(__FILE__) . "/lib/events.php");
+		
+	function menu_builder_init(){
+		
+		if(elgg_is_admin_logged_in()){
+			elgg_extend_view("navigation/menu/site", "menu_builder/site_menu_extend");
+		}
+		
+		elgg_extend_view("css/elgg", "menu_builder/css/site");
+		
+		// register pagehandler for nice URL's
+		elgg_register_page_handler("menu_builder", "menu_builder_page_handler");
+		
+		// switch mode
+		if(get_input("menu_builder_edit_mode") == "on"){
+			$_SESSION["menu_builder_edit_mode"] = true;
+		} elseif(get_input("menu_builder_edit_mode") == "off"){
+			unset($_SESSION["menu_builder_edit_mode"]);
+		}
+		
+		// register url handler for menu_builder objects
+		elgg_register_entity_url_handler("object", MENU_BUILDER_SUBTYPE,"menu_builder_menu_item_url_handler");
+		
+		// take control of menu setup
+		elgg_unregister_plugin_hook_handler('prepare', 'menu:site', 'elgg_site_menu_setup');
+		elgg_register_plugin_hook_handler('prepare', 'menu:site', 'menu_builder_site_menu_prepare');
+		elgg_register_plugin_hook_handler('register', 'menu:site', 'menu_builder_site_menu_register');
+	}
+	
+	function menu_builder_page_handler($page){
+		
+		switch($page[0]){
+			case "edit":
+				if(!empty($page[1])){
+					set_input("guid", $page[1]);
+				}
+				
+				include(dirname(__FILE__) . "/pages/edit.php");
+				break;
+			case "reorder":
+				include(dirname(__FILE__) . "/procedures/reorder.php");
+				break;
+			default:
+				return false;
+				break;
+		}
+		return true;
+	}
+	
+	function menu_builder_pagesetup(){
+		// no need for a seperate admin page to manage menu items TODO: replace page with a notice
+		elgg_unregister_menu_item("page", "appearance:menu_items");
+	}
+		
+	function menu_builder_menu_item_url_handler($entity){
+		$result = false;
+		
+		if($url = $entity->url){
+			// fill in site url
+			$url = str_replace("[wwwroot]", elgg_get_site_url(), $url);
+			
+			// fill in username
+			if($user = elgg_get_logged_in_user_entity()){
+				$url = str_replace("[username]", $user->username, $url);
+			} else {
+				list($url) = explode("[username]", $url);
+			}
+			
+			$result = $url;
+		} else {
+			$result = "javascript:void(0);";
+		}
+		
+		return $result;
+	}
+	
+	// register default Elgg events
+	elgg_register_event_handler("init", "system", "menu_builder_init");
+	elgg_register_event_handler("pagesetup", "system", "menu_builder_pagesetup");
+
+	elgg_register_event_handler("delete", "object", "menu_builder_delete_event_handler");
+	
+	// register actions
+	elgg_register_action("menu_builder/edit", dirname(__FILE__) . "/actions/edit.php", "admin");
+	elgg_register_action("menu_builder/delete", dirname(__FILE__) . "/actions/delete.php", "admin");
+	elgg_register_action("menu_builder/reorder", dirname(__FILE__) . "/actions/reorder.php", "admin");
+	

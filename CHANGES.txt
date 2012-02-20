@@ -1,0 +1,29 @@
+= Version Information =
+
+1.0 beta (2012-02-06):
+
+- changed: updated for 1.8
+	
+0.3.2 (2011-04-14):
+
+- fixed: quotes in title break js
+	
+0.3.1 (2011-03-16):
+
+- changed: in edit mode top level menu item edit icon only visible when hovering
+- changed: deleting a menu item is a full jQuery action
+- fixed: default generated menu not using [wwwroot] and [username]
+	 
+0.3 (2011-02-15):
+
+- added: 2 admin actions to clear/import (default) menu items
+- changed: loading of fancybox js to avoid multiple includes
+
+0.2 (2011-01-13):
+
+- added: run once function to create a default menu
+- fixed: incorrect highlighting (selected state) for main menu items
+
+0.1:
+
+- first release

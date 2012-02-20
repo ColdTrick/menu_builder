@@ -1,0 +1,61 @@
+<?php ?>
+.elgg-menu-site .elgg-child-menu {
+	
+    border-right: 1px solid #999999;
+    border-left: 1px solid #999999;
+    border-bottom: 1px solid #999999;
+    
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+    
+	-webkit-border-radius: 0 0 4px 4px;
+	-moz-border-radius: 0 0 4px 4px;
+	border-radius: 0 0 4px 4px;   
+
+    left: -1px;
+    position: absolute;
+}
+.elgg-menu-site .elgg-child-menu a {
+ 	background-color: white;
+    color: #555555;
+    font-weight: bold;
+    height: 20px;
+    padding: 3px 13px 0;
+    white-space: nowrap;
+}
+
+.elgg-menu-site .elgg-child-menu > li:last-child > a {   
+    -webkit-border-radius: 0 0 4px 4px;
+	-moz-border-radius: 0 0 4px 4px;
+	border-radius: 0 0 4px 4px;   
+}
+
+.elgg-menu-site .elgg-child-menu a:hover {
+	text-decoration: none;
+	background: #4690D6;
+	color: white;
+}
+
+.menu_builder_add_link{
+	text-align: center;
+}
+
+.elgg-menu-site > li.elgg-menu-item-menu-builder-add > a,
+.elgg-menu-site > li.elgg-menu-item-menu-builder-edit-mode > a,
+.elgg-menu-site > li.elgg-menu-item-menu-builder-add:hover > a,
+.elgg-menu-site > li.elgg-menu-item-menu-builder-edit-mode:hover > a {
+	background: none;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.menu-builder-edit-menu-item {
+	display: none;
+	vertical-align: top; 
+}
+
+.elgg-menu-site li:hover > a > .menu-builder-edit-menu-item {
+	display: inline-block;
+	margin-left: 10px;
+}
