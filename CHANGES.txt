@@ -1,4 +1,9 @@
 = Version Information =
+1.1 (2012-02-29):
+
+- added: access option to show menu item only for logged out users
+- added: context toggle options to view (in edit mode) the menu as a normal user or as a logged out user
+- changed: moved access write options to a hook
 
 1.0 (2012-02-20):
 - changed: more code cleanup and elgg code standardization
