@@ -172,3 +172,18 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 
 	return $return;
 }
+
+function menu_builder_write_access_hook($hook, $type, $return, $params) {
+	$result = $return_value;
+	
+	if(elgg_in_context("menu_builder")){
+		$result = array(
+			ACCESS_PUBLIC => elgg_echo("PUBLIC"), 
+			ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"), 
+			MENU_BUILDER_ACCESS_LOGGED_OUT => elgg_echo("LOGGED_OUT"), 
+			ACCESS_PRIVATE => elgg_echo("menu_builder:add:access:admin_only")
+		);
+	}
+	
+	return $result;
+}

@@ -48,7 +48,7 @@
 					
 		$form_body .= "<div>";
 		$form_body .= elgg_echo("menu_builder:add:form:access") . "<br />";
-		$form_body .= elgg_view("input/access", array("name" => "access_id", "value" => $access_id, "options_values" => array(ACCESS_PUBLIC => elgg_echo("PUBLIC"), ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"), MENU_BUILDER_ACCESS_LOGGED_OUT => elgg_echo("LOGGED_OUT"), ACCESS_PRIVATE => elgg_echo("menu_builder:add:access:admin_only"))));
+		$form_body .= elgg_view("input/access", array("name" => "access_id", "value" => $access_id));
 		$form_body .= "</div>";
 		$form_body .= elgg_view("input/submit", array("value" => elgg_echo("save")));
 		if(!empty($guid)){

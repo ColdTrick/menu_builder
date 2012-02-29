@@ -10,6 +10,7 @@
 		
 		if(elgg_is_admin_logged_in()){
 			elgg_extend_view("navigation/menu/site", "menu_builder/site_menu_extend");
+			elgg_register_plugin_hook_handler("access:collections:write", "user", "menu_builder_write_access_hook");
 		}
 		
 		elgg_extend_view("css/elgg", "menu_builder/css/site");
