@@ -41,6 +41,18 @@ if($_SESSION["menu_builder_edit_mode"]){
 		}
 	}
 
+	function menu_builder_menu_item_delete(guid){
+		if(guid){
+			elgg.action("menu_builder/delete", { 
+				data: $('#menu_builder_add_form').serialize(),
+				success: function(data){
+						$("#" + guid).remove();
+					}
+			});
+			$.fancybox.close();
+		}
+	}
+
 	$(document).ready(function(){
 		$(".menu_builder_add_link").fancybox({
 				titleShow: false,

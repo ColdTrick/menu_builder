@@ -52,7 +52,7 @@
 		$form_body .= "</div>";
 		$form_body .= elgg_view("input/submit", array("value" => elgg_echo("save")));
 		if(!empty($guid)){
-			$delete_js = "onclick='if(confirm(\"" . elgg_echo("question:areyousure") . "\")){ menu_builder_menu_item_delete(); }'";
+			$delete_js = "onclick='if(confirm(\"" . elgg_echo("question:areyousure") . "\")){ menu_builder_menu_item_delete(" . $guid . "); }'";
 			
 			$form_body .= " ";
 			$form_body .= elgg_view("input/button", array("type" => "button", "class" => "elgg-button-delete","value" => elgg_echo("delete"), "js" => $delete_js));
@@ -62,30 +62,18 @@
 
 		echo elgg_view_module("info", elgg_echo("menu_builder:add:title"), $form);
 		
+		if(empty($guid)){
 		?>
 		<script type="text/javascript">
-			
-			<?php if(empty($guid)){?>		
-
 			var url_path = window.location.pathname;
 			url_path = "[wwwroot]" + url_path.substr(1).replace("<?php echo elgg_get_logged_in_user_entity()->username;?>", "[username]")<?php if(elgg_get_page_owner_entity()){ ?>.replace("<?php echo page_owner_entity()->username; ?>", "[username]")<?php } ?>;
 
 			var window_title = document.title.replace("<?php echo elgg_get_site_entity()->name. ": "; ?>", "");
 			$("#menu_builder_add_form input[name='title']").val(window_title).focus();
 			$("#menu_builder_add_form input[name='url']").val(url_path);
-			
-			<?php } else { ?>
-
-			function menu_builder_menu_item_delete(){
-				$.elgg.action("menu_builder/delete", $('#menu_builder_add_form').serialize(), function(data){
-					$("#<?php echo $guid;?>").remove();
-				});
-				$.fancybox.close();
-			}
-
-			<?php } ?>
 		</script>
 		<?php 
+		}
 	} else {
 		exit();
 	}
