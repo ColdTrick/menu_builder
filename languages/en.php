@@ -7,7 +7,8 @@
 		 */
 	
 		'menu_builder' => "Menu Builder",
-	
+		'LOGGED_OUT' => "Logged out users",
+		
 		// item
 		'item:object:menu_builder_menu_item' => "Menu Builder item",
 	
@@ -17,6 +18,12 @@
 		'menu_builder:edit_mode:on' => "Edit mode",
 		'menu_builder:edit_mode:add' => "Click to add a new menu item",
 	
+		'menu_builder:toggle_context' => "Toggle context",
+		'menu_builder:toggle_context:normal_user' => "Viewing the menu as a non-admin user",
+		'menu_builder:toggle_context:logged_out' => "Viewing the menu for logged out users",
+		'menu_builder:toggle_context:all' => "Viewing all menu items",
+		'menu_builder:toggle_context:default' => "Viewing the menu as admin",
+				
 		// add
 		'menu_builder:add:title' => "Add a new menu item",
 		'menu_builder:add:form:title' => "Title",
@@ -36,7 +43,6 @@
 		'menu_builder:actions:edit:success' => "The menu item was created/edited successfully",
 	
 		'menu_builder:actions:delete:success' => "The menu item was deleted successfully",
-		
 		
 	);
 					

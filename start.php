@@ -1,5 +1,6 @@
 <?php 
 	define("MENU_BUILDER_SUBTYPE", "menu_builder_menu_item");
+	define("MENU_BUILDER_ACCESS_LOGGED_OUT", -5);
 	
 	require_once(dirname(__FILE__) . "/lib/functions.php");
 	require_once(dirname(__FILE__) . "/lib/hooks.php");
@@ -21,6 +22,13 @@
 			$_SESSION["menu_builder_edit_mode"] = true;
 		} elseif(get_input("menu_builder_edit_mode") == "off"){
 			unset($_SESSION["menu_builder_edit_mode"]);
+			unset($_SESSION["menu_builder_logged_out"]);			
+		}
+		
+		if(get_input("menu_builder_logged_out") == "on"){
+			$_SESSION["menu_builder_logged_out"] = true;
+		} elseif(get_input("menu_builder_logged_out") == "off"){
+			unset($_SESSION["menu_builder_logged_out"]);
 		}
 		
 		// register url handler for menu_builder objects

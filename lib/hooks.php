@@ -8,7 +8,10 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 				"subtype" => MENU_BUILDER_SUBTYPE,
 				"limit" => false
 	);
-
+	if(!elgg_is_logged_in()){
+		$options["wheres"] = array("e.access_id IN (" . ACCESS_PUBLIC . ", " . MENU_BUILDER_ACCESS_LOGGED_OUT . ")");
+	}
+	
 	$entities = elgg_get_entities($options);
 
 	if(empty($entities) && !elgg_get_plugin_setting("menu_builder_default_imported", "menu_builder") && elgg_is_admin_logged_in()){
@@ -75,9 +78,12 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 						"text" => $title, 
 						"href" => $entity->getURL(),
 						"priority" => $entity->order,
-						"rel" => $entity->getGUID(),
 						"id" => $entity->getGUID()
 			);
+			if(elgg_is_admin_logged_in()){
+				$menu_options["item_class"] = "menu-builder-access-" . $entity->access_id;
+			}
+			
 			if($entity->parent_guid){
 				$menu_options["parent_name"] = $entity->parent_guid;
 			}
@@ -143,6 +149,16 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 								"title" => elgg_echo("menu_builder:edit_mode:off")
 			));
 			$return["default"][] = $item;
+
+			// add context switcher at the front of the menu
+			$item = ElggMenuItem::factory(array(
+								"name" => 'menu_builder_switch_context', 
+								"text" => elgg_view_icon("eye"), 
+								"href" => 'javascript:menu_builder_toggle_context();',
+								"title" => elgg_echo("menu_builder:toggle_context")
+			));
+			array_unshift($return["default"], $item);
+		
 		} else {
 			$item = ElggMenuItem::factory(array(
 								"name" => 'menu_builder_edit_mode', 

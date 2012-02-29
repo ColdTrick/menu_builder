@@ -44,16 +44,17 @@
 
 .elgg-menu-site > li.elgg-menu-item-menu-builder-add > a,
 .elgg-menu-site > li.elgg-menu-item-menu-builder-edit-mode > a,
+.elgg-menu-site > li.elgg-menu-item-menu-builder-switch-context > a,
 .elgg-menu-site > li.elgg-menu-item-menu-builder-add:hover > a,
-.elgg-menu-site > li.elgg-menu-item-menu-builder-edit-mode:hover > a {
+.elgg-menu-site > li.elgg-menu-item-menu-builder-edit-mode:hover > a,
+.elgg-menu-site > li.elgg-menu-item-menu-builder-switch-context:hover > a {
 	background: none;
 	padding-left: 3px;
 	padding-right: 3px;
 	
 	 -webkit-box-shadow: 0px 0px;
 	-moz-box-shadow: 0px 0px;
-	box-shadow: 0px 0px;
-    
+	box-shadow: 0px 0px;  
 }
 
 .menu-builder-edit-menu-item {
@@ -64,4 +65,22 @@
 .elgg-menu-site li:hover > a > .menu-builder-edit-menu-item {
 	display: inline-block;
 	margin-left: 10px;
+}
+
+.menu-builder-context-logged-out li,
+.menu-builder-context-logged-in-normal .menu-builder-access-0,
+.menu-builder-access--5 {
+	display: none;
+}
+
+.menu-builder-context-all li,
+.menu-builder-context-logged-out .menu-builder-access-2,
+.menu-builder-context-logged-out .menu-builder-access--5 {
+	display: list-item;
+}
+
+.elgg-menu-item-menu-builder-switch-context,
+.elgg-menu-item-menu-builder-add,
+.elgg-menu-item-menu-builder-edit-mode {
+	display: list-item !important;
 }

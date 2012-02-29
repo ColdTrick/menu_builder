@@ -18,7 +18,6 @@
 			} else {
 				$access_id = ACCESS_LOGGED_IN;
 			}
-			
 		}
 		
 		$form_body = "";
@@ -40,7 +39,6 @@
 			}
 			
 			if(!empty($main_items)){
-			
 				$form_body .= "<div>";
 				$form_body .= elgg_echo("menu_builder:add:form:parent") . "<br />";
 				$form_body .= elgg_view("input/dropdown", array("name" => "parent_guid", "value" => $parent_guid, "options_values" => array("0" => elgg_echo("menu_builder:add:form:parent:toplevel")) + $main_items));
@@ -50,7 +48,7 @@
 					
 		$form_body .= "<div>";
 		$form_body .= elgg_echo("menu_builder:add:form:access") . "<br />";
-		$form_body .= elgg_view("input/access", array("name" => "access_id", "value" => $access_id, "options_values" => array(ACCESS_PUBLIC => elgg_echo("PUBLIC"), ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"), ACCESS_PRIVATE => elgg_echo("menu_builder:add:access:admin_only"))));
+		$form_body .= elgg_view("input/access", array("name" => "access_id", "value" => $access_id, "options_values" => array(ACCESS_PUBLIC => elgg_echo("PUBLIC"), ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"), MENU_BUILDER_ACCESS_LOGGED_OUT => elgg_echo("LOGGED_OUT"), ACCESS_PRIVATE => elgg_echo("menu_builder:add:access:admin_only"))));
 		$form_body .= "</div>";
 		$form_body .= elgg_view("input/submit", array("value" => elgg_echo("save")));
 		if(!empty($guid)){
