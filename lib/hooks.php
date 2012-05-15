@@ -98,34 +98,36 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 	// update order
 	$ordered = array();
 
-	foreach($return["default"] as $menu_item){
-		$ordered[$menu_item->getPriority()] = $menu_item;
-			
-		if($children = $menu_item->getChildren()){
-			// sort children
-			$ordered_children = array();
-
-			foreach($children as $child){
-				$ordered_children[$child->getPriority()] = $child;
+	if(isset($return["default"])){
+		foreach($return["default"] as $menu_item){
+			$ordered[$menu_item->getPriority()] = $menu_item;
+				
+			if($children = $menu_item->getChildren()){
+				// sort children
+				$ordered_children = array();
+	
+				foreach($children as $child){
+					$ordered_children[$child->getPriority()] = $child;
+				}
+				ksort($ordered_children);
+	
+				$menu_item->setChildren($ordered_children);
 			}
-			ksort($ordered_children);
-
-			$menu_item->setChildren($ordered_children);
-		}
-			
-		if($_SESSION["menu_builder_edit_mode"]){
-			// add button
-			$item = ElggMenuItem::factory(array(
-										"name" => 'menu_builder_add', 
-										"text" => elgg_view_icon("round-plus"), 
-										"href" => '/menu_builder/edit?parent_guid=' . $menu_item->getName(),
-										"class" => "menu_builder_add_link",
-										"title" => elgg_echo("menu_builder:edit_mode:add")
-			));
-			$menu_item->addChild($item);
+				
+			if($_SESSION["menu_builder_edit_mode"]){
+				// add button
+				$item = ElggMenuItem::factory(array(
+											"name" => 'menu_builder_add', 
+											"text" => elgg_view_icon("round-plus"), 
+											"href" => '/menu_builder/edit?parent_guid=' . $menu_item->getName(),
+											"class" => "menu_builder_add_link",
+											"title" => elgg_echo("menu_builder:edit_mode:add")
+				));
+				$menu_item->addChild($item);
+			}
 		}
 	}
-
+	
 	ksort($ordered);
 
 	$return["default"] = $ordered;
