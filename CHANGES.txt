@@ -1,4 +1,11 @@
 = Version Information =
+
+1.1.1 (2012-07-30):
+
+- changed: updated dutch translations
+- fixed: can't delete menu item
+- fixed: some php warnings
+
 1.1 (2012-02-29):
 
 - added: access option to show menu item only for logged out users
