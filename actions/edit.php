@@ -20,6 +20,7 @@
 			$item = new ElggObject();
 			$item->subtype = MENU_BUILDER_SUBTYPE;
 			$item->owner_guid = elgg_get_site_entity()->getGUID();
+			$item->container_guid = elgg_get_site_entity()->getGUID();
 			
 			$item->access_id = ACCESS_PUBLIC;
 			
