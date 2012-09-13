@@ -9,3 +9,4 @@
 
 - Replace appearance:menu_items page with a notice or forward
 - setSelected on submenu and parent + partial selection + or subitem selected state.
+- upgrade script for menu items stored with user container instead of site

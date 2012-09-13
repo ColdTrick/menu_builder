@@ -1,5 +1,9 @@
 = Version Information =
 
+x.x:
+
+- fixed: storage of menu items in site container
+
 1.1.1 (2012-07-30):
 
 - changed: updated dutch translations
