@@ -80,6 +80,11 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 						"priority" => $entity->order,
 						"id" => $entity->getGUID()
 			);
+			
+			if($entity->target == "_blank"){
+				$menu_options["target"] = "_blank";
+			}
+			
 			if(elgg_is_admin_logged_in()){
 				$menu_options["item_class"] = "menu-builder-access-" . $entity->access_id;
 			}

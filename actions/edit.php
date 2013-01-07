@@ -2,6 +2,7 @@
 
 	$title = get_input("title");
 	$url = get_input("url");
+	$target = get_input("target");
 	$access_id = (int) get_input("access_id", ACCESS_DEFAULT);
 	$parent_guid = (int) get_input("parent_guid", 0);
 	$guid = (int) get_input("guid");
@@ -45,6 +46,11 @@
 			
 			$item->title = $title;
 			$item->url = $url;
+			if($target){
+				$item->target = $target;
+			} else {
+				unset($item->target);
+			}
 			
 			$item->access_id = $access_id;
 			

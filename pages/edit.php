@@ -6,6 +6,7 @@
 		if($guid && $menu_item = get_entity($guid)){
 			$title = $menu_item->title;
 			$url = $menu_item->url;
+			$target = $menu_item->target;
 			$parent_guid = $menu_item->parent_guid;
 			$access_id = $menu_item->access_id;
 		} else {
@@ -20,6 +21,8 @@
 			}
 		}
 		
+		$target_options = array("0" => elgg_echo("menu_builder:add:form:target:self"), "_blank" => elgg_echo("menu_builder:add:form:target:blank"));
+		
 		$form_body = "";
 		$form_body .= elgg_view("input/hidden", array("name" => "guid", "value" => $guid));
 		$form_body .= "<table><tr><td>";
@@ -30,6 +33,10 @@
 		$form_body .= elgg_echo("menu_builder:add:form:url");
 		$form_body .= "</td><td>";
 		$form_body .= elgg_view("input/url", array("name" => "url", "value" => $url));
+		$form_body .= "</td></tr><tr><td>";
+		$form_body .= elgg_echo("menu_builder:add:form:target");
+		$form_body .= "</td><td>";
+		$form_body .= elgg_view("input/dropdown", array("name" => "target", "value" => $target, "options_values" => $target_options));
 		$form_body .= "</td></tr></table>";
 		
 		if($main_items = menu_builder_get_toplevel_menu_items()){
