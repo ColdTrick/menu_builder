@@ -26,7 +26,7 @@
 		$form_body = "";
 		$form_body .= elgg_view("input/hidden", array("name" => "guid", "value" => $guid));
 		$form_body .= "<table><tr><td>";
-		$form_body .= elgg_echo("menu_builder:add:form:title");
+		$form_body .= elgg_echo("title");
 		$form_body .= "</td><td>";
 		$form_body .= elgg_view("input/text", array("name" => "title", "value" => $title));
 		$form_body .= "</td></tr><tr><td>";

@@ -26,7 +26,6 @@
 				
 		// add
 		'menu_builder:add:title' => "Add a new menu item",
-		'menu_builder:add:form:title' => "Title",
 		'menu_builder:add:form:url' => "URL",
 		'menu_builder:add:form:target' => "Target",
 		'menu_builder:add:form:target:self' => "Same Window",
