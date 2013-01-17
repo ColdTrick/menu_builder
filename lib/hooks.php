@@ -107,14 +107,22 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 
 	if(isset($return["default"])){
 		foreach($return["default"] as $menu_item){
-			$ordered[$menu_item->getPriority()] = $menu_item;
+			$priority = $menu_item->getPriority();
+			while(array_key_exists($priority, $ordered)){
+				$priority++;
+			}
+			$ordered[$priority] = $menu_item;
 				
 			if($children = $menu_item->getChildren()){
 				// sort children
 				$ordered_children = array();
 	
 				foreach($children as $child){
-					$ordered_children[$child->getPriority()] = $child;
+					$child_priority = $child->getPriority();
+					while(array_key_exists($child_priority, $ordered_children)){
+						$child_priority++;
+					}
+					$ordered_children[$child_priority] = $child;
 				}
 				ksort($ordered_children);
 	
