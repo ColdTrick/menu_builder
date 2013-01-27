@@ -97,4 +97,6 @@
 	elgg_register_action("menu_builder/edit", dirname(__FILE__) . "/actions/edit.php", "admin");
 	elgg_register_action("menu_builder/delete", dirname(__FILE__) . "/actions/delete.php", "admin");
 	elgg_register_action("menu_builder/reorder", dirname(__FILE__) . "/actions/reorder.php", "admin");
+	elgg_register_action("menu_builder/export", dirname(__FILE__) . "/actions/export.php", "admin");
+	elgg_register_action("menu_builder/import", dirname(__FILE__) . "/actions/import.php", "admin");
 	
