@@ -1,7 +1,11 @@
 <?php 
+	$filter = true;
+	if (elgg_get_plugin_setting('htmlawed_filter', 'menu_builder') == 'no') {
+	  $filter = false;
+	}
 
-	$title = get_input("title");
-	$url = get_input("url");
+	$title = get_input("title", '', $filter);
+	$url = get_input("url", '', $filter);
 	$target = get_input("target");
 	$access_id = (int) get_input("access_id", ACCESS_DEFAULT);
 	$parent_guid = (int) get_input("parent_guid", 0);
