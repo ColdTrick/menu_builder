@@ -14,7 +14,7 @@ if ($_FILES['import']['type'] != 'text/plain') {
 $json = file_get_contents($_FILES['import']['tmp_name']);
 
 $menu = json_decode($json);
-//echo "<pre>" . print_r($json,1) . "</pre>"; exit;
+
 if (is_array($menu)) {
   
   // assume we're good at this point, delete current menu
