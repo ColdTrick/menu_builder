@@ -46,6 +46,9 @@
 	
 		'menu_builder:actions:delete:success' => "The menu item was deleted successfully",
 		
+		// settings
+		'menu_builder:htmlawed:filter' => "Filter url and titles through htmlawed?",
+		
 	);
 					
 	add_translation("en",$english);
