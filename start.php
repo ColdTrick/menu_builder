@@ -75,9 +75,12 @@
 			// fill in username
 			if($user = elgg_get_logged_in_user_entity()){
 				$url = str_replace("[username]", $user->username, $url);
+				$url = str_replace("[userguid]", $user->getGUID(), $url);
 			} else {
 				list($url) = explode("[username]", $url);
+				list($url) = explode("[userguid]", $url);
 			}
+			
 			
 			$result = $url;
 		} else {
@@ -97,4 +100,6 @@
 	elgg_register_action("menu_builder/edit", dirname(__FILE__) . "/actions/edit.php", "admin");
 	elgg_register_action("menu_builder/delete", dirname(__FILE__) . "/actions/delete.php", "admin");
 	elgg_register_action("menu_builder/reorder", dirname(__FILE__) . "/actions/reorder.php", "admin");
+	elgg_register_action("menu_builder/export", dirname(__FILE__) . "/actions/export.php", "admin");
+	elgg_register_action("menu_builder/import", dirname(__FILE__) . "/actions/import.php", "admin");
 	
