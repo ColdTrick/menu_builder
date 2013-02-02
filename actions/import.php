@@ -61,7 +61,7 @@ if (is_array($menu)) {
   foreach ($parent_map as $array) {
 	$new_item = $array['item'];
 	$parent = $parent_map[$array['parent']]['item'];
-	$new_item->parent_guid = $parent->guid;
+	$new_item->parent_guid = $parent->guid ? $parent->guid : 0;
   }
 }
 else {
