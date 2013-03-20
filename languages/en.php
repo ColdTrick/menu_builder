@@ -36,6 +36,7 @@
 		'menu_builder:add:form:parent:toplevel' => "Toplevel menu item",
 		'menu_builder:add:form:access' => "Who can see this menu item?",
 		'menu_builder:add:access:admin_only' => "Admin only",
+		'menu_builder:add:action:tokens' => "Action",
 		
 		// import
 		'admin:menu_builder' => "Menu Builder",
