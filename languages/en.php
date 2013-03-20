@@ -67,6 +67,9 @@
 		'menu_builder:actions:import:error:invalid:content' => "There was an error with the file contents",
 		'menu_builder:actions:import:complete' => "Menu import has been completed",
 		
+		// settings
+		'menu_builder:htmlawed:filter' => "Filter url and titles through htmlawed?",
+		
 	);
 					
 	add_translation("en",$english);

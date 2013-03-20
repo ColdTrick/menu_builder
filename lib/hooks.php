@@ -53,7 +53,7 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 			$item->order = $priority;
 
 			$item->title = $menu_item->getText();
-			$item->url = $menu_item->getHref();
+			$item->url = str_replace(elgg_get_site_url(), "[wwwroot]", $menu_item->getHref());
 
 			$item->save();
 

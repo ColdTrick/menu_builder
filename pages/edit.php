@@ -82,8 +82,11 @@
 		if(empty($guid)){
 		?>
 		<script type="text/javascript">
-			var url_path = window.location.pathname;
-			url_path = "[wwwroot]" + url_path.substr(1).replace("<?php echo elgg_get_logged_in_user_entity()->username;?>", "[username]")<?php if(elgg_get_page_owner_entity()){ ?>.replace("<?php echo page_owner_entity()->username; ?>", "[username]")<?php } ?>;
+			var url_path = window.location.href;
+			url_path = url_path.replace("<?php echo elgg_get_site_url(); ?>", "[wwwroot]").replace("<?php echo elgg_get_logged_in_user_entity()->username;?>", "[username]")<?php if(elgg_get_page_owner_entity()){ ?>.replace("<?php echo page_owner_entity()->username; ?>", "[username]")<?php } ?>;
+			
+			// regex makes sure the number isn't part of a larger number
+			url_path = url_path.replace(/\b<?php echo elgg_get_logged_in_user_guid(); ?>\b/, "[userguid]");
 
 			var window_title = document.title.replace("<?php echo elgg_get_site_entity()->name. ": "; ?>", "");
 			$("#menu_builder_add_form input[name='title']").val(window_title).focus();
