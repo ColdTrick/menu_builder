@@ -1,7 +1,7 @@
 <?php 
 	$guid = get_input("guid");
 	
-	if(elgg_is_admin_logged_in() &&	$_SESSION["menu_builder_edit_mode"]){
+	if(elgg_is_admin_logged_in() &&	isset($_SESSION["menu_builder_edit_mode"])){
 
 		if($guid && $menu_item = get_entity($guid)){
 			$title = $menu_item->title;

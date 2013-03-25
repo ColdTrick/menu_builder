@@ -71,7 +71,7 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 		foreach($entities as $entity){
 
 			$title = $entity->title;
-			if($_SESSION["menu_builder_edit_mode"]){
+			if(isset($_SESSION["menu_builder_edit_mode"])){
 				$title = $title . elgg_view_icon("settings-alt", "menu-builder-edit-menu-item");
 			}
 
@@ -129,7 +129,7 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 				$menu_item->setChildren($ordered_children);
 			}
 				
-			if($_SESSION["menu_builder_edit_mode"]){
+			if(isset($_SESSION["menu_builder_edit_mode"])){
 				// add button
 				$item = ElggMenuItem::factory(array(
 											"name" => 'menu_builder_add', 
@@ -149,7 +149,7 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 
 	// add edit buttons
 	if(elgg_is_admin_logged_in()){
-		if($_SESSION["menu_builder_edit_mode"]){
+		if(isset($_SESSION["menu_builder_edit_mode"])){
 			$item = ElggMenuItem::factory(array(
 								"name" => 'menu_builder_add', 
 								"text" => elgg_view_icon("round-plus"), 
