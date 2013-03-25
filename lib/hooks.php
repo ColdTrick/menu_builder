@@ -191,7 +191,7 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 }
 
 function menu_builder_write_access_hook($hook, $type, $return, $params) {
-	$result = $return_value;
+	$result = $return;
 	
 	if(elgg_in_context("menu_builder")){
 		$result = array(
