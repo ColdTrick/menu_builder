@@ -23,7 +23,9 @@
 		'menu_builder:toggle_context:logged_out' => "Viewing the menu for logged out users",
 		'menu_builder:toggle_context:all' => "Viewing all menu items",
 		'menu_builder:toggle_context:default' => "Viewing the menu as admin",
-				
+	
+		'menu_builder:appearance:menu_items:disabled' => "This page has been disabled by Menu Builder plugin, that took over modification of the site menu.",
+	
 		// add
 		'menu_builder:add:title' => "Add a new menu item",
 		'menu_builder:add:form:url' => "URL",
