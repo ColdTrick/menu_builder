@@ -102,6 +102,12 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 }
 
 function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
+	// select parent menu items
+	$item = elgg_extract('selected_item', $params);
+	
+	while ($item && ($item = $item->getParent())) {
+		$item->setSelected(true);
+	}
 	// update order
 	$ordered = array();
 
