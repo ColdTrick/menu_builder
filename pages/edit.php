@@ -9,10 +9,12 @@
 			$target = $menu_item->target;
 			$parent_guid = $menu_item->parent_guid;
 			$access_id = $menu_item->access_id;
+			$is_action = $menu_item->is_action;
 		} else {
 			$guid = "";
 			
 			$parent_guid = get_input("parent_guid");
+			$is_action = '';
 			
 			if($parent_guid && ($parent = get_entity($parent_guid))){
 				$access_id = $parent->access_id;
@@ -22,6 +24,10 @@
 		}
 		
 		$target_options = array("0" => elgg_echo("menu_builder:add:form:target:self"), "_blank" => elgg_echo("menu_builder:add:form:target:blank"));
+		$is_action_options = array("name" => "is_action", "value" => 1);
+		if ($is_action) {
+		  $is_action_options["checked"] = "checked";
+		}
 		
 		$form_body = "";
 		$form_body .= elgg_view("input/hidden", array("name" => "guid", "value" => $guid));
@@ -33,6 +39,10 @@
 		$form_body .= elgg_echo("menu_builder:add:form:url");
 		$form_body .= "</td><td>";
 		$form_body .= elgg_view("input/url", array("name" => "url", "value" => $url));
+		$form_body .= "</td></tr><tr><td>";
+		$form_body .= elgg_echo('menu_builder:add:action:tokens');
+		$form_body .= "</td><td>";
+		$form_body .= elgg_view('input/checkbox', $is_action_options);
 		$form_body .= "</td></tr><tr><td>";
 		$form_body .= elgg_echo("menu_builder:add:form:target");
 		$form_body .= "</td><td>";

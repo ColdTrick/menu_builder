@@ -10,6 +10,7 @@
 	$access_id = (int) get_input("access_id", ACCESS_DEFAULT);
 	$parent_guid = (int) get_input("parent_guid", 0);
 	$guid = (int) get_input("guid");
+	$is_action = get_input("is_action");
 
 	if(!empty($title) && !empty($url)){
 		if(!empty($guid)){
@@ -50,6 +51,8 @@
 			
 			$item->title = $title;
 			$item->url = $url;
+			$item->is_action = $is_action;
+			
 			if($target){
 				$item->target = $target;
 			} else {
