@@ -74,11 +74,15 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 			if(isset($_SESSION["menu_builder_edit_mode"])){
 				$title = $title . elgg_view_icon("settings-alt", "menu-builder-edit-menu-item");
 			}
-
+			
+			$url = $entity->getURL();
+			if ($entity->is_action) {
+			  $url = elgg_add_action_tokens_to_url($entity->getURL());
+			}
 			$menu_options = array(
 						"name" => $entity->getGUID(),
 						"text" => $title, 
-						"href" => $entity->getURL(),
+						"href" => $url,
 						"priority" => $entity->order,
 						"id" => $entity->getGUID()
 			);
