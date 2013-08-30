@@ -1,4 +1,4 @@
-<?php 
+<?php
 	$guid = get_input("guid");
 	
 	if(elgg_is_admin_logged_in() &&	isset($_SESSION["menu_builder_edit_mode"])){
@@ -60,7 +60,7 @@
 				$form_body .= elgg_echo("menu_builder:add:form:parent") . "<br />";
 				$form_body .= elgg_view("input/dropdown", array("name" => "parent_guid", "value" => $parent_guid, "options_values" => array("0" => elgg_echo("menu_builder:add:form:parent:toplevel")) + $main_items));
 				$form_body .= "</div>";
-			}	
+			}
 		}
 					
 		$form_body .= "<div>";
@@ -83,13 +83,21 @@
 		?>
 		<script type="text/javascript">
 			var url_path = window.location.href;
-			url_path = url_path.replace("<?php echo elgg_get_site_url(); ?>", "[wwwroot]").replace("<?php echo elgg_get_logged_in_user_entity()->username;?>", "[username]")<?php if(elgg_get_page_owner_entity()){ ?>.replace("<?php echo elgg_get_page_owner_entity()->username; ?>", "[username]")<?php } ?>;
+			
+			url_path = url_path.replace("<?php echo elgg_get_site_url(); ?>", "[wwwroot]");
+			url_path = url_path.replace("<?php echo elgg_get_logged_in_user_entity()->username;?>", "[username]");
+			<?php if (elgg_get_page_owner_entity()) {	?>
+			url_path = url_path.replace("<?php echo elgg_get_page_owner_entity()->username; ?>", "[username]");
+			<?php } ?>
+
+			// regex makes sure the number isn't part of a larger number
+			url_path = url_path.replace(/\b<?php echo elgg_get_logged_in_user_guid(); ?>\b/, "[userguid]");
 
 			var window_title = document.title.replace("<?php echo elgg_get_site_entity()->name. ": "; ?>", "");
 			$("#menu_builder_add_form input[name='title']").val(window_title).focus();
 			$("#menu_builder_add_form input[name='url']").val(url_path);
 		</script>
-		<?php 
+		<?php
 		}
 	} else {
 		exit();
