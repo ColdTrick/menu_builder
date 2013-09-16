@@ -3,6 +3,8 @@
 	
 	if(elgg_is_admin_logged_in() &&	isset($_SESSION["menu_builder_edit_mode"])){
 
+		elgg_push_context("menu_builder_form");
+		
 		if($guid && $menu_item = get_entity($guid)){
 			$title = $menu_item->title;
 			$url = $menu_item->url;
@@ -99,6 +101,8 @@
 		</script>
 		<?php
 		}
+		
+		elgg_pop_context();
 	} else {
 		exit();
 	}
