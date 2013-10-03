@@ -1,5 +1,13 @@
 = Version Information =
 
+1.3 (2013-10-03):
+
+- added: option to add action tokens to menu items
+- added: support for user_guid in url
+- changed: default menu items page now has a notice
+- fixed: setSelected is also applied on parent menu item
+- fixed: more menu items doesn't have a url set on import
+
 1.2 (2013-04-05):
 
 - added: target option to menu items
