@@ -19,16 +19,21 @@
 		elgg_register_page_handler("menu_builder", "menu_builder_page_handler");
 		
 		// switch mode
-		if(get_input("menu_builder_edit_mode") == "on"){
-			$_SESSION["menu_builder_edit_mode"] = true;
-		} elseif(get_input("menu_builder_edit_mode") == "off"){
+		if (elgg_is_admin_logged_in()) {
+			if(get_input("menu_builder_edit_mode") == "on"){
+				$_SESSION["menu_builder_edit_mode"] = true;
+			} elseif(get_input("menu_builder_edit_mode") == "off"){
+				unset($_SESSION["menu_builder_edit_mode"]);
+				unset($_SESSION["menu_builder_logged_out"]);
+			}
+			
+			if(get_input("menu_builder_logged_out") == "on"){
+				$_SESSION["menu_builder_logged_out"] = true;
+			} elseif(get_input("menu_builder_logged_out") == "off"){
+				unset($_SESSION["menu_builder_logged_out"]);
+			}
+		} else {
 			unset($_SESSION["menu_builder_edit_mode"]);
-			unset($_SESSION["menu_builder_logged_out"]);
-		}
-		
-		if(get_input("menu_builder_logged_out") == "on"){
-			$_SESSION["menu_builder_logged_out"] = true;
-		} elseif(get_input("menu_builder_logged_out") == "off"){
 			unset($_SESSION["menu_builder_logged_out"]);
 		}
 		
