@@ -25,7 +25,9 @@
 		'menu_builder:toggle_context:logged_out' => "Viewing the menu for logged out users",
 		'menu_builder:toggle_context:all' => "Viewing all menu items",
 		'menu_builder:toggle_context:default' => "Viewing the menu as admin",
-				
+	
+		'menu_builder:appearance:menu_items:disabled' => "This page has been disabled by Menu Builder plugin, that took over modification of the site menu.",
+	
 		// add
 		'menu_builder:add:title' => "Add a new menu item",
 		'menu_builder:add:form:url' => "URL",
@@ -36,6 +38,7 @@
 		'menu_builder:add:form:parent:toplevel' => "Toplevel menu item",
 		'menu_builder:add:form:access' => "Who can see this menu item?",
 		'menu_builder:add:access:admin_only' => "Admin only",
+		'menu_builder:add:action:tokens' => "Action",
 		
 		// import
 		'admin:menu_builder' => "Menu Builder",
@@ -65,6 +68,9 @@
 		'menu_builder:actions:import:error:upload' => "There was an error with the file upload",
 		'menu_builder:actions:import:error:invalid:content' => "There was an error with the file contents",
 		'menu_builder:actions:import:complete' => "Menu import has been completed",
+		
+		// settings
+		'menu_builder:htmlawed:filter' => "Filter url and titles through htmlawed?",
 		
 	);
 					

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 function menu_builder_site_menu_register($hook, $type, $return, $params) {
 	$result = array();
@@ -30,6 +30,7 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 
 			$item->order = ($priority * count($return)) + 10;
 			$item->title = elgg_echo("more");
+			$item->url = "#";
 			$item->parent_guid = 0;
 			$item->save();
 
@@ -53,7 +54,7 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 			$item->order = $priority;
 
 			$item->title = $menu_item->getText();
-			$item->url = $menu_item->getHref();
+			$item->url = str_replace(elgg_get_site_url(), "[wwwroot]", $menu_item->getHref());
 
 			$item->save();
 
@@ -71,14 +72,18 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 		foreach($entities as $entity){
 
 			$title = $entity->title;
-			if($_SESSION["menu_builder_edit_mode"]){
+			if(isset($_SESSION["menu_builder_edit_mode"])){
 				$title = $title . elgg_view_icon("settings-alt", "menu-builder-edit-menu-item");
 			}
-
+			
+			$url = $entity->getURL();
+			if ($entity->is_action) {
+			  $url = elgg_add_action_tokens_to_url($entity->getURL());
+			}
 			$menu_options = array(
 						"name" => $entity->getGUID(),
-						"text" => $title, 
-						"href" => $entity->getURL(),
+						"text" => $title,
+						"href" => $url,
 						"priority" => $entity->order,
 						"id" => $entity->getGUID()
 			);
@@ -102,6 +107,12 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 }
 
 function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
+	// select parent menu items
+	$item = elgg_extract('selected_item', $params);
+	
+	while ($item && ($item = $item->getParent())) {
+		$item->setSelected(true);
+	}
 	// update order
 	$ordered = array();
 
@@ -129,11 +140,11 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 				$menu_item->setChildren($ordered_children);
 			}
 				
-			if($_SESSION["menu_builder_edit_mode"]){
+			if(isset($_SESSION["menu_builder_edit_mode"])){
 				// add button
 				$item = ElggMenuItem::factory(array(
-											"name" => 'menu_builder_add', 
-											"text" => elgg_view_icon("round-plus"), 
+											"name" => 'menu_builder_add',
+											"text" => elgg_view_icon("round-plus"),
 											"href" => '/menu_builder/edit?parent_guid=' . $menu_item->getName(),
 											"class" => "menu_builder_add_link",
 											"title" => elgg_echo("menu_builder:edit_mode:add")
@@ -149,10 +160,10 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 
 	// add edit buttons
 	if(elgg_is_admin_logged_in()){
-		if($_SESSION["menu_builder_edit_mode"]){
+		if(isset($_SESSION["menu_builder_edit_mode"])){
 			$item = ElggMenuItem::factory(array(
-								"name" => 'menu_builder_add', 
-								"text" => elgg_view_icon("round-plus"), 
+								"name" => 'menu_builder_add',
+								"text" => elgg_view_icon("round-plus"),
 								"href" => '/menu_builder/edit',
 								"class" => "menu_builder_add_link",
 								"title" => elgg_echo("menu_builder:edit_mode:add")
@@ -160,8 +171,8 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 			$return["default"][] = $item;
 	
 			$item = ElggMenuItem::factory(array(
-								"name" => 'menu_builder_edit_mode', 
-								"text" => elgg_view_icon("settings"), 
+								"name" => 'menu_builder_edit_mode',
+								"text" => elgg_view_icon("settings"),
 								"href" => '?menu_builder_edit_mode=off',
 								"title" => elgg_echo("menu_builder:edit_mode:off")
 			));
@@ -169,8 +180,8 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 
 			// add context switcher at the front of the menu
 			$item = ElggMenuItem::factory(array(
-								"name" => 'menu_builder_switch_context', 
-								"text" => elgg_view_icon("eye"), 
+								"name" => 'menu_builder_switch_context',
+								"text" => elgg_view_icon("eye"),
 								"href" => 'javascript:menu_builder_toggle_context();',
 								"title" => elgg_echo("menu_builder:toggle_context")
 			));
@@ -178,8 +189,8 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 		
 		} else {
 			$item = ElggMenuItem::factory(array(
-								"name" => 'menu_builder_edit_mode', 
-								"text" => elgg_view_icon("settings"), 
+								"name" => 'menu_builder_edit_mode',
+								"text" => elgg_view_icon("settings"),
 								"href" => '?menu_builder_edit_mode=on',
 								"title" => elgg_echo("menu_builder:edit_mode:on")
 			));
@@ -191,13 +202,13 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 }
 
 function menu_builder_write_access_hook($hook, $type, $return, $params) {
-	$result = $return_value;
+	$result = $return;
 	
 	if(elgg_in_context("menu_builder")){
 		$result = array(
-			ACCESS_PUBLIC => elgg_echo("PUBLIC"), 
-			ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"), 
-			MENU_BUILDER_ACCESS_LOGGED_OUT => elgg_echo("LOGGED_OUT"), 
+			ACCESS_PUBLIC => elgg_echo("PUBLIC"),
+			ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
+			MENU_BUILDER_ACCESS_LOGGED_OUT => elgg_echo("LOGGED_OUT"),
 			ACCESS_PRIVATE => elgg_echo("menu_builder:add:access:admin_only")
 		);
 	}

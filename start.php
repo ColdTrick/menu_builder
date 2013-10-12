@@ -1,4 +1,4 @@
-<?php 
+<?php
 	define("MENU_BUILDER_SUBTYPE", "menu_builder_menu_item");
 	define("MENU_BUILDER_ACCESS_LOGGED_OUT", -5);
 	
@@ -19,16 +19,21 @@
 		elgg_register_page_handler("menu_builder", "menu_builder_page_handler");
 		
 		// switch mode
-		if(get_input("menu_builder_edit_mode") == "on"){
-			$_SESSION["menu_builder_edit_mode"] = true;
-		} elseif(get_input("menu_builder_edit_mode") == "off"){
+		if (elgg_is_admin_logged_in()) {
+			if(get_input("menu_builder_edit_mode") == "on"){
+				$_SESSION["menu_builder_edit_mode"] = true;
+			} elseif(get_input("menu_builder_edit_mode") == "off"){
+				unset($_SESSION["menu_builder_edit_mode"]);
+				unset($_SESSION["menu_builder_logged_out"]);
+			}
+			
+			if(get_input("menu_builder_logged_out") == "on"){
+				$_SESSION["menu_builder_logged_out"] = true;
+			} elseif(get_input("menu_builder_logged_out") == "off"){
+				unset($_SESSION["menu_builder_logged_out"]);
+			}
+		} else {
 			unset($_SESSION["menu_builder_edit_mode"]);
-			unset($_SESSION["menu_builder_logged_out"]);			
-		}
-		
-		if(get_input("menu_builder_logged_out") == "on"){
-			$_SESSION["menu_builder_logged_out"] = true;
-		} elseif(get_input("menu_builder_logged_out") == "off"){
 			unset($_SESSION["menu_builder_logged_out"]);
 		}
 		
@@ -68,15 +73,18 @@
 	function menu_builder_menu_item_url_handler($entity){
 		$result = false;
 		
-		if($url = $entity->url){
+		if ($url = $entity->url) {
 			// fill in site url
 			$url = str_replace("[wwwroot]", elgg_get_site_url(), $url);
 			
-			// fill in username
-			if($user = elgg_get_logged_in_user_entity()){
+			// fill in username/userguid
+			$user = elgg_get_logged_in_user_entity();
+			if ($user) {
 				$url = str_replace("[username]", $user->username, $url);
+				$url = str_replace("[userguid]", $user->getGUID(), $url);
 			} else {
 				list($url) = explode("[username]", $url);
+				list($url) = explode("[userguid]", $url);
 			}
 			
 			$result = $url;
