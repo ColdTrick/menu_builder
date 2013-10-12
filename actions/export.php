@@ -24,7 +24,8 @@ foreach ($menu as $item) {
 	  'access_id' => $item->access_id,
 	  'parent_guid' => $item->parent_guid,
 	  'order' => $item->order,
-	  'target' => $item->target
+	  'target' => $item->target,
+	  'is_action' => $item->is_action
   );
 }
 

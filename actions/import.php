@@ -52,6 +52,7 @@ if (is_array($menu)) {
 	
 	$new_item->url = $item->url;
 	$new_item->order = $item->order;
+	$new_item->is_action = $item->is_action;
 	
 	// build a map to link the parents with the new guids
 	$parent_map[$item->guid] = array('item' => $new_item, 'parent' => $item->parent_guid);
