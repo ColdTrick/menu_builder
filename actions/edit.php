@@ -28,9 +28,9 @@ if (!empty($title) && !empty($url)) {
 		$item->subtype = MENU_BUILDER_SUBTYPE;
 		$item->owner_guid = elgg_get_site_entity()->getGUID();
 		$item->container_guid = elgg_get_site_entity()->getGUID();
-		
+
 		$item->access_id = ACCESS_PUBLIC;
-		
+
 		$order = elgg_get_entities_from_metadata(array(
 			"type" => "object",
 			"subtype" => MENU_BUILDER_SUBTYPE,
@@ -38,30 +38,30 @@ if (!empty($title) && !empty($url)) {
 			"metadata_value" => $parent_guid,
 			"count" => true
 		));
-		
+
 		$item->parent_guid = $parent_guid;
 		$item->order = $order;
-		
+
 		if (!$item->save()) {
 			register_error(elgg_echo("menu_builder:actions:edit:error:create"));
 		}
 	}
-	
+
 	if (!empty($item)) {
 		$save = true;
-		
+
 		$item->title = $title;
 		$item->url = $url;
 		$item->is_action = $is_action;
-		
+
 		if ($target) {
 			$item->target = $target;
 		} else {
 			unset($item->target);
 		}
-		
+
 		$item->access_id = $access_id;
-		
+
 		if ($item->parent_guid !== $parent_guid) {
 			$children = elgg_get_entities_from_metadata(array(
 				"type" => "object",
@@ -70,10 +70,10 @@ if (!empty($title) && !empty($url)) {
 				"metadata_value" => $item->getGUID(),
 				"count" => true
 			));
-			
+
 			if (empty($children)) {
 				$item->parent_guid = $parent_guid;
-				
+
 				$order = elgg_get_entities_from_metadata(array(
 					"type" => "object",
 					"subtype" => MENU_BUILDER_SUBTYPE,
@@ -81,14 +81,14 @@ if (!empty($title) && !empty($url)) {
 					"metadata_value" => $parent_guid,
 					"count" => true
 				));
-				
+
 				$item->order = $order;
 			} else {
 				$save = false;
 				register_error(elgg_echo("menu_builder:actions:edit:error:parent"));
 			}
 		}
-		
+
 		if ($save) {
 			if ($item->save()) {
 				system_message(elgg_echo("menu_builder:actions:edit:success"));
@@ -102,4 +102,3 @@ if (!empty($title) && !empty($url)) {
 }
 
 forward(REFERER);
-	
