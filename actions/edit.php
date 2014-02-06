@@ -2,7 +2,7 @@
 
 $filter = true;
 if (elgg_get_plugin_setting('htmlawed_filter', 'menu_builder') == 'no') {
-  $filter = false;
+	$filter = false;
 }
 
 $title = get_input("title", '', $filter);
