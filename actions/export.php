@@ -33,9 +33,9 @@ foreach ($menu as $item) {
 $json = json_encode($export);
 
 header("Cache-Control: no-cache, must-revalidate");
-header("Content-type: text/plain");
+header("Content-type: application/json");
 header("Content-Length: " . strlen($json));
-header('Content-Disposition: attachment; filename="menu_builder_export.txt"');
+header('Content-Disposition: attachment; filename="menu_builder_export.json"');
 echo $json;
 
 exit;
