@@ -4,6 +4,7 @@ $current_page = current_page_url();
 $settings_url = elgg_get_site_url() . 'admin/plugin_settings/menu_builder';
 $import_url = elgg_get_site_url() . 'admin/menu_builder/import';
 $export_url = elgg_get_site_url() . 'action/menu_builder/export';
+
 echo elgg_view('navigation/tabs', array(
 	'tabs' => array(
 		array(

@@ -11,7 +11,7 @@
     
 	-webkit-border-radius: 0 0 4px 4px;
 	-moz-border-radius: 0 0 4px 4px;
-	border-radius: 0 0 4px 4px;   
+	border-radius: 0 0 4px 4px;
 
 	min-width: 100%;
     left: -1px;
@@ -26,10 +26,10 @@
     white-space: nowrap;
 }
 
-.elgg-menu-site .elgg-child-menu > li:last-child > a {   
+.elgg-menu-site .elgg-child-menu > li:last-child > a {
     -webkit-border-radius: 0 0 4px 4px;
 	-moz-border-radius: 0 0 4px 4px;
-	border-radius: 0 0 4px 4px;   
+	border-radius: 0 0 4px 4px;
 }
 
 .elgg-menu-site .elgg-child-menu a:hover {
@@ -54,12 +54,12 @@
 	
 	 -webkit-box-shadow: 0px 0px;
 	-moz-box-shadow: 0px 0px;
-	box-shadow: 0px 0px;  
+	box-shadow: 0px 0px;
 }
 
 .menu-builder-edit-menu-item {
 	display: none;
-	vertical-align: top; 
+	vertical-align: top;
 }
 
 .elgg-menu-site li:hover > a > .menu-builder-edit-menu-item {

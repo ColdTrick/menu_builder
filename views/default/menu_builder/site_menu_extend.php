@@ -1,4 +1,4 @@
-<?php 
+<?php
 if(isset($_SESSION["menu_builder_edit_mode"])){
 	
 	elgg_load_js("lightbox");
@@ -43,7 +43,7 @@ if(isset($_SESSION["menu_builder_edit_mode"])){
 
 	function menu_builder_menu_item_delete(guid){
 		if(guid){
-			elgg.action("menu_builder/delete", { 
+			elgg.action("menu_builder/delete", {
 				data: $('#menu_builder_add_form').serialize(),
 				success: function(data){
 						$("#" + guid).remove();
@@ -84,5 +84,5 @@ if(isset($_SESSION["menu_builder_edit_mode"])){
 			
 	});
 </script>
-<?php 
+<?php
 }

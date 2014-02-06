@@ -17,26 +17,25 @@ if (!$menu) {
 // guid won't be the same when imported
 $export = array();
 foreach ($menu as $item) {
-  $export[] = array(
-	  'guid' => $item->guid,
-	  'title' => $item->title,
-	  'url' => $item->url,
-	  'access_id' => $item->access_id,
-	  'parent_guid' => $item->parent_guid,
-	  'order' => $item->order,
-	  'target' => $item->target,
-	  'is_action' => $item->is_action
-  );
+	$export[] = array(
+		'guid' => $item->guid,
+		'title' => $item->title,
+		'url' => $item->url,
+		'access_id' => $item->access_id,
+		'parent_guid' => $item->parent_guid,
+		'order' => $item->order,
+		'target' => $item->target,
+		'is_action' => $item->is_action
+	);
 }
 
 // export the array as JSON in a txt file
 $json = json_encode($export);
 
-
 header("Cache-Control: no-cache, must-revalidate");
 header("Content-type: text/plain");
 header("Content-Length: " . strlen($json));
 header('Content-Disposition: attachment; filename="menu_builder_export.txt"');
-echo $json; 
+echo $json;
 
 exit;
