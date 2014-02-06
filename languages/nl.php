@@ -23,7 +23,6 @@ $language = array (
   'menu_builder:actions:edit:error:entity' => 'Opgegeven GUID kon niet worden gevonden',
   'menu_builder:actions:edit:error:subtype' => 'Opgegeven GUID is geen menu item',
   'menu_builder:actions:edit:error:create' => 'Er is een fout opgetreden, probeer het opnieuw',
-  'menu_builder:actions:edit:error:parent' => 'Verplaats eerst de submenu items voordat je het hoofdmenu item verplaatst.',
   'menu_builder:actions:edit:error:save' => 'Er is een fout opgetreden, probeer het opnieuw',
   'menu_builder:actions:edit:success' => 'Menu item opgeslagen',
   'menu_builder:actions:delete:success' => 'Menu item verwijderd',

@@ -48,8 +48,6 @@ if (!empty($title) && !empty($url)) {
 	}
 
 	if (!empty($item)) {
-		$save = true;
-
 		$item->title = $title;
 		$item->url = $url;
 		$item->is_action = $is_action;
@@ -63,38 +61,24 @@ if (!empty($title) && !empty($url)) {
 		$item->access_id = $access_id;
 
 		if ($item->parent_guid !== $parent_guid) {
-			$children = elgg_get_entities_from_metadata(array(
+
+			$item->parent_guid = $parent_guid;
+
+			$order = elgg_get_entities_from_metadata(array(
 				"type" => "object",
 				"subtype" => MENU_BUILDER_SUBTYPE,
 				"metadata_name" => "parent_guid",
-				"metadata_value" => $item->getGUID(),
+				"metadata_value" => $parent_guid,
 				"count" => true
 			));
 
-			if (empty($children)) {
-				$item->parent_guid = $parent_guid;
-
-				$order = elgg_get_entities_from_metadata(array(
-					"type" => "object",
-					"subtype" => MENU_BUILDER_SUBTYPE,
-					"metadata_name" => "parent_guid",
-					"metadata_value" => $parent_guid,
-					"count" => true
-				));
-
-				$item->order = $order;
-			} else {
-				$save = false;
-				register_error(elgg_echo("menu_builder:actions:edit:error:parent"));
-			}
+			$item->order = $order;
 		}
 
-		if ($save) {
-			if ($item->save()) {
-				system_message(elgg_echo("menu_builder:actions:edit:success"));
-			} else {
-				register_error(elgg_echo("menu_builder:actions:edit:error:save"));
-			}
+		if ($item->save()) {
+			system_message(elgg_echo("menu_builder:actions:edit:success"));
+		} else {
+			register_error(elgg_echo("menu_builder:actions:edit:error:save"));
 		}
 	}
 } else {
