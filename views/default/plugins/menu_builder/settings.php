@@ -1,5 +1,6 @@
 <?php
 
+echo "<div>";
 echo elgg_view('admin/menu_builder/navigation');
 
 echo elgg_echo('menu_builder:htmlawed:filter') . '<br>';
@@ -13,4 +14,4 @@ echo elgg_view('input/dropdown', array(
 	)
 ));
 
-echo '<br><br>';
+echo "</div>";
