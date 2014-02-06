@@ -8,8 +8,8 @@ $menu = elgg_get_entities(array(
 
 // make sure we have a menu to export
 if (!$menu) {
-  register_error(elgg_echo('menu_builder:actions:export:error:empty'));
-  forward(REFERER);
+	register_error(elgg_echo('menu_builder:actions:export:error:empty'));
+	forward(REFERER);
 }
 
 // build a nice array to represent the menu
