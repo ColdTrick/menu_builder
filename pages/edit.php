@@ -1,6 +1,6 @@
 <?php
 
-$guid = get_input("guid");
+$guid = (int) get_input("guid");
 
 if (elgg_is_admin_logged_in() && isset($_SESSION["menu_builder_edit_mode"])) {
 
@@ -10,20 +10,20 @@ if (elgg_is_admin_logged_in() && isset($_SESSION["menu_builder_edit_mode"])) {
 		$title = $menu_item->title;
 		$url = $menu_item->url;
 		$target = $menu_item->target;
-		$parent_guid = $menu_item->parent_guid;
-		$access_id = $menu_item->access_id;
+		$parent_guid = (int) $menu_item->parent_guid;
+		$access_id = (int) $menu_item->access_id;
 		$is_action = $menu_item->is_action;
 	} else {
-		$guid = "";
+		$guid = 0;
 		$title = "";
 		$url = "";
 		$target = "";
 		
-		$parent_guid = get_input("parent_guid");
+		$parent_guid = (int) get_input("parent_guid");
 		$is_action = '';
 		
 		if ($parent_guid && ($parent = get_entity($parent_guid))) {
-			$access_id = $parent->access_id;
+			$access_id = (int) $parent->access_id;
 		} else {
 			$access_id = ACCESS_LOGGED_IN;
 		}
@@ -55,17 +55,12 @@ if (elgg_is_admin_logged_in() && isset($_SESSION["menu_builder_edit_mode"])) {
 	$form_body .= elgg_view("input/dropdown", array("name" => "target", "value" => $target, "options_values" => $target_options));
 	$form_body .= "</td></tr></table>";
 	
-	if ($main_items = menu_builder_get_toplevel_menu_items()) {
-		if (!empty($guid)) {
-			unset($main_items[$guid]);
-		}
-		
-		if (!empty($main_items)) {
-			$form_body .= "<div>";
-			$form_body .= elgg_echo("menu_builder:add:form:parent") . "<br />";
-			$form_body .= elgg_view("input/dropdown", array("name" => "parent_guid", "value" => $parent_guid, "options_values" => array("0" => elgg_echo("menu_builder:add:form:parent:toplevel")) + $main_items));
-			$form_body .= "</div>";
-		}
+	$menu_items = menu_builder_get_parent_menu_select_options($guid);
+	if (!empty($menu_items)) {
+		$form_body .= "<div>";
+		$form_body .= elgg_echo("menu_builder:add:form:parent") . "<br />";
+		$form_body .= elgg_view("input/dropdown", array("name" => "parent_guid", "value" => $parent_guid, "options_values" => array("0" => elgg_echo("menu_builder:add:form:parent:toplevel")) + $menu_items));
+		$form_body .= "</div>";
 	}
 				
 	$form_body .= "<div>";
