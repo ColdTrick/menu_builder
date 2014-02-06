@@ -81,8 +81,10 @@ function menu_builder_get_menu_select_option($menu_items, $entity_guid = 0, $dep
 	$result = array();
 	
 	$entity_guid = sanitise_int($entity_guid, false);
+	$depth = sanitise_int($depth, false);
 	
-	if (!empty($menu_items)) {
+	if (!empty($menu_items) && ($depth < 4)) {
+		
 		foreach ($menu_items as $menu_item) {
 			$name = $menu_item->getName();
 			
