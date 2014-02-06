@@ -223,7 +223,6 @@ function menu_builder_order_menu_item(ElggMenuItem $item) {
 	return $item;
 }
 
-
 function menu_builder_write_access_hook($hook, $type, $return, $params) {
 	$result = $return;
 
