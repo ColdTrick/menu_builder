@@ -47,7 +47,7 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 
 			$item->access_id = ACCESS_PUBLIC;
 
-			if($key >= 5){
+			if ($key >= 5) {
 				$item->parent_guid = $more_guid;
 			} else {
 				$item->parent_guid = 0;
