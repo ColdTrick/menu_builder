@@ -121,7 +121,7 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 	if (isset($return["default"])) {
 		foreach ($return["default"] as $menu_item) {
 
-			$menu_item = menu_builder_order_menu_item($menu_item);
+			$menu_item = menu_builder_order_menu_item($menu_item, 2);
 			$priority = $menu_item->getPriority();
 			while (array_key_exists($priority, $ordered)) {
 				$priority++;
@@ -188,14 +188,15 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 	return $return;
 }
 
-function menu_builder_order_menu_item(ElggMenuItem $item) {
+function menu_builder_order_menu_item(ElggMenuItem $item, int $depth) {
 
 	if ($children = $item->getChildren()) {
 		// sort children
 		$ordered_children = array();
 
 		foreach ($children as $child) {
-			$child = menu_builder_order_menu_item($child);
+
+			$child = menu_builder_order_menu_item($child, $depth + 1);
 
 			$child_priority = $child->getPriority();
 			while (array_key_exists($child_priority, $ordered_children)) {
@@ -203,7 +204,8 @@ function menu_builder_order_menu_item(ElggMenuItem $item) {
 			}
 			$ordered_children[$child_priority] = $child;
 
-			if (isset($_SESSION["menu_builder_edit_mode"])) {
+
+			if (isset($_SESSION["menu_builder_edit_mode"]) && $depth < 5) {
 				// add button
 				$child_add = ElggMenuItem::factory(array(
 						"name" => 'menu_builder_add',
