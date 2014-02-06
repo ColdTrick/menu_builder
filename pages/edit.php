@@ -56,7 +56,7 @@ if (elgg_is_admin_logged_in() && isset($_SESSION["menu_builder_edit_mode"])) {
 	$form_body .= "</td></tr></table>";
 	
 	if ($main_items = menu_builder_get_toplevel_menu_items()) {
-		if(!empty($guid)){
+		if (!empty($guid)) {
 			unset($main_items[$guid]);
 		}
 		

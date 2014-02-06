@@ -21,16 +21,16 @@ function menu_builder_init(){
 	
 	// switch mode
 	if (elgg_is_admin_logged_in()) {
-		if(get_input("menu_builder_edit_mode") == "on"){
+		if (get_input("menu_builder_edit_mode") == "on") {
 			$_SESSION["menu_builder_edit_mode"] = true;
-		} elseif(get_input("menu_builder_edit_mode") == "off"){
+		} elseif (get_input("menu_builder_edit_mode") == "off") {
 			unset($_SESSION["menu_builder_edit_mode"]);
 			unset($_SESSION["menu_builder_logged_out"]);
 		}
 		
-		if(get_input("menu_builder_logged_out") == "on"){
+		if (get_input("menu_builder_logged_out") == "on") {
 			$_SESSION["menu_builder_logged_out"] = true;
-		} elseif(get_input("menu_builder_logged_out") == "off"){
+		} elseif (get_input("menu_builder_logged_out") == "off") {
 			unset($_SESSION["menu_builder_logged_out"]);
 		}
 	} else {
@@ -51,7 +51,7 @@ function menu_builder_page_handler($page){
 	
 	switch($page[0]){
 		case "edit":
-			if(!empty($page[1])){
+			if (!empty($page[1])) {
 				set_input("guid", $page[1]);
 			}
 			
