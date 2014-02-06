@@ -119,7 +119,7 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 	$ordered = array();
 
 	if (isset($return["default"])) {
-		foreach($return["default"] as $menu_item){
+		foreach ($return["default"] as $menu_item) {
 			$priority = $menu_item->getPriority();
 			while (array_key_exists($priority, $ordered)) {
 				$priority++;
