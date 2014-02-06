@@ -6,6 +6,4 @@ echo elgg_view('output/longtext', array(
 	'class' => 'elgg-subtext'
 ));
 
-echo '<br>';
-
 echo elgg_view('input/submit', array('value' => elgg_echo('admin:menu_builder:import')));
