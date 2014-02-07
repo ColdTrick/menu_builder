@@ -70,7 +70,26 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 	}
 
 	if ($entities) {
+		$parent_guids = array();
 		foreach ($entities as $entity) {
+			$parent_guids[] = $entity->getGUID();
+		}
+
+		foreach ($entities as $entity) {
+			$parent_guid = $entity->parent_guid;
+			$skip = false;
+
+			while($parent_guid) {
+				if (!in_array($parent_guid, $parent_guids)) {
+					$skip = true;
+					break;
+				}
+				$parent_guid = get_entity($parent_guid)->parent_guid;
+			}
+
+			if ($skip) {
+				continue;
+			}
 
 			$title = $entity->title;
 			if (isset($_SESSION["menu_builder_edit_mode"])) {
