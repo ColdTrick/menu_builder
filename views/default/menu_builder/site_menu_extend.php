@@ -1,5 +1,5 @@
 <?php
-if (isset($_SESSION["menu_builder_edit_mode"])) {
+if (isset($_SESSION["menu_builder_edit_mode"]) && elgg_is_admin_logged_in()) {
 
 	elgg_load_js("lightbox");
 	elgg_load_css("lightbox");

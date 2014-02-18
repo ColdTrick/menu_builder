@@ -7,13 +7,10 @@ require_once(dirname(__FILE__) . "/lib/functions.php");
 require_once(dirname(__FILE__) . "/lib/hooks.php");
 require_once(dirname(__FILE__) . "/lib/events.php");
 	
-function menu_builder_init(){
+function menu_builder_init() {
 	
-	if (elgg_is_admin_logged_in()) {
-		elgg_extend_view("navigation/menu/site", "menu_builder/site_menu_extend");
-		elgg_register_plugin_hook_handler("access:collections:write", "user", "menu_builder_write_access_hook");
-	}
-	
+	elgg_extend_view("navigation/menu/site", "menu_builder/site_menu_extend");
+		
 	elgg_extend_view("css/elgg", "menu_builder/css/site");
 	
 	// register pagehandler for nice URL's
@@ -21,6 +18,8 @@ function menu_builder_init(){
 	
 	// switch mode
 	if (elgg_is_admin_logged_in()) {
+		elgg_register_plugin_hook_handler("access:collections:write", "user", "menu_builder_write_access_hook");
+		
 		if (get_input("menu_builder_edit_mode") == "on") {
 			$_SESSION["menu_builder_edit_mode"] = true;
 		} elseif (get_input("menu_builder_edit_mode") == "off") {
@@ -47,7 +46,7 @@ function menu_builder_init(){
 	elgg_register_plugin_hook_handler('register', 'menu:site', 'menu_builder_site_menu_register');
 }
 
-function menu_builder_page_handler($page){
+function menu_builder_page_handler($page) {
 	
 	switch($page[0]){
 		case "edit":
@@ -65,12 +64,12 @@ function menu_builder_page_handler($page){
 	}
 }
 
-function menu_builder_pagesetup(){
+function menu_builder_pagesetup() {
 	// no need for a seperate admin page to manage menu items TODO: replace page with a notice
 	elgg_unregister_menu_item("page", "appearance:menu_items");
 }
 	
-function menu_builder_menu_item_url_handler($entity){
+function menu_builder_menu_item_url_handler($entity) {
 	$result = "javascript:void(0);";
 	
 	if ($url = $entity->url) {
