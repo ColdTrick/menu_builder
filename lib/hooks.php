@@ -127,7 +127,11 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 			}
 
 			if (elgg_is_admin_logged_in()) {
-				$menu_options["item_class"] = "menu-builder-access-" . $entity->access_id;
+				$item_class = "menu-builder-access-" . $entity->access_id;
+				if (isset($_SESSION["menu_builder_edit_mode"])) {
+					$item_class .= " menu-builder-menu-item-sortable";
+				}
+				$menu_options["item_class"] = $item_class;
 			}
 
 			if ($entity->parent_guid) {
@@ -177,7 +181,7 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 											"name" => 'menu_builder_add',
 											"text" => elgg_view_icon("round-plus"),
 											"href" => '/menu_builder/edit?parent_guid=' . $menu_item->getName(),
-											"link_class" => "menu_builder_add_link elgg-lightbox",
+											"link_class" => "center elgg-lightbox",
 											"title" => elgg_echo("menu_builder:edit_mode:add")
 				));
 				$menu_item->addChild($item);
@@ -196,7 +200,7 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 								"name" => 'menu_builder_add',
 								"text" => elgg_view_icon("round-plus"),
 								"href" => '/menu_builder/edit',
-								"link_class" => "menu_builder_add_link elgg-lightbox",
+								"link_class" => "center elgg-lightbox",
 								"title" => elgg_echo("menu_builder:edit_mode:add")
 			));
 			$return["default"][] = $item;

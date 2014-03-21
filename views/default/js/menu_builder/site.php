@@ -6,7 +6,7 @@ elgg.provide("elgg.menu_builder");
 elgg.menu_builder.reorder_menu = function(menu) {
 	var menu_items = new Array();
 
-	$(menu).find(" > li:not(.elgg-menu-item-menu-builder-add, .elgg-menu-item-menu-builder-switch-context, .elgg-menu-item-menu-builder-edit-mode) > a").each(function(index, elem){
+	$(menu).find(" > li.menu-builder-menu-item-sortable > a").each(function(index, elem){
 		menu_items.push($(elem).attr("id"));
 	});
 
@@ -64,8 +64,8 @@ elgg.menu_builder.init = function() {
 		event.preventDefault();
 	});
 
-	$(".elgg-menu-site, .elgg-menu-site .elgg-child-menu").sortable({
-		items: " > li:not(.elgg-menu-item-menu-builder-add, .elgg-menu-item-menu-builder-switch-context, .elgg-menu-item-menu-builder-edit-mode)",
+	$(".menu-builder-menu-item-sortable").parent().sortable({
+		items: " > .menu-builder-menu-item-sortable",
 		update: function(event, ui) {
 			elgg.menu_builder.reorder_menu(this);
 		}

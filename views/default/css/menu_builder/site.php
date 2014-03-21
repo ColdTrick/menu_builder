@@ -61,10 +61,6 @@
 	top: 0px;
 }
 
-.menu_builder_add_link{
-	text-align: center;
-}
-
 .elgg-menu-site > li.elgg-menu-item-menu-builder-add > a,
 .elgg-menu-site > li.elgg-menu-item-menu-builder-edit-mode > a,
 .elgg-menu-site > li.elgg-menu-item-menu-builder-switch-context > a,

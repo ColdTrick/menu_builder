@@ -156,7 +156,7 @@ function menu_builder_order_menu_item(ElggMenuItem $item, $depth) {
 						"name" => 'menu_builder_add',
 						"text" => elgg_view_icon("round-plus"),
 						"href" => '/menu_builder/edit?parent_guid=' . $child->getName(),
-						"link_class" => "menu_builder_add_link elgg-lightbox",
+						"link_class" => "center elgg-lightbox",
 						"title" => elgg_echo("menu_builder:edit_mode:add")
 				));
 				$child->addChild($child_add);
