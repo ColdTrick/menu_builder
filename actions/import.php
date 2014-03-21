@@ -5,7 +5,7 @@ if ($_FILES['import']['error'] != UPLOAD_ERR_OK || !is_uploaded_file($_FILES['im
 	forward(REFERER);
 }
 
-if ($_FILES['import']['type'] != 'text/plain') {
+if ($_FILES['import']['type'] != 'application/json') {
 	register_error(elgg_echo('menu_builder:actions:import:error:invalid:filetype'));
 	forward(REFERER);
 }
