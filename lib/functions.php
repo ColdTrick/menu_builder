@@ -1,6 +1,15 @@
 <?php
 
-function menu_builder_get_toplevel_menu_items(){
+/**
+ * Functions for Menu Builder
+ */
+
+/**
+ * Returns the toplevel menu items
+ *
+ * @return boolean|array
+ */
+function menu_builder_get_toplevel_menu_items() {
 
 	$result = false;
 
@@ -71,9 +80,9 @@ function menu_builder_get_parent_menu_select_options($entity_guid = 0) {
 /**
  * Recursively loop through all menu items and children to get correct options.
  *
- * @param array $menu_items the current level of menu items
- * @param int $entity_guid the current entity being edited (optional)
- * @param int $depth recursive depth for layout
+ * @param array $menu_items  the current level of menu items
+ * @param int   $entity_guid the current entity being edited (optional)
+ * @param int   $depth       recursive depth for layout
  *
  * @return array the selection options
  */
@@ -115,10 +124,11 @@ function menu_builder_get_menu_select_option($menu_items, $entity_guid = 0, $dep
 }
 
 /**
- * reorders menu item and adds an add button
+ * Reorders menu item and adds an add button
  *
- * @param ElggMenuItem $item
- * @param int $depth
+ * @param ElggMenuItem $item  menu item
+ * @param int          $depth depth of the menu item
+ *
  * @return ElggMenuItem
  */
 function menu_builder_order_menu_item(ElggMenuItem $item, $depth) {

@@ -6,7 +6,12 @@ define("MENU_BUILDER_ACCESS_LOGGED_OUT", -5);
 require_once(dirname(__FILE__) . "/lib/functions.php");
 require_once(dirname(__FILE__) . "/lib/hooks.php");
 require_once(dirname(__FILE__) . "/lib/events.php");
-	
+
+/**
+ * Init function for Menu Builder
+ *
+ * @return void
+ */
 function menu_builder_init() {
 	
 	elgg_extend_view("navigation/menu/site", "menu_builder/site_menu_extend");
@@ -46,6 +51,13 @@ function menu_builder_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:site', 'menu_builder_site_menu_register');
 }
 
+/**
+ * Page handler function for Menu Builder
+ *
+ * @param array $page requested page
+ *
+ * @return boolean
+ */
 function menu_builder_page_handler($page) {
 	
 	switch($page[0]){
@@ -64,11 +76,23 @@ function menu_builder_page_handler($page) {
 	}
 }
 
+/**
+ * Page setup function for Menu Builder
+ *
+ * @return void
+ */
 function menu_builder_pagesetup() {
 	// no need for a seperate admin page to manage menu items TODO: replace page with a notice
 	elgg_unregister_menu_item("page", "appearance:menu_items");
 }
 	
+/**
+ * Item url handler for Menu Builder
+ *
+ * @param ElggEntity $entity menu item
+ *
+ * @return string
+ */
 function menu_builder_menu_item_url_handler($entity) {
 	$result = "javascript:void(0);";
 	

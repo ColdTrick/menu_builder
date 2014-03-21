@@ -1,6 +1,17 @@
 <?php
 
-function menu_builder_delete_event_handler($event, $entity_type, $object){
+/**
+ * Events for Menu Builder
+ */
+
+/**
+ * Delete child menu items when a menu item gets deleted
+ *
+ * @param string     $event       event
+ * @param string     $entity_type type
+ * @param ElggEntity $object      object
+ */
+function menu_builder_delete_event_handler($event, $entity_type, $object) {
 	if (!empty($object) && elgg_is_admin_logged_in()) {
 		if (elgg_instanceof($object, "object", MENU_BUILDER_SUBTYPE)) {
 			$options = array(

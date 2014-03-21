@@ -1,12 +1,26 @@
 <?php
 
+/**
+ * Hooks for Menu Builder
+ */
+
+/**
+ * Adds the menu items to the site menu
+ *
+ * @param string  $hook   name of the hook
+ * @param string  $type   type of the hook
+ * @param unknown $return return value
+ * @param unknown $params hook parameters
+ *
+ * @return array
+ */
 function menu_builder_site_menu_register($hook, $type, $return, $params) {
 	$result = array();
 
 	$options = array(
-				"type" => "object",
-				"subtype" => MENU_BUILDER_SUBTYPE,
-				"limit" => false
+		"type" => "object",
+		"subtype" => MENU_BUILDER_SUBTYPE,
+		"limit" => false
 	);
 
 	if (!elgg_is_logged_in()) {
@@ -79,7 +93,7 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 			$parent_guid = $entity->parent_guid;
 			$skip = false;
 
-			while($parent_guid) {
+			while ($parent_guid) {
 				if (!in_array($parent_guid, $parent_guids)) {
 					$skip = true;
 					break;
@@ -127,6 +141,16 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 	return $result;
 }
 
+/**
+ * Applies correct order to the menu items
+ *
+ * @param string  $hook   name of the hook
+ * @param string  $type   type of the hook
+ * @param unknown $return return value
+ * @param unknown $params hook parameters
+ *
+ * @return array
+ */
 function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 	// select parent menu items
 	$item = elgg_extract('selected_item', $params);
@@ -207,6 +231,16 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 	return $return;
 }
 
+/**
+ * Replaces the options in the access dropdowns for menu items
+ *
+ * @param string  $hook   name of the hook
+ * @param string  $type   type of the hook
+ * @param unknown $return return value
+ * @param unknown $params hook parameters
+ *
+ * @return array
+ */
 function menu_builder_write_access_hook($hook, $type, $return, $params) {
 	$result = $return;
 
