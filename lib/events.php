@@ -10,6 +10,8 @@
  * @param string     $event       event
  * @param string     $entity_type type
  * @param ElggEntity $object      object
+ *
+ * @return void
  */
 function menu_builder_delete_event_handler($event, $entity_type, $object) {
 	if (!empty($object) && elgg_is_admin_logged_in()) {
