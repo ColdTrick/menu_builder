@@ -44,7 +44,7 @@ if (elgg_is_admin_logged_in() && isset($_SESSION["menu_builder_edit_mode"])) {
 	$form_body .= "</td></tr><tr><td>";
 	$form_body .= elgg_echo("menu_builder:add:form:url");
 	$form_body .= "</td><td>";
-	$form_body .= elgg_view("input/url", array("name" => "url", "value" => $url));
+	$form_body .= elgg_view("input/text", array("name" => "url", "value" => $url));
 	$form_body .= "</td></tr><tr><td>";
 	$form_body .= elgg_echo('menu_builder:add:action:tokens');
 	$form_body .= "</td><td>";
@@ -68,16 +68,17 @@ if (elgg_is_admin_logged_in() && isset($_SESSION["menu_builder_edit_mode"])) {
 	$form_body .= elgg_view("input/access", array("name" => "access_id", "value" => $access_id));
 	$form_body .= "</div>";
 	$form_body .= elgg_view("input/submit", array("value" => elgg_echo("save")));
+	
 	if (!empty($guid)) {
-		$delete_js = "onclick='if(confirm(\"" . elgg_echo("question:areyousure") . "\")){ menu_builder_menu_item_delete(" . $guid . "); }'";
+		$delete_js = "if (confirm('" . elgg_echo("question:areyousure") . "')) { elgg.menu_builder.menu_item_delete(" . $guid . "); }";
 		
 		$form_body .= " ";
-		$form_body .= elgg_view("input/button", array("type" => "button", "class" => "elgg-button-delete","value" => elgg_echo("delete"), "js" => $delete_js));
+		$form_body .= elgg_view("input/button", array("type" => "button", "class" => "elgg-button-delete","value" => elgg_echo("delete"), "onclick" => $delete_js));
 	}
 	
 	$form = elgg_view("input/form", array("action" => "action/menu_builder/edit", "body" => $form_body, "id" => "menu_builder_add_form"));
 
-	echo elgg_view_module("info", elgg_echo("menu_builder:add:title"), $form);
+	echo elgg_view_module("info", elgg_echo("menu_builder:add:title"), $form, array("class" => "menu-builder-edit-form man"));
 	
 	if (empty($guid)) {
 		?>

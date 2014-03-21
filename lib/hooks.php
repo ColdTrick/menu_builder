@@ -177,7 +177,7 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 											"name" => 'menu_builder_add',
 											"text" => elgg_view_icon("round-plus"),
 											"href" => '/menu_builder/edit?parent_guid=' . $menu_item->getName(),
-											"class" => "menu_builder_add_link",
+											"link_class" => "menu_builder_add_link elgg-lightbox",
 											"title" => elgg_echo("menu_builder:edit_mode:add")
 				));
 				$menu_item->addChild($item);
@@ -196,7 +196,7 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 								"name" => 'menu_builder_add',
 								"text" => elgg_view_icon("round-plus"),
 								"href" => '/menu_builder/edit',
-								"class" => "menu_builder_add_link",
+								"link_class" => "menu_builder_add_link elgg-lightbox",
 								"title" => elgg_echo("menu_builder:edit_mode:add")
 			));
 			$return["default"][] = $item;
@@ -213,7 +213,7 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 			$item = ElggMenuItem::factory(array(
 								"name" => 'menu_builder_switch_context',
 								"text" => elgg_view_icon("eye"),
-								"href" => 'javascript:menu_builder_toggle_context();',
+								"href" => 'javascript:elgg.menu_builder.toggle_context();',
 								"title" => elgg_echo("menu_builder:toggle_context")
 			));
 			array_unshift($return["default"], $item);
@@ -253,5 +253,43 @@ function menu_builder_write_access_hook($hook, $type, $return, $params) {
 		);
 	}
 
+	return $result;
+}
+
+/**
+ * Item url handler for Menu Builder
+ *
+ * @param string $hook_name    name of the hook
+ * @param string $entity_type  type of the hook
+ * @param string $return_value current return value
+ * @param array  $params       hook parameters
+ *
+ * @return string
+ */
+function menu_builder_menu_item_url_handler($hook_name, $entity_type, $return_value, $params) {
+	$result = $return_value;
+	$entity = $params["entity"];
+
+	if (empty($result) && elgg_instanceof($entity, "object", MENU_BUILDER_SUBTYPE)) {
+		$result = "javascript:void(0);";
+
+		if ($url = $entity->url) {
+			// fill in site url
+			$url = str_replace("[wwwroot]", elgg_get_site_url(), $url);
+	
+			// fill in username/userguid
+			$user = elgg_get_logged_in_user_entity();
+			if ($user) {
+				$url = str_replace("[username]", $user->username, $url);
+				$url = str_replace("[userguid]", $user->getGUID(), $url);
+			} else {
+				list($url) = explode("[username]", $url);
+				list($url) = explode("[userguid]", $url);
+			}
+	
+			$result = $url;
+		}
+	}
+	
 	return $result;
 }

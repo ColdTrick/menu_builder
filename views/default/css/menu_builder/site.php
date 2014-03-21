@@ -107,3 +107,7 @@
 .elgg-menu-item-menu-builder-edit-mode {
 	display: list-item !important;
 }
+
+.menu-builder-edit-form {
+	width: 300px;
+}
