@@ -81,19 +81,8 @@ function menu_builder_page_handler($page) {
 	}
 }
 
-/**
- * Page setup function for Menu Builder
- *
- * @return void
- */
-function menu_builder_pagesetup() {
-	// no need for a seperate admin page to manage menu items TODO: replace page with a notice
-	elgg_unregister_menu_item("page", "appearance:menu_items");
-}
-
 // register default Elgg events
 elgg_register_event_handler("init", "system", "menu_builder_init");
-elgg_register_event_handler("pagesetup", "system", "menu_builder_pagesetup");
 
 elgg_register_event_handler("delete", "object", "menu_builder_delete_event_handler");
 
@@ -103,4 +92,5 @@ elgg_register_action("menu_builder/delete", dirname(__FILE__) . "/actions/delete
 elgg_register_action("menu_builder/reorder", dirname(__FILE__) . "/actions/reorder.php", "admin");
 elgg_register_action("menu_builder/export", dirname(__FILE__) . "/actions/export.php", "admin");
 elgg_register_action("menu_builder/import", dirname(__FILE__) . "/actions/import.php", "admin");
+elgg_register_action("menu_builder/menu/edit", dirname(__FILE__) . "/actions/menu/edit.php", "admin");
 	

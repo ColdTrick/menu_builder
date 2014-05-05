@@ -13,6 +13,11 @@
 
 		// item
 		'item:object:menu_builder_menu_item' => "Menu Builder item",
+			
+		// admin
+		'menu_builder:admin:menu:list' => "Managable menus",
+		'menu_builder:admin:menu:add' => "New menu",
+		'menu_builder:admin:menu:add:internal_name' => "Internal menu name",
 
 		// views
 		// edit
