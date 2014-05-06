@@ -4,6 +4,114 @@
  * Hooks for Menu Builder
  */
 
+
+/**
+ * Adds the menu items to the menus managed by menu_builder
+ *
+ * @param string  $hook   name of the hook
+ * @param string  $type   type of the hook
+ * @param unknown $return return value
+ * @param unknown $params hook parameters
+ *
+ * @return array
+ */
+function menu_builder_all_menu_register($hook, $type, $return, $params) {
+	$current_menu = $params["name"];
+	$return = array(); // need to reset as there should be no other way to add menu items
+	
+	// fix menu name if needed
+	$lang_key = "menu:" . $current_menu . ":header:default";
+	if (elgg_echo($lang_key) == $lang_key) {
+		add_translation(get_current_language(), array($lang_key => $current_menu));
+	}
+	
+	// add configured menu items
+	$menu_items = json_decode(elgg_get_plugin_setting("menu_" . $current_menu . "_config", "menu_builder"), true);
+	if (is_array($menu_items)) {
+		foreach ($menu_items as $menu_item) {
+			if (elgg_in_context("menu_builder_manage")) {
+				$menu_item["menu_builder_menu_name"] = $current_menu;
+			}
+			$return[] = ElggMenuItem::factory($menu_item);
+		}
+	}
+	
+	// add 'new menu item' menu item
+	if (elgg_in_context("menu_builder_manage")) {
+		$item = ElggMenuItem::factory(array(
+			"name" => 'menu_builder_add',
+			"text" => "<strong>+</strong>&nbsp;&nbsp;" . elgg_echo("menu_builder:edit_mode:add"),
+			"href" => "#",
+			"link_class" => "elgg-lightbox",
+			"menu_builder_menu_name" => $current_menu,
+			"priority" => time()
+		));
+		
+		$return[] = $item;
+	}
+	
+	return $return;
+}
+
+
+/**
+ * Makes menus managable if needed
+ *
+ * @param string  $hook   name of the hook
+ * @param string  $type   type of the hook
+ * @param unknown $return return value
+ * @param unknown $params hook parameters
+ *
+ * @return array
+ */
+function menu_builder_all_menu_prepare($hook, $type, $return, $params) {
+	if (elgg_in_context("menu_builder_manage")) {
+		
+		$parent_options = array();
+		$menu = $return["default"];
+		$parent_options = menu_builder_get_parent_options($menu);
+		
+		menu_builder_prepare_menu_items_edit($menu, $parent_options);
+	}
+}
+
+function menu_builder_prepare_menu_items_edit($menu, $parent_options){
+	foreach ($menu as $menu_item) {
+		$text = "<a href='#'>" . $menu_item->getText();
+		if ($menu_item->getName() != "menu_builder_add") {
+			$text .= " " . elgg_view_icon("settings-alt");
+		}
+		$text .= "</a>";
+			
+		$text .= elgg_view("menu_builder/edit_item", array("menu_item" => $menu_item, "parent_options" => $parent_options));
+		$menu_item->setText($text);
+		$menu_item->setHref(false);
+		
+		$children = $menu_item->getChildren();
+		if ($children) {
+			menu_builder_prepare_menu_items_edit($children, $parent_options);
+		}
+	}
+}
+
+function menu_builder_get_parent_options($menu, $indent = 0) {
+	$result = array();
+	foreach($menu as $menu_item) {
+		if ($menu_item->getName() == "menu_builder_add") {
+			continue;
+		}
+		$text = str_repeat("-", $indent) . $menu_item->getText();
+		$result[$menu_item->getName()] = $text;
+		$children = $menu_item->getChildren();
+		if ($children) {
+			$children_options = menu_builder_get_parent_options($children, $indent + 1);
+			$result = $result + $children_options;
+		}
+	}
+	
+	return $result;
+}
+
 /**
  * Adds the menu items to the site menu
  *
@@ -177,14 +285,14 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 
 			if (isset($_SESSION["menu_builder_edit_mode"])) {
 				// add button
-				$item = ElggMenuItem::factory(array(
-											"name" => 'menu_builder_add',
-											"text" => elgg_view_icon("round-plus"),
-											"href" => '/menu_builder/edit?parent_guid=' . $menu_item->getName(),
-											"link_class" => "center elgg-lightbox",
-											"title" => elgg_echo("menu_builder:edit_mode:add")
-				));
-				$menu_item->addChild($item);
+// 				$item = ElggMenuItem::factory(array(
+// 											"name" => 'menu_builder_add',
+// 											"text" => elgg_view_icon("round-plus"),
+// 											"href" => '/menu_builder/edit?parent_guid=' . $menu_item->getName(),
+// 											"link_class" => "center elgg-lightbox",
+// 											"title" => elgg_echo("menu_builder:edit_mode:add")
+// 				));
+// 				$menu_item->addChild($item);
 			}
 		}
 	}
@@ -196,39 +304,39 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 	// add edit buttons
 	if (elgg_is_admin_logged_in()) {
 		if (isset($_SESSION["menu_builder_edit_mode"])) {
-			$item = ElggMenuItem::factory(array(
-								"name" => 'menu_builder_add',
-								"text" => elgg_view_icon("round-plus"),
-								"href" => '/menu_builder/edit',
-								"link_class" => "center elgg-lightbox",
-								"title" => elgg_echo("menu_builder:edit_mode:add")
-			));
-			$return["default"][] = $item;
+// 			$item = ElggMenuItem::factory(array(
+// 								"name" => 'menu_builder_add',
+// 								"text" => elgg_view_icon("round-plus"),
+// 								"href" => '/menu_builder/edit',
+// 								"link_class" => "center elgg-lightbox",
+// 								"title" => elgg_echo("menu_builder:edit_mode:add")
+// 			));
+// 			$return["default"][] = $item;
 
-			$item = ElggMenuItem::factory(array(
-								"name" => 'menu_builder_edit_mode',
-								"text" => elgg_view_icon("settings"),
-								"href" => '?menu_builder_edit_mode=off',
-								"title" => elgg_echo("menu_builder:edit_mode:off")
-			));
-			$return["default"][] = $item;
+// 			$item = ElggMenuItem::factory(array(
+// 								"name" => 'menu_builder_edit_mode',
+// 								"text" => elgg_view_icon("settings"),
+// 								"href" => '?menu_builder_edit_mode=off',
+// 								"title" => elgg_echo("menu_builder:edit_mode:off")
+// 			));
+// 			$return["default"][] = $item;
 
 			// add context switcher at the front of the menu
-			$item = ElggMenuItem::factory(array(
-								"name" => 'menu_builder_switch_context',
-								"text" => elgg_view_icon("eye"),
-								"href" => 'javascript:elgg.menu_builder.toggle_context();',
-								"title" => elgg_echo("menu_builder:toggle_context")
-			));
-			array_unshift($return["default"], $item);
+// 			$item = ElggMenuItem::factory(array(
+// 								"name" => 'menu_builder_switch_context',
+// 								"text" => elgg_view_icon("eye"),
+// 								"href" => 'javascript:elgg.menu_builder.toggle_context();',
+// 								"title" => elgg_echo("menu_builder:toggle_context")
+// 			));
+// 			array_unshift($return["default"], $item);
 		} else {
-			$item = ElggMenuItem::factory(array(
-								"name" => 'menu_builder_edit_mode',
-								"text" => elgg_view_icon("settings"),
-								"href" => '?menu_builder_edit_mode=on',
-								"title" => elgg_echo("menu_builder:edit_mode:on")
-			));
-			$return["default"][] = $item;
+// 			$item = ElggMenuItem::factory(array(
+// 								"name" => 'menu_builder_edit_mode',
+// 								"text" => elgg_view_icon("settings"),
+// 								"href" => '?menu_builder_edit_mode=on',
+// 								"title" => elgg_echo("menu_builder:edit_mode:on")
+// 			));
+// 			$return["default"][] = $item;
 		}
 	}
 

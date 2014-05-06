@@ -14,46 +14,54 @@ require_once(dirname(__FILE__) . "/lib/events.php");
  */
 function menu_builder_init() {
 		
-	elgg_extend_view("css/elgg", "css/menu_builder/site");
-	elgg_extend_view("js/elgg", "js/menu_builder/site");
+// 	elgg_extend_view("css/elgg", "css/menu_builder/site");
+	elgg_extend_view("css/admin", "css/menu_builder/admin");
+// 	elgg_extend_view("js/elgg", "js/menu_builder/site");
+	elgg_extend_view("js/admin", "js/menu_builder/admin");
 	
 	// register pagehandler for nice URL's
 	elgg_register_page_handler("menu_builder", "menu_builder_page_handler");
 	
 	// switch mode
-	if (elgg_is_admin_logged_in()) {
-		elgg_register_plugin_hook_handler("access:collections:write", "user", "menu_builder_write_access_hook");
+// 	if (elgg_is_admin_logged_in()) {
+// 		elgg_register_plugin_hook_handler("access:collections:write", "user", "menu_builder_write_access_hook");
 		
-		if (get_input("menu_builder_edit_mode") == "on") {
-			elgg_load_js("lightbox");
-			elgg_load_css("lightbox");
+// 		if (get_input("menu_builder_edit_mode") == "on") {
+// 			elgg_load_js("lightbox");
+// 			elgg_load_css("lightbox");
 			
-			$_SESSION["menu_builder_edit_mode"] = true;
-		} elseif (get_input("menu_builder_edit_mode") == "off") {
-			unset($_SESSION["menu_builder_edit_mode"]);
-			unset($_SESSION["menu_builder_logged_out"]);
-		}
+// 			$_SESSION["menu_builder_edit_mode"] = true;
+// 		} elseif (get_input("menu_builder_edit_mode") == "off") {
+// 			unset($_SESSION["menu_builder_edit_mode"]);
+// 			unset($_SESSION["menu_builder_logged_out"]);
+// 		}
 		
-		if (get_input("menu_builder_logged_out") == "on") {
-			elgg_load_js("lightbox");
-			elgg_load_css("lightbox");
+// 		if (get_input("menu_builder_logged_out") == "on") {
+// 			elgg_load_js("lightbox");
+// 			elgg_load_css("lightbox");
 			
-			$_SESSION["menu_builder_logged_out"] = true;
-		} elseif (get_input("menu_builder_logged_out") == "off") {
-			unset($_SESSION["menu_builder_logged_out"]);
-		}
-	} else {
-		unset($_SESSION["menu_builder_edit_mode"]);
-		unset($_SESSION["menu_builder_logged_out"]);
-	}
+// 			$_SESSION["menu_builder_logged_out"] = true;
+// 		} elseif (get_input("menu_builder_logged_out") == "off") {
+// 			unset($_SESSION["menu_builder_logged_out"]);
+// 		}
+// 	} else {
+// 		unset($_SESSION["menu_builder_edit_mode"]);
+// 		unset($_SESSION["menu_builder_logged_out"]);
+// 	}
 	
 	// register url handler for menu_builder objects
-	elgg_register_plugin_hook_handler("entity:url", "object", "menu_builder_menu_item_url_handler");
+// 	elgg_register_plugin_hook_handler("entity:url", "object", "menu_builder_menu_item_url_handler");
 	
 	// take control of menu setup
 	elgg_unregister_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup');
-	elgg_register_plugin_hook_handler('prepare', 'menu:site', 'menu_builder_site_menu_prepare');
-	elgg_register_plugin_hook_handler('register', 'menu:site', 'menu_builder_site_menu_register');
+// 	elgg_register_plugin_hook_handler('prepare', 'menu:site', 'menu_builder_site_menu_prepare');
+// 	elgg_register_plugin_hook_handler('register', 'menu:site', 'menu_builder_site_menu_register');
+	
+	$managed_menus = menu_builder_get_managed_menus();
+	foreach ($managed_menus as $menu_name) {
+		elgg_register_plugin_hook_handler('register', 'menu:' . $menu_name, 'menu_builder_all_menu_register', 999);
+		elgg_register_plugin_hook_handler('prepare', 'menu:' . $menu_name, 'menu_builder_all_menu_prepare', 999);
+	}
 }
 
 /**
@@ -84,7 +92,7 @@ function menu_builder_page_handler($page) {
 // register default Elgg events
 elgg_register_event_handler("init", "system", "menu_builder_init");
 
-elgg_register_event_handler("delete", "object", "menu_builder_delete_event_handler");
+// elgg_register_event_handler("delete", "object", "menu_builder_delete_event_handler");
 
 // register actions
 elgg_register_action("menu_builder/edit", dirname(__FILE__) . "/actions/edit.php", "admin");
@@ -92,5 +100,9 @@ elgg_register_action("menu_builder/delete", dirname(__FILE__) . "/actions/delete
 elgg_register_action("menu_builder/reorder", dirname(__FILE__) . "/actions/reorder.php", "admin");
 elgg_register_action("menu_builder/export", dirname(__FILE__) . "/actions/export.php", "admin");
 elgg_register_action("menu_builder/import", dirname(__FILE__) . "/actions/import.php", "admin");
+
 elgg_register_action("menu_builder/menu/edit", dirname(__FILE__) . "/actions/menu/edit.php", "admin");
+elgg_register_action("menu_builder/menu/delete", dirname(__FILE__) . "/actions/menu/delete.php", "admin");
+elgg_register_action("menu_builder/menu_item/edit", dirname(__FILE__) . "/actions/menu_item/edit.php", "admin");
+elgg_register_action("menu_builder/menu_item/delete", dirname(__FILE__) . "/actions/menu_item/delete.php", "admin");
 	

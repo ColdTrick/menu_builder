@@ -169,3 +169,15 @@ function menu_builder_order_menu_item(ElggMenuItem $item, $depth) {
 
 	return $item;
 }
+
+/**
+ * Returns an array of all the menu names that are managed by menu_builder
+ * 
+ * @return array
+ */
+function menu_builder_get_managed_menus() {
+	return json_decode(elgg_get_plugin_setting("menu_names", "menu_builder"), true);
+}
+
+
+

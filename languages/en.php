@@ -18,6 +18,7 @@
 		'menu_builder:admin:menu:list' => "Managable menus",
 		'menu_builder:admin:menu:add' => "New menu",
 		'menu_builder:admin:menu:add:internal_name' => "Internal menu name",
+		'menu_builder:admin:menu:delete' => "Delete menu",
 
 		// views
 		// edit
@@ -42,8 +43,10 @@
 		'menu_builder:add:form:parent' => "Parent menu item",
 		'menu_builder:add:form:parent:toplevel' => "Toplevel menu item",
 		'menu_builder:add:form:access' => "Who can see this menu item?",
+		'menu_builder:add:form:priority' => "Priority",
 		'menu_builder:add:access:admin_only' => "Admin only",
 		'menu_builder:add:action:tokens' => "Action",
+		
 
 		// import
 		'admin:menu_builder' => "Menu Builder",
