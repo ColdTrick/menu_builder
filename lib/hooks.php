@@ -33,6 +33,10 @@ function menu_builder_all_menu_register($hook, $type, $return, $params) {
 				$menu_item["menu_builder_menu_name"] = $current_menu;
 			}
 			
+			if (empty($menu_item["target"])) {
+				unset($menu_item["target"]);
+			}
+			
 			$menu_item["href"] = menu_builder_normalize_href($menu_item["href"]);
 			
 			$return[] = ElggMenuItem::factory($menu_item);
