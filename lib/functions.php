@@ -179,5 +179,82 @@ function menu_builder_get_managed_menus() {
 	return json_decode(elgg_get_plugin_setting("menu_names", "menu_builder"), true);
 }
 
+/**
+ * Normalizes the href and replaces some parts of it
+ * 
+ * @param string $href
+ * 
+ * @return string
+ */
+function menu_builder_normalize_href($href) {
+	if (empty($href)) {
+		// empty href's should not have a href set
+		return false;
+	}
 
+	// fill in site url
+	$href = str_replace("[wwwroot]", elgg_get_site_url(), $href);
 
+	// fill in username/userguid
+	$user = elgg_get_logged_in_user_entity();
+	if ($user) {
+		$href = str_replace("[username]", $user->username, $href);
+		$href = str_replace("[userguid]", $user->guid, $href);
+	} else {
+		list($href) = explode("[username]", $href);
+		list($href) = explode("[userguid]", $href);
+	}
+
+	return $href;
+}
+
+/**
+ * Prepares menu items to be edited
+ * 
+ * @param array $menu           array of ElggMenuItem objects
+ * @param array $parent_options all parent options
+ */
+function menu_builder_prepare_menu_items_edit($menu, $parent_options) {
+	foreach ($menu as $menu_item) {
+		$text = "<a href='#'>" . $menu_item->getText();
+		if ($menu_item->getName() != "menu_builder_add") {
+			$text .= " " . elgg_view_icon("settings-alt");
+		}
+		$text .= "</a>";
+			
+		$text .= elgg_view("menu_builder/edit_item", array("menu_item" => $menu_item, "parent_options" => $parent_options));
+		$menu_item->setText($text);
+		$menu_item->setHref(false);
+
+		$children = $menu_item->getChildren();
+		if ($children) {
+			menu_builder_prepare_menu_items_edit($children, $parent_options);
+		}
+	}
+}
+
+/**
+ * Returns an array of parent items to be used in edit forms of menu items
+ * 
+ * @param array $menu   array of ElggMenuItem objects
+ * @param int   $indent number of indents 
+ * 
+ * @return array
+ */
+function menu_builder_get_parent_options($menu, $indent = 0) {
+	$result = array();
+	foreach ($menu as $menu_item) {
+		if ($menu_item->getName() == "menu_builder_add") {
+			continue;
+		}
+		$text = str_repeat("-", $indent) . $menu_item->getText();
+		$result[$menu_item->getName()] = $text;
+		$children = $menu_item->getChildren();
+		if ($children) {
+			$children_options = menu_builder_get_parent_options($children, $indent + 1);
+			$result = $result + $children_options;
+		}
+	}
+
+	return $result;
+}

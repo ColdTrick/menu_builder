@@ -1,10 +1,15 @@
 <?php
 
+$filter = true;
+if (elgg_get_plugin_setting("htmlawed_filter", "menu_builder") == "no") {
+	$filter = false;
+}
+
 $menu_name = get_input("menu_name");
 
 $name = get_input("name");
-$text = get_input("text");
-$href = get_input("href");
+$text = get_input("text", null, $filter);
+$href = get_input("href", null, $filter);
 $access_id = (int) get_input("access_id");
 $target = get_input("target");
 $is_action = get_input("is_action");

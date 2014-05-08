@@ -5,7 +5,6 @@ define("MENU_BUILDER_ACCESS_LOGGED_OUT", -5);
 
 require_once(dirname(__FILE__) . "/lib/functions.php");
 require_once(dirname(__FILE__) . "/lib/hooks.php");
-require_once(dirname(__FILE__) . "/lib/events.php");
 
 /**
  * Init function for Menu Builder
@@ -49,12 +48,9 @@ function menu_builder_init() {
 // 		unset($_SESSION["menu_builder_logged_out"]);
 // 	}
 	
-	// register url handler for menu_builder objects
-// 	elgg_register_plugin_hook_handler("entity:url", "object", "menu_builder_menu_item_url_handler");
 	
 	// take control of menu setup
 	elgg_unregister_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup');
-// 	elgg_register_plugin_hook_handler('prepare', 'menu:site', 'menu_builder_site_menu_prepare');
 // 	elgg_register_plugin_hook_handler('register', 'menu:site', 'menu_builder_site_menu_register');
 	
 	$managed_menus = menu_builder_get_managed_menus();
@@ -92,14 +88,12 @@ function menu_builder_page_handler($page) {
 // register default Elgg events
 elgg_register_event_handler("init", "system", "menu_builder_init");
 
-// elgg_register_event_handler("delete", "object", "menu_builder_delete_event_handler");
-
 // register actions
-elgg_register_action("menu_builder/edit", dirname(__FILE__) . "/actions/edit.php", "admin");
-elgg_register_action("menu_builder/delete", dirname(__FILE__) . "/actions/delete.php", "admin");
-elgg_register_action("menu_builder/reorder", dirname(__FILE__) . "/actions/reorder.php", "admin");
-elgg_register_action("menu_builder/export", dirname(__FILE__) . "/actions/export.php", "admin");
-elgg_register_action("menu_builder/import", dirname(__FILE__) . "/actions/import.php", "admin");
+// elgg_register_action("menu_builder/edit", dirname(__FILE__) . "/actions/edit.php", "admin");
+// elgg_register_action("menu_builder/delete", dirname(__FILE__) . "/actions/delete.php", "admin");
+// elgg_register_action("menu_builder/reorder", dirname(__FILE__) . "/actions/reorder.php", "admin");
+// elgg_register_action("menu_builder/export", dirname(__FILE__) . "/actions/export.php", "admin");
+// elgg_register_action("menu_builder/import", dirname(__FILE__) . "/actions/import.php", "admin");
 
 elgg_register_action("menu_builder/menu/edit", dirname(__FILE__) . "/actions/menu/edit.php", "admin");
 elgg_register_action("menu_builder/menu/delete", dirname(__FILE__) . "/actions/menu/delete.php", "admin");

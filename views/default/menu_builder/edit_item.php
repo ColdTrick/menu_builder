@@ -12,6 +12,7 @@ if ($menu_item->getName() == "menu_builder_add") {
 	$is_action = false;
 	$name = null;
 	$parent_name = null;
+	$priority = null;
 	
 	if (elgg_get_config("walled_garden")) {
 		$access_id = ACCESS_LOGGED_IN;

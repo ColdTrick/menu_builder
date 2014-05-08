@@ -40,6 +40,7 @@ if ($menus) {
 	$delete_menu_form = elgg_view("input/form", array(
 		"action" => "action/menu_builder/menu/delete",
 		"body" => $delete_menu_form_body,
+		"class" => "menu-builder-menu-delete"
 		
 	));
 	
