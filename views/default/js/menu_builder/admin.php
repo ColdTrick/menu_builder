@@ -10,8 +10,26 @@ elgg.menu_builder.init_admin = function() {
 	});
 	
 	$(".menu-builder-manage .elgg-icon-settings-alt").live("click", function(event) {
-		$(this).parent().next().toggle();
+		$(this).parent().parent().next("form").toggle();
 		event.preventDefault();
+	});
+	$(".menu-builder-manage .elgg-icon-delete").live("click", function(event) {
+		if (!confirm(elgg.echo("deleteconfirm"))) {
+			return false;
+		} else {
+			$form = $(this).parent().parent().next("form");
+			var name = $form.find("input[name='name']").val();
+			var menu_name = $form.find("input[name='menu_name']").val();
+			elgg.action("menu_builder/menu_item/delete", {
+				data : {
+					"name" : name,
+					"menu_name" : menu_name,
+				},
+				success: function(data) {
+					location.reload();
+				}
+			});
+		}
 	});
 
 	$(".menu-builder-menu-delete").live("submit", function(event) {

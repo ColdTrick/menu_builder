@@ -27,6 +27,7 @@ function menu_builder_all_menu_register($hook, $type, $return, $params) {
 	
 	// add configured menu items
 	$menu_items = json_decode(elgg_get_plugin_setting("menu_" . $current_menu . "_config", "menu_builder"), true);
+	
 	if (is_array($menu_items)) {
 		foreach ($menu_items as $menu_item) {
 			if (elgg_in_context("menu_builder_manage")) {

@@ -220,7 +220,8 @@ function menu_builder_prepare_menu_items_edit($menu, $parent_options) {
 	foreach ($menu as $menu_item) {
 		$text = "<a href='#'>" . $menu_item->getText();
 		if ($menu_item->getName() != "menu_builder_add") {
-			$text .= " " . elgg_view_icon("settings-alt");
+			$text .= " <span title='" . elgg_echo("edit") . "'>" . elgg_view_icon("settings-alt") . "</span>";
+			$text .= " <span title='" . elgg_echo("delete") . "'>" . elgg_view_icon("delete") . "</span>";
 		}
 		$text .= "</a>";
 			
@@ -259,4 +260,22 @@ function menu_builder_get_parent_options($menu, $indent = 0) {
 	}
 
 	return $result;
+}
+
+/**
+ * Recursively deletes menu_items
+ * 
+ * @param string $menu_name  name of the menu item to delete
+ * @param array  $menu_items array of menu items
+ * @return array
+ */
+function menu_builder_delete_menu_item($menu_name, &$menu_items) {
+	if (!empty($menu_name) && !empty($menu_items)) {
+		unset($menu_items[$menu_name]);
+		foreach ($menu_items as $key => $item) {
+			if ($item["parent_name"] == $menu_name) {
+				menu_builder_delete_menu_item($key, $menu_items);
+			}
+		}
+	}
 }
