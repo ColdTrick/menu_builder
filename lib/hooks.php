@@ -222,28 +222,3 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 
 	return $result;
 }
-
-/**
- * Replaces the options in the access dropdowns for menu items
- *
- * @param string  $hook   name of the hook
- * @param string  $type   type of the hook
- * @param unknown $return return value
- * @param unknown $params hook parameters
- *
- * @return array
- */
-function menu_builder_write_access_hook($hook, $type, $return, $params) {
-	$result = $return;
-
-	if (elgg_in_context("menu_builder_manage")) {
-		$result = array(
-			ACCESS_PUBLIC => elgg_echo("PUBLIC"),
-			ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
-			MENU_BUILDER_ACCESS_LOGGED_OUT => elgg_echo("LOGGED_OUT"),
-			ACCESS_PRIVATE => elgg_echo("menu_builder:add:access:admin_only")
-		);
-	}
-
-	return $result;
-}

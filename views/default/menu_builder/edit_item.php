@@ -29,6 +29,12 @@ if ($menu_item->getName() == "menu_builder_add") {
 }
 
 $target_options = array("0" => elgg_echo("menu_builder:add:form:target:self"), "_blank" => elgg_echo("menu_builder:add:form:target:blank"));
+$access_options = array(
+	ACCESS_PUBLIC => elgg_echo("PUBLIC"),
+	ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
+	MENU_BUILDER_ACCESS_LOGGED_OUT => elgg_echo("LOGGED_OUT"),
+	ACCESS_PRIVATE => elgg_echo("menu_builder:add:access:admin_only")
+);
 
 $form_body = "";
 
@@ -68,7 +74,8 @@ $form_body .= "</td><td>";
 
 $form_body .= elgg_view("input/access", array(
 	"name" => "access_id",
-	"value" => $access_id
+	"value" => $access_id,
+	"options_values" => $access_options
 ));
 
 $form_body .= "</td></tr><tr><td>";
