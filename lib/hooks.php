@@ -32,6 +32,10 @@ function menu_builder_all_menu_register($hook, $type, $return, $params) {
 			if (elgg_in_context("menu_builder_manage")) {
 				$menu_item["menu_builder_menu_name"] = $current_menu;
 			}
+			if (empty($menu_item["href"])) {
+				// empty href's should not have a href set
+				$menu_item["href"] = false;
+			}
 			$return[] = ElggMenuItem::factory($menu_item);
 		}
 	}
