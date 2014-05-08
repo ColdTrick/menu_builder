@@ -30,17 +30,42 @@ function menu_builder_all_menu_register($hook, $type, $return, $params) {
 	
 	if (is_array($menu_items)) {
 		foreach ($menu_items as $menu_item) {
+			$can_add_menu_item = true;
+			
 			if (elgg_in_context("menu_builder_manage")) {
 				$menu_item["menu_builder_menu_name"] = $current_menu;
-			}
+			} else {
 			
-			if (empty($menu_item["target"])) {
-				unset($menu_item["target"]);
+				if (empty($menu_item["target"])) {
+					unset($menu_item["target"]);
+				}
+				
+				$access_id = $menu_item["access_id"];
+				unset($menu_item["access_id"]);
+				switch($access_id) {
+					case ACCESS_PRIVATE:
+						if (!elgg_is_admin_logged_in()) {
+							$can_add_menu_item = false;
+						}
+						break;
+					case MENU_BUILDER_ACCESS_LOGGED_OUT:
+						if (elgg_is_logged_in()) {
+							$can_add_menu_item = false;
+						}
+						break;
+					case ACCESS_LOGGED_IN:
+						if (!elgg_is_logged_in()) {
+							$can_add_menu_item = false;
+						}
+						break;
+				}
 			}
 			
 			$menu_item["href"] = menu_builder_normalize_href($menu_item["href"]);
 			
-			$return[] = ElggMenuItem::factory($menu_item);
+			if ($can_add_menu_item) {
+				$return[] = ElggMenuItem::factory($menu_item);
+			}
 		}
 	}
 	
