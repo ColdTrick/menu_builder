@@ -182,7 +182,7 @@ function menu_builder_get_managed_menus() {
 /**
  * Normalizes the href and replaces some parts of it
  * 
- * @param string $href
+ * @param string $href current href
  * 
  * @return string
  */
@@ -213,6 +213,8 @@ function menu_builder_normalize_href($href) {
  * 
  * @param array $menu           array of ElggMenuItem objects
  * @param array $parent_options all parent options
+ * 
+ * @return void
  */
 function menu_builder_prepare_menu_items_edit($menu, $parent_options) {
 	foreach ($menu as $menu_item) {
