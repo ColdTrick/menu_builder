@@ -105,6 +105,14 @@ function menu_builder_all_menu_prepare($hook, $type, $return, $params) {
 		
 		menu_builder_prepare_menu_items_edit($menu, $parent_options);
 	}
+	
+
+	// set selected state on parent menu items
+	$item = elgg_extract('selected_item', $params);
+	
+	while ($item && ($item = $item->getParent())) {
+		$item->setSelected(true);
+	}
 }
 
 /**
