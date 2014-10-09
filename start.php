@@ -53,6 +53,15 @@ function menu_builder_init() {
 	elgg_unregister_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup');
 // 	elgg_register_plugin_hook_handler('register', 'menu:site', 'menu_builder_site_menu_register');
 	
+	elgg_register_event_handler("pagesetup", "system", "menu_builder_pagesetup");
+}
+
+/**
+ * Page setup function for Menu Builder
+ *
+ * @return void
+ */
+function menu_builder_pagesetup() {
 	$managed_menus = menu_builder_get_managed_menus();
 	foreach ($managed_menus as $menu_name) {
 		elgg_register_plugin_hook_handler('register', 'menu:' . $menu_name, 'menu_builder_all_menu_register', 999);
