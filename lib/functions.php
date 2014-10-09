@@ -279,3 +279,46 @@ function menu_builder_delete_menu_item($menu_name, &$menu_items) {
 		}
 	}
 }
+
+/**
+ * Checks if cached menu html is available and returns the html if it is available
+ * 
+ * @param string $menu_name name of the menu
+ * 
+ * @return boolean|string
+ */
+function menu_builder_get_menu_cache($menu_name) {
+	global $CONFIG;
+	
+	if (!$CONFIG->system_cache_enabled) {
+		return false;	
+	}
+	
+	$cache_name = menu_builder_get_menu_cache_name($menu_name);
+	
+	$data = elgg_load_system_cache($cache_name);
+	
+	if (!$data) {
+		return false;
+	}
+	
+	return $data;
+}
+
+/**
+ * Returns name for menu cache file
+ * 
+ * @param string $menu_name name of the menu
+ * 
+ * @return string
+ */
+function menu_builder_get_menu_cache_name($menu_name) {
+	$cache_name = $menu_name . "_logged_in";
+	if (!elgg_is_logged_in()) {
+		$cache_name = $menu_name . "_logged_out";
+	} elseif (elgg_is_admin_logged_in()) {
+		$cache_name = $menu_name . "_admin";
+	}
+	
+	return $cache_name;
+}

@@ -54,6 +54,6 @@ $menu_item = array(
 $current_config[$name] = $menu_item;
 
 elgg_set_plugin_setting("menu_" . $menu_name . "_config", json_encode($current_config), "menu_builder");
-
+elgg_reset_system_cache();
 system_message("menu item saved");
 forward(REFERER);

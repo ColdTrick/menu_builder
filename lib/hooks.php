@@ -4,7 +4,6 @@
  * Hooks for Menu Builder
  */
 
-
 /**
  * Adds the menu items to the menus managed by menu_builder
  *
@@ -18,6 +17,11 @@
 function menu_builder_all_menu_register($hook, $type, $return, $params) {
 	$current_menu = $params["name"];
 	$return = array(); // need to reset as there should be no other way to add menu items
+	
+	if (menu_builder_get_menu_cache($current_menu)) {
+		// don't get menu as it will be handle by the cache @see menu_builder_view_navigation_menu_default_hook
+		return $return;
+	}	
 	
 	// fix menu name if needed
 	$lang_key = "menu:" . elgg_get_friendly_title($current_menu) . ":header:default";
@@ -254,4 +258,19 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 	}
 
 	return $result;
+}
+
+/**
+ * Caches menus
+ *
+ * @param string  $hook   name of the hook
+ * @param string  $type   type of the hook
+ * @param unknown $return return value
+ * @param unknown $params hook parameters
+ *
+ * @return array
+ */
+function menu_builder_view_menu_hook_handler($hook, $type, $return, $params) {
+	$cache_name = menu_builder_get_menu_cache_name($params["vars"]["name"]);
+	elgg_save_system_cache($cache_name, $return);
 }

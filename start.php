@@ -66,6 +66,11 @@ function menu_builder_pagesetup() {
 	foreach ($managed_menus as $menu_name) {
 		elgg_register_plugin_hook_handler('register', 'menu:' . $menu_name, 'menu_builder_all_menu_register', 999);
 		elgg_register_plugin_hook_handler('prepare', 'menu:' . $menu_name, 'menu_builder_all_menu_prepare', 999);
+		
+		// extend view for cache output
+		elgg_extend_view("navigation/menu/$menu_name", "menu_builder/menu_cache", 400);
+		// hook after view to save cache
+		elgg_register_plugin_hook_handler("view", "navigation/menu/$menu_name", "menu_builder_view_menu_hook_handler", 999);
 	}
 }
 

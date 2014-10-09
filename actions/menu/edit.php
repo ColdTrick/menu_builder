@@ -15,6 +15,6 @@ if ($menu_name) {
 	}
 	
 	elgg_set_plugin_setting("menu_names", json_encode($menus), "menu_builder");
-	
+	elgg_reset_system_cache();
 }
 
