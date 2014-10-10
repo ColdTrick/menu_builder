@@ -31,12 +31,6 @@ elgg.menu_builder.init_admin = function() {
 			});
 		}
 	});
-
-	$(".menu-builder-menu-delete").live("submit", function(event) {
-		if (!confirm(elgg.echo("deleteconfirm"))) {
-			return false;
-		}		
-	});
 }
 
 elgg.register_hook_handler('init', 'system', elgg.menu_builder.init_admin);
