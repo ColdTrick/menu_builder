@@ -52,6 +52,8 @@ function menu_builder_init() {
 	// take control of menu setup
 	elgg_unregister_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup');
 	
+	elgg_register_plugin_hook_handler('prepare', 'all', 'menu_builder_prepare_menu_set_selected_hook', 9999);
+	
 	elgg_register_event_handler("pagesetup", "system", "menu_builder_pagesetup");
 }
 

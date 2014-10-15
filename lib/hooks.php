@@ -21,7 +21,7 @@ function menu_builder_all_menu_register($hook, $type, $return, $params) {
 	if (menu_builder_get_menu_cache($current_menu)) {
 		// don't get menu as it will be handle by the cache @see menu_builder_view_navigation_menu_default_hook
 		return $return;
-	}	
+	}
 	
 	// fix menu name if needed
 	$lang_key = "menu:" . elgg_get_friendly_title($current_menu) . ":header:default";
@@ -108,14 +108,6 @@ function menu_builder_all_menu_prepare($hook, $type, $return, $params) {
 		$parent_options = menu_builder_get_parent_options($menu);
 		
 		menu_builder_prepare_menu_items_edit($menu, $parent_options);
-	}
-	
-
-	// set selected state on parent menu items
-	$item = elgg_extract('selected_item', $params);
-	
-	while ($item && ($item = $item->getParent())) {
-		$item->setSelected(true);
 	}
 }
 
@@ -273,4 +265,36 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 function menu_builder_view_menu_hook_handler($hook, $type, $return, $params) {
 	$cache_name = menu_builder_get_menu_cache_name($params["vars"]["name"]);
 	elgg_save_system_cache($cache_name, $return);
+}
+
+
+/**
+ * Make sure all items are selected correctly
+ *
+ * @param string  $hook   name of the hook
+ * @param string  $type   type of the hook
+ * @param unknown $return return value
+ * @param unknown $params hook parameters
+ *
+ * @return array
+ */
+function menu_builder_prepare_menu_set_selected_hook($hook, $type, $return, $params) {
+	
+	if (strpos($type, "menu:") !== 0) {
+		return $return;
+	}
+	
+	if (empty($params) || !is_array($params)) {
+		return $return;
+	}
+	
+	// set selected state on parent menu items
+	$item = elgg_extract("selected_item", $params);
+	if (empty($item) || !($item instanceof ElggMenuItem)) {
+		return $return;
+	}
+	
+	while ($item && ($item = $item->getParent())) {
+		$item->setSelected(true);
+	}
 }
