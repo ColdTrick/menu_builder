@@ -18,7 +18,7 @@ function menu_builder_all_menu_register($hook, $type, $return, $params) {
 	$current_menu = $params["name"];
 	$return = array(); // need to reset as there should be no other way to add menu items
 	
-	if (menu_builder_get_menu_cache($current_menu)) {
+	if (!elgg_in_context("admin") && menu_builder_get_menu_cache($current_menu)) {
 		// don't get menu as it will be handle by the cache @see menu_builder_view_navigation_menu_default_hook
 		return $return;
 	}
@@ -260,11 +260,13 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
  * @param unknown $return return value
  * @param unknown $params hook parameters
  *
- * @return array
+ * @return void
  */
 function menu_builder_view_menu_hook_handler($hook, $type, $return, $params) {
-	$cache_name = menu_builder_get_menu_cache_name($params["vars"]["name"]);
-	elgg_save_system_cache($cache_name, $return);
+	if (!elgg_in_context("admin")) {
+		$cache_name = menu_builder_get_menu_cache_name($params["vars"]["name"]);
+		elgg_save_system_cache($cache_name, $return);
+	}
 }
 
 

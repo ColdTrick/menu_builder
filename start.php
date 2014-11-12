@@ -63,6 +63,10 @@ function menu_builder_init() {
  * @return void
  */
 function menu_builder_pagesetup() {
+	if (elgg_in_context("admin")) {
+		 return;
+	}
+	
 	$managed_menus = menu_builder_get_managed_menus();
 	foreach ($managed_menus as $menu_name) {
 		elgg_register_plugin_hook_handler('register', 'menu:' . $menu_name, 'menu_builder_all_menu_register', 999);

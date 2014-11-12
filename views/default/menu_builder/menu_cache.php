@@ -1,6 +1,9 @@
 <?php
 $menu_name = $vars["name"];
-$data = menu_builder_get_menu_cache($menu_name);
+$data = false;
+if (!elgg_in_context("admin")) {
+	$data = menu_builder_get_menu_cache($menu_name);
+}
 
 if ($data) {
 	echo $data;
