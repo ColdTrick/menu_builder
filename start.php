@@ -63,19 +63,18 @@ function menu_builder_init() {
  * @return void
  */
 function menu_builder_pagesetup() {
-	if (elgg_in_context("admin")) {
-		 return;
-	}
-	
+
 	$managed_menus = menu_builder_get_managed_menus();
 	foreach ($managed_menus as $menu_name) {
 		elgg_register_plugin_hook_handler('register', 'menu:' . $menu_name, 'menu_builder_all_menu_register', 999);
 		elgg_register_plugin_hook_handler('prepare', 'menu:' . $menu_name, 'menu_builder_all_menu_prepare', 999);
 		
-		// extend view for cache output
-		elgg_extend_view("navigation/menu/$menu_name", "menu_builder/menu_cache", 400);
-		// hook after view to save cache
-		elgg_register_plugin_hook_handler("view", "navigation/menu/$menu_name", "menu_builder_view_menu_hook_handler", 999);
+		if (!elgg_in_context("admin")) {
+			// extend view for cache output
+			elgg_extend_view("navigation/menu/$menu_name", "menu_builder/menu_cache", 400);
+			// hook after view to save cache
+			elgg_register_plugin_hook_handler("view", "navigation/menu/$menu_name", "menu_builder_view_menu_hook_handler", 999);
+		}
 	}
 }
 
