@@ -10,3 +10,8 @@ if ($data) {
 } elseif ($menu_name !== "site") {
 	echo elgg_view("navigation/menu/default", $vars);
 }
+
+if (!$data) {
+	// hook after view to save cache
+	elgg_register_plugin_hook_handler("view", "navigation/menu/$menu_name", "menu_builder_view_menu_hook_handler", 999);
+}
