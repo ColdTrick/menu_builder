@@ -50,5 +50,9 @@ function menu_builder_upgrade_event_handler($event, $type) {
 		));
 	}
 	
-	
+
+	// delete entities need to do it afterwards as parents are not always available otherwise
+	foreach($entities as $menu_item) {
+		$menu_item->delete();
+	}
 }
