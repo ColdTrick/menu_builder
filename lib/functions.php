@@ -322,3 +322,76 @@ function menu_builder_get_menu_cache_name($menu_name) {
 	
 	return $cache_name;
 }
+
+/**
+ * Adds a menu to the list of manageable menus
+ * 
+ * @param string $menu_name name of the menu
+ * 
+ * @return void
+ */
+function menu_builder_add_menu($menu_name) {
+	$menus = elgg_get_plugin_setting("menu_names", "menu_builder");
+	$menus = json_decode($menus, true);
+	if (!is_array($menus)) {
+		$menus = array();
+	}
+	
+	if (!in_array($menu_name, $menus)) {
+		$menus[] = $menu_name;
+		
+		elgg_set_plugin_setting("menu_names", json_encode($menus), "menu_builder");
+		elgg_reset_system_cache();
+	}
+}
+
+/**
+ * Adds a menu item to the list of manageable menu items
+ * 
+ * @param string $menu_name name of the menu
+ * @param array  $params    name of the menu
+ * 
+ * @return void
+ */
+function menu_builder_add_menu_item($menu_name, array $params = array()) {
+	$filter = true;
+	if (elgg_get_plugin_setting("htmlawed_filter", "menu_builder") == "no") {
+		$filter = false;
+	}
+	
+	$defaults = array(
+		"name" => get_input("name"),
+		"text" => get_input("text", null, $filter),
+		"href" => get_input("href", null, $filter),
+		"access_id" => (int) get_input("access_id", ACCESS_PUBLIC),
+		"target" => get_input("target"),
+		"is_action" => get_input("is_action"),
+		"priority" => get_input("priority", time()),
+		"parent_name" => get_input("parent_name")
+	);	
+		
+	$menu_item = array_merge($defaults, $params);
+	
+	$current_config = json_decode(elgg_get_plugin_setting("menu_" . $menu_name . "_config", "menu_builder"), true);
+	
+	if (!is_array($current_config)) {
+		$current_config = array();
+	}
+	
+	$name = $menu_item["name"];
+	if (empty($name)) {
+		$time = time();
+		$name = "menu_name_" . $time;
+		while (in_array($name, $current_config)) {
+			$time++;
+			$name = "menu_name_" . $time;
+		}
+		
+		$menu_item["name"] = $name;
+	}
+	
+	$current_config[$name] = $menu_item;
+	
+	elgg_set_plugin_setting("menu_" . $menu_name . "_config", json_encode($current_config), "menu_builder");
+	elgg_reset_system_cache();
+}

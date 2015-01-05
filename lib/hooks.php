@@ -300,3 +300,102 @@ function menu_builder_prepare_menu_set_selected_hook($hook, $type, $return, $par
 		$item->setSelected(true);
 	}
 }
+
+/**
+ * Loads initially the site menu into the menu_builder config.
+ * Needs to be loaded in the activate file as it will not be available otherwise
+ *
+ * @param string  $hook   name of the hook
+ * @param string  $type   type of the hook
+ * @param unknown $return return value
+ * @param unknown $params hook parameters
+ *
+ * @return array
+ */
+function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
+	menu_builder_add_menu("site");
+
+	$priority = 10;
+	$parent_name = null;
+
+	foreach ($return as $section => $items) {
+		$parent_name = null;
+		
+		if ($section !== "default") {
+			
+				
+			menu_builder_add_menu_item("site", array(
+				"name" => $section,
+				"text" => elgg_echo($section),
+				"href" => "#",
+				// 				"target" => get_input("target"),
+				// 				"is_action" => false,
+				"priority" => $priority,
+			));
+				
+			$parent_name = $section;
+			$priority += 10;
+		}
+
+		foreach ($items as $item) {
+			menu_builder_add_menu_item("site", array(
+				"name" => $item->getName(),
+				"text" => $item->getText(),
+				"href" => str_replace(elgg_get_site_url(), "[wwwroot]", $item->getHref()),
+				// "target" => get_input("target"),
+				// "is_action" => false,
+				"priority" => $priority,
+				"parent_name" => $parent_name
+			));
+				
+			$priority += 10;
+		}
+	}
+
+
+
+	// 	if (count($return) > 5) {
+	// 		// create more menu item
+	// 		$item = new ElggObject();
+	// 		$item->subtype = MENU_BUILDER_SUBTYPE;
+	// 		$item->owner_guid = elgg_get_site_entity()->getGUID();
+	// 		$item->container_guid = elgg_get_site_entity()->getGUID();
+
+	// 		$item->access_id = ACCESS_PUBLIC;
+
+	// 		$item->order = ($priority * count($return)) + 10;
+	// 		$item->title = elgg_echo("more");
+	// 		$item->url = "#";
+	// 		$item->parent_guid = 0;
+	// 		$item->save();
+
+	// 		$more_guid = $item->getGUID();
+	// 	}
+
+	// 	foreach ($return as $key => $menu_item) {
+	// 		$item = new ElggObject();
+	// 		$item->subtype = MENU_BUILDER_SUBTYPE;
+	// 		$item->owner_guid = elgg_get_site_entity()->getGUID();
+	// 		$item->container_guid = elgg_get_site_entity()->getGUID();
+
+	// 		$item->access_id = ACCESS_PUBLIC;
+
+	// 		if ($key >= 5) {
+	// 			$item->parent_guid = $more_guid;
+	// 		} else {
+	// 			$item->parent_guid = 0;
+	// 		}
+
+	// 		$item->order = $priority;
+
+	// 		$item->title = $menu_item->getText();
+	// 		$item->url = str_replace(elgg_get_site_url(), "[wwwroot]", $menu_item->getHref());
+
+	// 		$item->save();
+
+	// 		$priority += 10;
+	// 	}
+
+
+	elgg_set_plugin_setting("menu_builder_default_imported", time(), "menu_builder");
+}
