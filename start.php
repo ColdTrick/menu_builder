@@ -5,6 +5,7 @@ define("MENU_BUILDER_ACCESS_LOGGED_OUT", -5);
 
 require_once(dirname(__FILE__) . "/lib/functions.php");
 require_once(dirname(__FILE__) . "/lib/hooks.php");
+require_once(dirname(__FILE__) . "/lib/events.php");
 
 /**
  * Init function for Menu Builder
@@ -55,6 +56,7 @@ function menu_builder_init() {
 	elgg_register_plugin_hook_handler('prepare', 'all', 'menu_builder_prepare_menu_set_selected_hook', 9999);
 	
 	elgg_register_event_handler("pagesetup", "system", "menu_builder_pagesetup");
+	elgg_register_event_handler("upgrade", "system", "menu_builder_upgrade_event_handler");
 }
 
 /**

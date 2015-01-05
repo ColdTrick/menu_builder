@@ -121,136 +121,136 @@ function menu_builder_all_menu_prepare($hook, $type, $return, $params) {
  *
  * @return array
  */
-function menu_builder_site_menu_register($hook, $type, $return, $params) {
-	$result = array();
+// function menu_builder_site_menu_register($hook, $type, $return, $params) {
+// 	$result = array();
 
-	$options = array(
-		"type" => "object",
-		"subtype" => MENU_BUILDER_SUBTYPE,
-		"limit" => false
-	);
+// 	$options = array(
+// 		"type" => "object",
+// 		"subtype" => MENU_BUILDER_SUBTYPE,
+// 		"limit" => false
+// 	);
 
-	if (!elgg_is_logged_in()) {
-		$options["wheres"] = array("e.access_id IN (" . ACCESS_PUBLIC . ", " . MENU_BUILDER_ACCESS_LOGGED_OUT . ")");
-	}
+// 	if (!elgg_is_logged_in()) {
+// 		$options["wheres"] = array("e.access_id IN (" . ACCESS_PUBLIC . ", " . MENU_BUILDER_ACCESS_LOGGED_OUT . ")");
+// 	}
 
-	$entities = elgg_get_entities($options);
+// 	$entities = elgg_get_entities($options);
 
-	if (empty($entities) && !elgg_get_plugin_setting("menu_builder_default_imported", "menu_builder") && elgg_is_admin_logged_in()) {
-		// create default menu items
+// 	if (empty($entities) && !elgg_get_plugin_setting("menu_builder_default_imported", "menu_builder") && elgg_is_admin_logged_in()) {
+// 		// create default menu items
 
-		$priority = 10;
-		$more_guid = null;
+// 		$priority = 10;
+// 		$more_guid = null;
 
-		if (count($return) > 5) {
-			// create more menu item
-			$item = new ElggObject();
-			$item->subtype = MENU_BUILDER_SUBTYPE;
-			$item->owner_guid = elgg_get_site_entity()->getGUID();
-			$item->container_guid = elgg_get_site_entity()->getGUID();
+// 		if (count($return) > 5) {
+// 			// create more menu item
+// 			$item = new ElggObject();
+// 			$item->subtype = MENU_BUILDER_SUBTYPE;
+// 			$item->owner_guid = elgg_get_site_entity()->getGUID();
+// 			$item->container_guid = elgg_get_site_entity()->getGUID();
 
-			$item->access_id = ACCESS_PUBLIC;
+// 			$item->access_id = ACCESS_PUBLIC;
 
-			$item->order = ($priority * count($return)) + 10;
-			$item->title = elgg_echo("more");
-			$item->url = "#";
-			$item->parent_guid = 0;
-			$item->save();
+// 			$item->order = ($priority * count($return)) + 10;
+// 			$item->title = elgg_echo("more");
+// 			$item->url = "#";
+// 			$item->parent_guid = 0;
+// 			$item->save();
 
-			$more_guid = $item->getGUID();
-		}
+// 			$more_guid = $item->getGUID();
+// 		}
 
-		foreach ($return as $key => $menu_item) {
-			$item = new ElggObject();
-			$item->subtype = MENU_BUILDER_SUBTYPE;
-			$item->owner_guid = elgg_get_site_entity()->getGUID();
-			$item->container_guid = elgg_get_site_entity()->getGUID();
+// 		foreach ($return as $key => $menu_item) {
+// 			$item = new ElggObject();
+// 			$item->subtype = MENU_BUILDER_SUBTYPE;
+// 			$item->owner_guid = elgg_get_site_entity()->getGUID();
+// 			$item->container_guid = elgg_get_site_entity()->getGUID();
 
-			$item->access_id = ACCESS_PUBLIC;
+// 			$item->access_id = ACCESS_PUBLIC;
 
-			if ($key >= 5) {
-				$item->parent_guid = $more_guid;
-			} else {
-				$item->parent_guid = 0;
-			}
+// 			if ($key >= 5) {
+// 				$item->parent_guid = $more_guid;
+// 			} else {
+// 				$item->parent_guid = 0;
+// 			}
 
-			$item->order = $priority;
+// 			$item->order = $priority;
 
-			$item->title = $menu_item->getText();
-			$item->url = str_replace(elgg_get_site_url(), "[wwwroot]", $menu_item->getHref());
+// 			$item->title = $menu_item->getText();
+// 			$item->url = str_replace(elgg_get_site_url(), "[wwwroot]", $menu_item->getHref());
 
-			$item->save();
+// 			$item->save();
 
-			$priority += 10;
-		}
+// 			$priority += 10;
+// 		}
 
-		elgg_set_plugin_setting("menu_builder_default_imported", time(), "menu_builder");
+// 		elgg_set_plugin_setting("menu_builder_default_imported", time(), "menu_builder");
 
-		// fetch items again
-		$entities = elgg_get_entities($options);
-	}
+// 		// fetch items again
+// 		$entities = elgg_get_entities($options);
+// 	}
 
-	if ($entities) {
-		$parent_guids = array();
-		foreach ($entities as $entity) {
-			$parent_guids[] = $entity->getGUID();
-		}
+// 	if ($entities) {
+// 		$parent_guids = array();
+// 		foreach ($entities as $entity) {
+// 			$parent_guids[] = $entity->getGUID();
+// 		}
 
-		foreach ($entities as $entity) {
-			$parent_guid = $entity->parent_guid;
-			$skip = false;
+// 		foreach ($entities as $entity) {
+// 			$parent_guid = $entity->parent_guid;
+// 			$skip = false;
 
-			while ($parent_guid) {
-				if (!in_array($parent_guid, $parent_guids)) {
-					$skip = true;
-					break;
-				}
-				$parent_guid = get_entity($parent_guid)->parent_guid;
-			}
+// 			while ($parent_guid) {
+// 				if (!in_array($parent_guid, $parent_guids)) {
+// 					$skip = true;
+// 					break;
+// 				}
+// 				$parent_guid = get_entity($parent_guid)->parent_guid;
+// 			}
 
-			if ($skip) {
-				continue;
-			}
+// 			if ($skip) {
+// 				continue;
+// 			}
 
-			$title = $entity->title;
-			if (isset($_SESSION["menu_builder_edit_mode"])) {
-				$title = $title . elgg_view_icon("settings-alt", "menu-builder-edit-menu-item");
-			}
+// 			$title = $entity->title;
+// 			if (isset($_SESSION["menu_builder_edit_mode"])) {
+// 				$title = $title . elgg_view_icon("settings-alt", "menu-builder-edit-menu-item");
+// 			}
 
-			$url = $entity->getURL();
-			if ($entity->is_action) {
-				$url = elgg_add_action_tokens_to_url($entity->getURL());
-			}
-			$menu_options = array(
-						"name" => $entity->getGUID(),
-						"text" => $title,
-						"href" => $url,
-						"priority" => $entity->order,
-						"id" => $entity->getGUID()
-			);
+// 			$url = $entity->getURL();
+// 			if ($entity->is_action) {
+// 				$url = elgg_add_action_tokens_to_url($entity->getURL());
+// 			}
+// 			$menu_options = array(
+// 						"name" => $entity->getGUID(),
+// 						"text" => $title,
+// 						"href" => $url,
+// 						"priority" => $entity->order,
+// 						"id" => $entity->getGUID()
+// 			);
 
-			if ($entity->target == "_blank") {
-				$menu_options["target"] = "_blank";
-			}
+// 			if ($entity->target == "_blank") {
+// 				$menu_options["target"] = "_blank";
+// 			}
 
-			if (elgg_is_admin_logged_in()) {
-				$item_class = "menu-builder-access-" . $entity->access_id;
-				if (isset($_SESSION["menu_builder_edit_mode"])) {
-					$item_class .= " menu-builder-menu-item-sortable";
-				}
-				$menu_options["item_class"] = $item_class;
-			}
+// 			if (elgg_is_admin_logged_in()) {
+// 				$item_class = "menu-builder-access-" . $entity->access_id;
+// 				if (isset($_SESSION["menu_builder_edit_mode"])) {
+// 					$item_class .= " menu-builder-menu-item-sortable";
+// 				}
+// 				$menu_options["item_class"] = $item_class;
+// 			}
 
-			if ($entity->parent_guid) {
-				$menu_options["parent_name"] = $entity->parent_guid;
-			}
+// 			if ($entity->parent_guid) {
+// 				$menu_options["parent_name"] = $entity->parent_guid;
+// 			}
 
-			$result[] = ElggMenuItem::factory($menu_options);
-		}
-	}
+// 			$result[] = ElggMenuItem::factory($menu_options);
+// 		}
+// 	}
 
-	return $result;
-}
+// 	return $result;
+// }
 
 /**
  * Caches menus
@@ -303,7 +303,6 @@ function menu_builder_prepare_menu_set_selected_hook($hook, $type, $return, $par
 
 /**
  * Loads initially the site menu into the menu_builder config.
- * Needs to be loaded in the activate file as it will not be available otherwise
  *
  * @param string  $hook   name of the hook
  * @param string  $type   type of the hook
@@ -313,6 +312,10 @@ function menu_builder_prepare_menu_set_selected_hook($hook, $type, $return, $par
  * @return array
  */
 function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
+	if (elgg_get_plugin_setting("menu_builder_default_imported", "menu_builder", false)) {
+		return;
+	}
+	
 	menu_builder_add_menu("site");
 
 	$priority = 10;
@@ -322,14 +325,10 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 		$parent_name = null;
 		
 		if ($section !== "default") {
-			
-				
 			menu_builder_add_menu_item("site", array(
 				"name" => $section,
 				"text" => elgg_echo($section),
 				"href" => "#",
-				// 				"target" => get_input("target"),
-				// 				"is_action" => false,
 				"priority" => $priority,
 			));
 				
@@ -342,8 +341,6 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 				"name" => $item->getName(),
 				"text" => $item->getText(),
 				"href" => str_replace(elgg_get_site_url(), "[wwwroot]", $item->getHref()),
-				// "target" => get_input("target"),
-				// "is_action" => false,
 				"priority" => $priority,
 				"parent_name" => $parent_name
 			));
@@ -351,51 +348,6 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 			$priority += 10;
 		}
 	}
-
-
-
-	// 	if (count($return) > 5) {
-	// 		// create more menu item
-	// 		$item = new ElggObject();
-	// 		$item->subtype = MENU_BUILDER_SUBTYPE;
-	// 		$item->owner_guid = elgg_get_site_entity()->getGUID();
-	// 		$item->container_guid = elgg_get_site_entity()->getGUID();
-
-	// 		$item->access_id = ACCESS_PUBLIC;
-
-	// 		$item->order = ($priority * count($return)) + 10;
-	// 		$item->title = elgg_echo("more");
-	// 		$item->url = "#";
-	// 		$item->parent_guid = 0;
-	// 		$item->save();
-
-	// 		$more_guid = $item->getGUID();
-	// 	}
-
-	// 	foreach ($return as $key => $menu_item) {
-	// 		$item = new ElggObject();
-	// 		$item->subtype = MENU_BUILDER_SUBTYPE;
-	// 		$item->owner_guid = elgg_get_site_entity()->getGUID();
-	// 		$item->container_guid = elgg_get_site_entity()->getGUID();
-
-	// 		$item->access_id = ACCESS_PUBLIC;
-
-	// 		if ($key >= 5) {
-	// 			$item->parent_guid = $more_guid;
-	// 		} else {
-	// 			$item->parent_guid = 0;
-	// 		}
-
-	// 		$item->order = $priority;
-
-	// 		$item->title = $menu_item->getText();
-	// 		$item->url = str_replace(elgg_get_site_url(), "[wwwroot]", $menu_item->getHref());
-
-	// 		$item->save();
-
-	// 		$priority += 10;
-	// 	}
-
 
 	elgg_set_plugin_setting("menu_builder_default_imported", time(), "menu_builder");
 }
