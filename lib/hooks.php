@@ -65,7 +65,9 @@ function menu_builder_all_menu_register($hook, $type, $return, $params) {
 				}
 			}
 			
-			$menu_item["href"] = menu_builder_normalize_href($menu_item["href"]);
+			if (!elgg_in_context("menu_builder_manage")) {
+				$menu_item["href"] = menu_builder_normalize_href($menu_item["href"]);
+			}
 			
 			if ($can_add_menu_item) {
 				$return[] = ElggMenuItem::factory($menu_item);
