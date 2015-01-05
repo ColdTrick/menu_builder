@@ -14,6 +14,8 @@
  */
 function menu_builder_upgrade_event_handler($event, $type) {
 	// Migrate pre 2.0 menu items to new json format
+	menu_builder_add_menu("site");
+	
 	$options = array(
 		"type" => "object",
 		"subtype" => MENU_BUILDER_SUBTYPE,
