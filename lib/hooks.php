@@ -114,6 +114,26 @@ function menu_builder_all_menu_register($hook, $type, $return, $params) {
  * @return array
  */
 function menu_builder_all_menu_prepare($hook, $type, $return, $params) {
+	
+	// update order
+	$ordered = array();
+	
+	if (isset($return["default"])) {
+		foreach ($return["default"] as $menu_item) {
+	
+			$menu_item = menu_builder_order_menu_item($menu_item, 2);
+			$priority = $menu_item->getPriority();
+			while (array_key_exists($priority, $ordered)) {
+				$priority++;
+			}
+			$ordered[$priority] = $menu_item;
+		}
+	}
+	
+	ksort($ordered);
+	
+	$return["default"] = $ordered;
+	
 	if (elgg_in_context("menu_builder_manage")) {
 		
 		$menu = $return["default"];
@@ -121,6 +141,8 @@ function menu_builder_all_menu_prepare($hook, $type, $return, $params) {
 		
 		menu_builder_prepare_menu_items_edit($menu, $parent_options);
 	}
+	
+	return $return;
 }
 
 /**

@@ -148,19 +148,6 @@ function menu_builder_order_menu_item(ElggMenuItem $item, $depth) {
 				$child_priority++;
 			}
 			$ordered_children[$child_priority] = $child;
-
-
-			if (isset($_SESSION["menu_builder_edit_mode"]) && $depth < 5) {
-				// add button
-				$child_add = ElggMenuItem::factory(array(
-						"name" => 'menu_builder_add',
-						"text" => elgg_view_icon("round-plus"),
-						"href" => '/menu_builder/edit?parent_guid=' . $child->getName(),
-						"link_class" => "center elgg-lightbox",
-						"title" => elgg_echo("menu_builder:edit_mode:add")
-				));
-				$child->addChild($child_add);
-			}
 		}
 		ksort($ordered_children);
 
