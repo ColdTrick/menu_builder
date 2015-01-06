@@ -134,6 +134,7 @@ function menu_builder_all_menu_prepare($hook, $type, $return, $params) {
 	
 	$return["default"] = $ordered;
 	
+	// prepare menu items for edit
 	if (elgg_in_context("menu_builder_manage")) {
 		
 		$menu = $return["default"];
@@ -173,10 +174,29 @@ function menu_builder_view_menu_hook_handler($hook, $type, $return, $params) {
  * @return void
  */
 function menu_builder_view_menu_after_hook_handler($hook, $type, $return, $params) {
-	$return = menu_builder_normalize_href($return);
+	if (empty($return)) {
+		return $return;
+	}
+
+	// fill in username/userguid
+	$user = elgg_get_logged_in_user_entity();
+	if ($user) {
+		$return = str_replace("[username]", $user->username, $return);
+		$return = str_replace("[userguid]", $user->guid, $return);
+	} else {
+		$return = str_replace("[username]", "", $return);
+		$return = str_replace("[userguid]", "", $return);
+	}
+
+	// add in tokens
+	$elgg_ts = time();
+	$elgg_token = generate_action_token($elgg_ts);
+	
+	$return = str_replace("[__elgg_ts]", $elgg_ts, $return);
+	$return = str_replace("[__elgg_token]", $elgg_token, $return);
+	
 	return $return;
 }
-
 
 /**
  * Make sure all items are selected correctly

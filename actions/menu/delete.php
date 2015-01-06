@@ -11,5 +11,3 @@ if (in_array($menu_name, $menus)) {
 	elgg_set_plugin_setting("menu_names", json_encode($menus), "menu_builder");
 	elgg_unset_plugin_setting("menu_" . $menu_name . "_config", "menu_builder");
 }
-
-forward(REFERER);

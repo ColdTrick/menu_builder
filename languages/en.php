@@ -53,10 +53,6 @@ return array(
 
 	// actions
 	'menu_builder:actions:edit:error:input' => "Incorrect input to create/edit a menu item",
-	'menu_builder:actions:edit:error:entity' => "The given GUID could not be found",
-	'menu_builder:actions:edit:error:subtype' => "The given GUID is not a menu item",
-	'menu_builder:actions:edit:error:create' => "An error occured while creating the menu item, please try again",
-	'menu_builder:actions:edit:error:save' => "An unknown error occured while saving the menu item, please try again",
 	'menu_builder:actions:edit:success' => "The menu item was created/edited successfully",
 
 	'menu_builder:actions:delete:success' => "The menu item was deleted successfully",

@@ -18,7 +18,7 @@ function menu_builder_upgrade_event_handler($event, $type) {
 	
 	$options = array(
 		"type" => "object",
-		"subtype" => MENU_BUILDER_SUBTYPE,
+		"subtype" => "menu_builder_menu_item",
 		"limit" => false
 	);
 	
