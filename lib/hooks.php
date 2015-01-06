@@ -69,7 +69,7 @@ function menu_builder_all_menu_register($hook, $type, $return, $params) {
 			$menu_item["href"] = str_replace("[wwwroot]", "", $menu_item["href"]);
 			
 			// add global replacable action tokens
-			if ($menu_item["is_action"]) {
+			if ($menu_item["is_action"] && !elgg_in_context("menu_builder_manage")) {
 				unset($menu_item["is_action"]);
 				
 				$concat = "?";
