@@ -74,8 +74,11 @@ function menu_builder_pagesetup() {
 		if (!elgg_in_context("admin")) {
 			// extend view for cache output
 			elgg_extend_view("navigation/menu/$menu_name", "menu_builder/menu_cache", 400);
+			elgg_register_plugin_hook_handler("view", "navigation/menu/$menu_name", "menu_builder_view_menu_after_hook_handler", 9999);
 		}
 	}
+	
+	
 }
 
 /**

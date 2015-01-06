@@ -85,7 +85,7 @@ if (elgg_is_admin_logged_in() && isset($_SESSION["menu_builder_edit_mode"])) {
 		<script type="text/javascript">
 			var url_path = window.location.href;
 			
-			url_path = url_path.replace("<?php echo elgg_get_site_url(); ?>", "[wwwroot]");
+			url_path = url_path.replace("<?php echo elgg_get_site_url(); ?>", "");
 			url_path = url_path.replace("<?php echo elgg_get_logged_in_user_entity()->username;?>", "[username]");
 			<?php if (elgg_get_page_owner_entity()) { ?>
 			url_path = url_path.replace("<?php echo elgg_get_page_owner_entity()->username; ?>", "[username]");

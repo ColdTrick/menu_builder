@@ -47,7 +47,7 @@ return array(
 	'menu_builder:import:warning' => "Importing a site menu will permanently and irreversably remove the current
 	  menu configuration.  Proceed with caution.<br><br>
 	After importing, check the links as hard-coded urls from another system may be still point at a wrong domain if not using
-	the [wwwroot] token, or if exported from a system in a subdirectory and imported into a different subdirectory.
+	relative links, or if exported from a system in a subdirectory and imported into a different subdirectory.
 	",
 	'menu_builder:import:help' => "Upload a file from an exported menu",
 

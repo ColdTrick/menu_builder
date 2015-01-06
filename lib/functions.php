@@ -192,19 +192,22 @@ function menu_builder_normalize_href($href) {
 		return false;
 	}
 
-	// fill in site url
-	$href = str_replace("[wwwroot]", elgg_get_site_url(), $href);
-
 	// fill in username/userguid
 	$user = elgg_get_logged_in_user_entity();
 	if ($user) {
 		$href = str_replace("[username]", $user->username, $href);
 		$href = str_replace("[userguid]", $user->guid, $href);
 	} else {
-		list($href) = explode("[username]", $href);
-		list($href) = explode("[userguid]", $href);
+		$href = str_replace("[username]", "", $href);
+		$href = str_replace("[userguid]", "", $href);
 	}
-
+	
+	// add in tokens
+	$elgg_ts = time();
+	$elgg_token = generate_action_token($elgg_ts);
+	$href = str_replace("[__elgg_ts]", $elgg_ts, $href);
+	$href = str_replace("[__elgg_token]", $elgg_token, $href);
+	
 	return $href;
 }
 
@@ -365,7 +368,7 @@ function menu_builder_add_menu_item($menu_name, array $params = array()) {
 		"href" => get_input("href", null, $filter),
 		"access_id" => (int) get_input("access_id", ACCESS_PUBLIC),
 		"target" => get_input("target"),
-		"is_action" => get_input("is_action"),
+		"is_action" => get_input("is_action", false),
 		"priority" => get_input("priority", time()),
 		"parent_name" => get_input("parent_name")
 	);	

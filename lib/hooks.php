@@ -65,10 +65,20 @@ function menu_builder_all_menu_register($hook, $type, $return, $params) {
 				}
 			}
 			
-			if (!elgg_in_context("menu_builder_manage")) {
-				$menu_item["href"] = menu_builder_normalize_href($menu_item["href"]);
-			}
+			// strip out deprecated use of [wwwroot] as menu items will be normalized by default
+			$menu_item["href"] = str_replace("[wwwroot]", "", $menu_item["href"]);
 			
+			// add global replacable action tokens
+			if ($menu_item["is_action"]) {
+				unset($menu_item["is_action"]);
+				
+				$concat = "?";
+				if (stristr($menu_item["href"], "?")) {
+					$concat = "&";
+				}
+				$menu_item["href"] .= $concat . "__elgg_ts=[__elgg_ts]&__elgg_token[__elgg_token]";
+			}
+						
 			if ($can_add_menu_item) {
 				$return[] = ElggMenuItem::factory($menu_item);
 			}
@@ -128,6 +138,21 @@ function menu_builder_view_menu_hook_handler($hook, $type, $return, $params) {
 		$cache_name = menu_builder_get_menu_cache_name($params["vars"]["name"]);
 		elgg_save_system_cache($cache_name, $return);
 	}
+}
+
+/**
+ * Replaces dynamic data in menu's
+ *
+ * @param string  $hook   name of the hook
+ * @param string  $type   type of the hook
+ * @param unknown $return return value
+ * @param unknown $params hook parameters
+ *
+ * @return void
+ */
+function menu_builder_view_menu_after_hook_handler($hook, $type, $return, $params) {
+	$return = menu_builder_normalize_href($return);
+	return $return;
 }
 
 
@@ -201,7 +226,7 @@ function menu_builder_site_menu_prepare($hook, $type, $return, $params) {
 			menu_builder_add_menu_item("site", array(
 				"name" => $item->getName(),
 				"text" => $item->getText(),
-				"href" => str_replace(elgg_get_site_url(), "[wwwroot]", $item->getHref()),
+				"href" => str_replace(elgg_get_site_url(), "", $item->getHref()),
 				"priority" => $priority,
 				"parent_name" => $parent_name
 			));
