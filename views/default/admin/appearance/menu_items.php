@@ -34,7 +34,7 @@ echo elgg_view_module("inline", elgg_echo("menu_builder:admin:menu:add"), $add_m
 $menus = menu_builder_get_managed_menus();
 if ($menus) {
 	$delete_menu_form_body = elgg_view("input/select", array("name" => "menu_name", "options" => $menus));
-	$delete_menu_form_body .= elgg_view("input/submit", array("value" => elgg_echo("delete"), "class" => "elgg-requires-confirmation mtm elgg-button-submit"));
+	$delete_menu_form_body .= elgg_view("input/submit", array("value" => elgg_echo("delete"), "data-confirm" => elgg_echo("question:areyousure") ,"class" => "mtm elgg-button-submit"));
 	
 	$delete_menu_form = elgg_view("input/form", array(
 		"action" => "action/menu_builder/menu/delete",
