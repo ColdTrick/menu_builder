@@ -11,6 +11,7 @@ $language = array (
   'menu_builder:edit_mode:on' => 'Bewerk weergave',
   'menu_builder:edit_mode:add' => 'Klik om een nieuw menu item toe te voegen',
   'menu_builder:add:title' => 'Nieuw menu item',
+  'menu_builder:add:title:translate' => "Klik hier om het menu item te vertalen",
   'menu_builder:add:form:url' => 'URL',
   'menu_builder:add:form:target' => "Venster",
   'menu_builder:add:form:target:self' => "Zelfde Venster",
