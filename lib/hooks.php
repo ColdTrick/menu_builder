@@ -105,7 +105,10 @@ function menu_builder_site_menu_register($hook, $type, $return, $params) {
 				continue;
 			}
 
-			$title = $entity->title;
+			$title = menu_builder_return_translated_title($entity);
+			if (!$title) {
+				$title = $entity->title;
+			}
 			if (isset($_SESSION["menu_builder_edit_mode"])) {
 				$title = $title . elgg_view_icon("settings-alt", "menu-builder-edit-menu-item");
 			}

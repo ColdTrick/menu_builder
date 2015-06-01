@@ -6,6 +6,7 @@ if (elgg_get_plugin_setting('htmlawed_filter', 'menu_builder') == 'no') {
 }
 
 $title = get_input("title", '', $filter);
+$translated_titles = (array) get_input("translated_titles", '', $filter);
 $url = get_input("url", '', $filter);
 $target = get_input("target");
 $access_id = (int) get_input("access_id", ACCESS_DEFAULT);
@@ -74,7 +75,24 @@ if (!empty($title) && !empty($url)) {
 
 			$item->order = $order;
 		}
-
+		
+		// translated titles
+		$json_data = array();
+		if (!empty($translated_titles)) {
+			foreach ($translated_titles as $country_code => $translation) {
+				if (!empty($translation)) {
+					$json_data[$country_code] = $translation;
+				}
+			}
+		}
+		
+		if (!empty($json_data)) {
+			$json_data = json_encode($json_data);
+			$item->translated_titles = $json_data;
+		} else {
+			unset($item->translated_titles);
+		}		
+		
 		if ($item->save()) {
 			system_message(elgg_echo("menu_builder:actions:edit:success"));
 		} else {

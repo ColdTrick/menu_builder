@@ -169,3 +169,28 @@ function menu_builder_order_menu_item(ElggMenuItem $item, $depth) {
 
 	return $item;
 }
+
+/**
+ * Return a translated version of a menu item title if available
+ * 
+ * @param ElggEntity $entity menu item entity to check
+ * @param string     $lang   language to get, defaults to current language
+ * 
+ * @return false|string
+ */
+function menu_builder_return_translated_title(ElggEntity $entity, $lang = null) {
+	if (empty($entity) || !elgg_instanceof($entity,"object", MENU_BUILDER_SUBTYPE)) {
+		return false;
+	}
+	if (empty($lang)) {
+		$lang = get_current_language();
+	}
+	
+	$translated_titles = $entity->translated_titles;
+	if (!empty($translated_titles)) {
+		$translated_titles = json_decode($translated_titles, true);
+		return elgg_extract($lang, $translated_titles, false);
+	}
+	
+	return false;	
+}

@@ -41,7 +41,51 @@ if (elgg_is_admin_logged_in() && isset($_SESSION["menu_builder_edit_mode"])) {
 	$form_body .= elgg_echo("title");
 	$form_body .= "</td><td>";
 	$form_body .= elgg_view("input/text", array("name" => "title", "value" => $title));
-	$form_body .= "</td></tr><tr><td>";
+	$form_body .= "</td></tr>";
+
+	// translations
+	$translations = get_installed_translations();
+	foreach ($translations as $country_code => $percentage) {
+		if ($country_code == 'en') {
+			continue;
+		}
+		
+		$form_body .= "<tr class='menu_builder_extra_translations hidden'><td>";
+		
+		// flag
+		$lang_flag_file = "mod/translation_editor/_graphics/flags/" . $country_code . ".gif";
+		if (file_exists(elgg_get_root_path() . $lang_flag_file)) {
+			$form_body .= elgg_view("output/img", array(
+				"src" => $lang_flag_file,
+				"alt" => elgg_echo($country_code),
+				"title" => elgg_echo($country_code)
+			));
+		} else {
+			$form_body .= $country_code;
+		}
+		
+		$form_body .= "</td><td>";
+		$translated_title = false;
+		
+		if ($menu_item) {
+			$translated_title = menu_builder_return_translated_title($menu_item, $country_code);
+		}
+		if (!$translated_title) {
+			$translated_title = "";
+		}
+		$form_body .= elgg_view("input/text", array("name" => "translated_titles[{$country_code}]", "value" => $translated_title));
+		$form_body .= "</td></tr>";
+	}
+	$form_body .= "<tr><td colspan='2' class='pbm'>";
+	$form_body .= elgg_view("output/url", array(
+		'text' => elgg_echo('menu_builder:add:title:translate'),
+		'href' => '#',
+		'onclick' => '$(".menu_builder_extra_translations").toggle();'
+	));
+	$form_body .= "</td></tr>";
+	// end translations
+		
+	$form_body .= "<tr><td>";
 	$form_body .= elgg_echo("menu_builder:add:form:url");
 	$form_body .= "</td><td>";
 	$form_body .= elgg_view("input/url", array("name" => "url", "value" => $url));
