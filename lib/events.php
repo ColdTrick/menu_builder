@@ -13,6 +13,7 @@
  * @return void
  */
 function menu_builder_upgrade_event_handler($event, $type) {
+	$ia = elgg_set_ignore_access(true);
 	// Migrate pre 2.0 menu items to new json format
 	menu_builder_add_menu("site");
 	
@@ -25,6 +26,7 @@ function menu_builder_upgrade_event_handler($event, $type) {
 	$entities = elgg_get_entities($options);
 	
 	if (empty($entities)) {
+		elgg_set_ignore_access($ia);
 		return;
 	}
 	
@@ -55,4 +57,6 @@ function menu_builder_upgrade_event_handler($event, $type) {
 	foreach($entities as $menu_item) {
 		$menu_item->delete();
 	}
+	
+	elgg_set_ignore_access($ia);
 }
