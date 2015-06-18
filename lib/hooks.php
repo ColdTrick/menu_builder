@@ -78,6 +78,10 @@ function menu_builder_all_menu_register($hook, $type, $return, $params) {
 				}
 				$menu_item["href"] .= $concat . "__elgg_ts=[__elgg_ts]&__elgg_token[__elgg_token]";
 			}
+			
+			if (empty($menu_item['href'])) {
+				$menu_item['href'] = false;
+			}
 						
 			if ($can_add_menu_item) {
 				$return[] = ElggMenuItem::factory($menu_item);
