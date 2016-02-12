@@ -1,10 +1,10 @@
 <?php
 
-$menu = elgg_get_entities(array(
-	"type" => "object",
-	"subtype" => MENU_BUILDER_SUBTYPE,
-	"limit" => false
-));
+$menu = elgg_get_entities([
+	'type' => 'object',
+	'subtype' => MENU_BUILDER_SUBTYPE,
+	'limit' => false,
+]);
 
 // make sure we have a menu to export
 if (!$menu) {
@@ -15,9 +15,9 @@ if (!$menu) {
 // build a nice array to represent the menu
 // note, guid sent along to determine parentage
 // guid won't be the same when imported
-$export = array();
+$export = [];
 foreach ($menu as $item) {
-	$export[] = array(
+	$export[] = [
 		'guid' => $item->guid,
 		'title' => $item->title,
 		'url' => $item->url,
@@ -25,16 +25,16 @@ foreach ($menu as $item) {
 		'parent_guid' => $item->parent_guid,
 		'order' => $item->order,
 		'target' => $item->target,
-		'is_action' => $item->is_action
-	);
+		'is_action' => $item->is_action,
+	];
 }
 
 // export the array as JSON in a txt file
 $json = json_encode($export);
 
-header("Cache-Control: no-cache, must-revalidate");
-header("Content-type: application/json");
-header("Content-Length: " . strlen($json));
+header('Cache-Control: no-cache, must-revalidate');
+header('Content-type: application/json');
+header('Content-Length: ' . strlen($json));
 header('Content-Disposition: attachment; filename="menu_builder_export.json"');
 echo $json;
 

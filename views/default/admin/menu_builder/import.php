@@ -1,6 +1,6 @@
 <?php
 
-echo "<span class='elgg-admin-notices'><p>" . elgg_echo('menu_builder:import:warning:title') . "</p></span>";
+echo elgg_format_element('span', ['class' => 'elgg-admin-notices'], elgg_format_element('p', [], elgg_echo('menu_builder:import:warning:title')));
 echo elgg_echo('menu_builder:import:warning') . '<br><br>';
 
-echo elgg_view_form('menu_builder/import', array('enctype' => 'multipart/form-data'));
+echo elgg_view_form('menu_builder/import', ['enctype' => 'multipart/form-data']);

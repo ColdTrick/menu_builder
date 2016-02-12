@@ -1,9 +1,9 @@
 <?php
 
-echo elgg_view('input/file', array('name' => 'import'));
-echo elgg_view('output/longtext', array(
+echo elgg_view('input/file', ['name' => 'import']);
+echo elgg_view('output/longtext', [
 	'value' => elgg_echo('menu_builder:import:help'),
-	'class' => 'elgg-subtext'
-));
+	'class' => 'elgg-subtext',
+]);
 
-echo elgg_view('input/submit', array('value' => elgg_echo('import')));
+echo elgg_view('input/submit', ['value' => elgg_echo('import')]);

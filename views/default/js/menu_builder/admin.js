@@ -1,6 +1,3 @@
-<?php
-?>
-//<script>
 elgg.provide("elgg.menu_builder");
 
 elgg.menu_builder.init_admin = function() {

@@ -17,11 +17,11 @@ $menu = json_decode($json);
 if (is_array($menu)) {
 
 	// assume we're good at this point, delete current menu
-	$old_menu = elgg_get_entities(array(
-		"type" => "object",
-		"subtype" => MENU_BUILDER_SUBTYPE,
-		"limit" => false
-	));
+	$old_menu = elgg_get_entities([
+		'type' => 'object',
+		'subtype' => MENU_BUILDER_SUBTYPE,
+		'limit' => false,
+	]);
 
 	if ($old_menu) {
 		foreach ($old_menu as $old_item) {
@@ -30,7 +30,7 @@ if (is_array($menu)) {
 	}
 
 	// now import new menu
-	$parent_map = array();
+	$parent_map = [];
 	foreach ($menu as $key => $item) {
 		$new_item = new ElggObject();
 		$new_item->subtype = MENU_BUILDER_SUBTYPE;
@@ -54,7 +54,7 @@ if (is_array($menu)) {
 		$new_item->is_action = $item->is_action;
 
 		// build a map to link the parents with the new guids
-		$parent_map[$item->guid] = array('item' => $new_item, 'parent' => $item->parent_guid);
+		$parent_map[$item->guid] = ['item' => $new_item, 'parent' => $item->parent_guid];
 	}
 
 	// now resolve the parents

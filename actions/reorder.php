@@ -4,14 +4,22 @@
  * jQuery call to reorder menu items
  */
 
-$order = get_input("elgg-menu-item");
+$order = get_input('elgg-menu-item');
 	
-if (!empty($order)) {
-	foreach ($order as $index => $order_guid) {
-		if ($item = get_entity($order_guid)) {
-			if (($item->getSubtype() == MENU_BUILDER_SUBTYPE)) {
-				$item->order = $index;
-			}
-		}
+if (empty($order)) {
+	return;
+}
+
+foreach ($order as $index => $order_guid) {
+	$item = get_entity($order_guid);
+	
+	if (empty($item)) {
+		continue;
 	}
+	
+	if ($item->getSubtype() !== MENU_BUILDER_SUBTYPE) {
+		continue;
+	}
+	
+	$item->order = $index;
 }
