@@ -3,8 +3,6 @@
 define('MENU_BUILDER_ACCESS_LOGGED_OUT', -5);
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
-require_once(dirname(__FILE__) . '/lib/hooks.php');
-require_once(dirname(__FILE__) . '/lib/events.php');
 
 /**
  * Init function for Menu Builder
@@ -21,10 +19,10 @@ function menu_builder_init() {
 	// take control of menu setup
 	elgg_unregister_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup');
 	
-	elgg_register_plugin_hook_handler('prepare', 'all', 'menu_builder_prepare_menu_set_selected_hook', 9999);
+	elgg_register_plugin_hook_handler('prepare', 'all', '\ColdTrick\MenuBuilder\MenuHooks::prepareMenuSetSelected', 9999);
 	
 	elgg_register_event_handler('pagesetup', 'system', 'menu_builder_pagesetup');
-	elgg_register_event_handler('upgrade', 'system', 'menu_builder_upgrade_event_handler');
+	elgg_register_event_handler('upgrade', 'system', '\ColdTrick\MenuBuilder\Upgrade::migrateEntitiesToJSON');
 }
 
 /**
@@ -36,14 +34,14 @@ function menu_builder_pagesetup() {
 
 	$managed_menus = menu_builder_get_managed_menus();
 	foreach ($managed_menus as $menu_name) {
-		elgg_register_plugin_hook_handler('register', "menu:{$menu_name}", 'menu_builder_all_menu_register', 999);
-		elgg_register_plugin_hook_handler('prepare', "menu:{$menu_name}", 'menu_builder_all_menu_prepare', 999);
+		elgg_register_plugin_hook_handler('register', "menu:{$menu_name}", '\ColdTrick\MenuBuilder\MenuHooks::registerAllMenu', 999);
+		elgg_register_plugin_hook_handler('prepare', "menu:{$menu_name}", '\ColdTrick\MenuBuilder\MenuHooks::prepareAllMenu', 999);
 		
 		if (!elgg_in_context('admin')) {
 			// extend view for cache output
 			elgg_extend_view("navigation/menu/{$menu_name}", 'menu_builder/menu_cache', 400);
 			
-			elgg_register_plugin_hook_handler('view', "navigation/menu/{$menu_name}", 'menu_builder_view_menu_after_hook_handler', 9999);
+			elgg_register_plugin_hook_handler('view', "navigation/menu/{$menu_name}", '\ColdTrick\MenuBuilder\MenuHooks::afterViewMenu', 9999);
 		}
 	}
 }

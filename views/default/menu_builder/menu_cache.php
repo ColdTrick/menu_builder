@@ -2,7 +2,8 @@
 $menu_name = elgg_extract('name', $vars);
 $data = false;
 if (!elgg_in_context('admin')) {
-	$data = menu_builder_get_menu_cache($menu_name);
+	$menu = new \ColdTrick\MenuBuilder\Menu($menu_name);
+	$data = $menu->getCachedData();
 }
 
 if ($data) {
@@ -13,5 +14,5 @@ if ($data) {
 
 if (!$data) {
 	// hook after view to save cache
-	elgg_register_plugin_hook_handler('view', "navigation/menu/{$menu_name}", 'menu_builder_view_menu_hook_handler', 999);
+	elgg_register_plugin_hook_handler('view', "navigation/menu/{$menu_name}", '\ColdTrick\MenuBuilder\MenuHooks::viewMenu', 999);
 }
