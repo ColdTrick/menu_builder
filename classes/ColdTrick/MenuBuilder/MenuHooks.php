@@ -88,13 +88,13 @@ class MenuHooks {
 					$menu_item['href'] = false;
 				}
 					
-				$return[] = ElggMenuItem::factory($menu_item);
+				$return[] = \ElggMenuItem::factory($menu_item);
 			}
 		}
 	
 		// add 'new menu item' menu item
 		if (elgg_in_context('menu_builder_manage')) {
-			$return[] = ElggMenuItem::factory([
+			$return[] = \ElggMenuItem::factory([
 				'name' => 'menu_builder_add',
 				'text' => '<strong>+</strong>&nbsp;&nbsp;' . elgg_echo('menu_builder:edit_mode:add'),
 				'href' => '#',
@@ -226,7 +226,7 @@ class MenuHooks {
 	
 		// set selected state on parent menu items
 		$item = elgg_extract('selected_item', $params);
-		if (empty($item) || !($item instanceof ElggMenuItem)) {
+		if (empty($item) || !($item instanceof \ElggMenuItem)) {
 			return $return;
 		}
 	
@@ -290,7 +290,7 @@ class MenuHooks {
 	/**
 	 * Prepares menu items to be edited
 	 *
-	 * @param array $menu           array of ElggMenuItem objects
+	 * @param array $menu           array of \ElggMenuItem objects
 	 * @param array $parent_options all parent options
 	 *
 	 * @return void
@@ -319,12 +319,12 @@ class MenuHooks {
 	/**
 	 * Reorders menu item and adds an add button
 	 *
-	 * @param ElggMenuItem $item  menu item
-	 * @param int          $depth depth of the menu item
+	 * @param \ElggMenuItem $item  menu item
+	 * @param int           $depth depth of the menu item
 	 *
-	 * @return ElggMenuItem
+	 * @return \ElggMenuItem
 	 */
-	private static function orderMenuItem(ElggMenuItem $item, $depth) {
+	private static function orderMenuItem(\ElggMenuItem $item, $depth) {
 	
 		$depth = (int) $depth;
 		$children = $item->getChildren();
@@ -355,7 +355,7 @@ class MenuHooks {
 	/**
 	 * Returns an array of parent items to be used in edit forms of menu items
 	 *
-	 * @param array $menu   array of ElggMenuItem objects
+	 * @param array $menu   array of \ElggMenuItem objects
 	 * @param int   $indent number of indents
 	 *
 	 * @return array
