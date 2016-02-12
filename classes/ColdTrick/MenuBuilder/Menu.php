@@ -19,8 +19,7 @@ class Menu {
 	 * @return void
 	 */
 	public function save() {
-		$menus = elgg_get_plugin_setting('menu_names', 'menu_builder');
-		$menus = json_decode($menus, true);
+		$menus = menu_builder_get_managed_menus();
 		if (!is_array($menus)) {
 			$menus = [];
 		}

@@ -14,7 +14,6 @@ function menu_builder_init() {
 // 	elgg_extend_view('css/elgg', 'css/menu_builder/site.css');
 	elgg_extend_view('css/admin', 'css/menu_builder/admin.css');
 // 	elgg_extend_view('js/elgg', 'js/menu_builder/site.js');
-	elgg_extend_view('js/admin', 'js/menu_builder/admin.js');
 		
 	// take control of menu setup
 	elgg_unregister_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup');

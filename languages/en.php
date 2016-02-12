@@ -13,7 +13,6 @@ return array(
 	'menu_builder:admin:menu:add' => "New menu",
 	'menu_builder:admin:menu:add:internal_name' => "Internal menu name",
 	'menu_builder:admin:menu:delete' => "Delete menu",
-	'menu_builder:admin:menu:export_import' => "Export & Import",
 
 	// views
 	// edit
