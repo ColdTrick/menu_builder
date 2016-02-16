@@ -16,7 +16,8 @@ $menu_items = elgg_view_menu($menu, [
 elgg_pop_context();
 
 $button_bank = elgg_view('output/url', [
-	'href' => 'action/menu_builder/export',
+	'href' => 'action/menu_builder/menu/export?menu_name=' . $menu,
+	'is_action' => true,
 	'text' => elgg_echo('export'),
 	'class' => 'elgg-button elgg-button-submit',
 ]);

@@ -51,6 +51,8 @@ return array(
 	'menu_builder:import:help' => "Upload a file from an exported menu",
 
 	// actions
+	'menu_builder:actions:missing_name' => "Missing menu name",
+	
 	'menu_builder:actions:edit:error:input' => "Incorrect input to create/edit a menu item",
 	'menu_builder:actions:edit:success' => "The menu item was created/edited successfully",
 

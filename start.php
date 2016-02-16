@@ -48,7 +48,7 @@ elgg_register_event_handler('init', 'system', 'menu_builder_init');
 
 // register actions
 // elgg_register_action('menu_builder/reorder', dirname(__FILE__) . '/actions/reorder.php', 'admin');
-// elgg_register_action('menu_builder/export', dirname(__FILE__) . '/actions/export.php', 'admin');
+elgg_register_action('menu_builder/menu/export', dirname(__FILE__) . '/actions/menu/export.php', 'admin');
 // elgg_register_action('menu_builder/import', dirname(__FILE__) . '/actions/import.php', 'admin');
 
 elgg_register_action('menu_builder/menu/edit', dirname(__FILE__) . '/actions/menu/edit.php', 'admin');
