@@ -16,13 +16,15 @@ if (empty($config)) {
 	forward(REFERER);
 }
 
+$export_name = 'menu_builder_export_' . elgg_get_friendly_title($menu_name) . '.json';
+
 // export the array as JSON in a txt file
 $json = json_encode($config);
 
 header('Cache-Control: no-cache, must-revalidate');
 header('Content-type: application/json');
 header('Content-Length: ' . strlen($json));
-header('Content-Disposition: attachment; filename="menu_builder_export.json"');
+header('Content-Disposition: attachment; filename="' . $export_name . '"');
 echo $json;
 
 exit;
