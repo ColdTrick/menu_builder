@@ -21,13 +21,14 @@ if (!empty($menus)) {
 			$class = '';
 		}
 		
+		$menu_list .= elgg_view('menu_builder/admin/edit_menu', ['menu' => $menu, 'class' => $class, 'rel' => $menu]);
+		
 		$tabs[] = [
-			'text' => $menu,
+			'text' => elgg_echo('menu:' . elgg_get_friendly_title($menu) . ':header:default'),
 			'selected' => ($menu === $selected),
 			'rel' => $menu,
 			'href' => 'javascript:void(0)',
 		];
-		$menu_list .= elgg_view('menu_builder/admin/edit_menu', ['menu' => $menu, 'class' => $class, 'rel' => $menu]);
 	}
 } else {
 	$menu_list = elgg_echo('notfound');
