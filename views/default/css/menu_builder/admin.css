@@ -5,3 +5,8 @@
 .menu-builder-manage .elgg-child-menu {
 	display: block;
 }
+
+.menu-builder-admin-button-bank {
+	margin: 10px 0;
+	text-align: right;
+}

@@ -41,4 +41,23 @@ define(function(require) {
 		
 		elgg.forward(elgg.security.addToken('action/menu_builder/menu/edit?menu_name=' + name));
 	});
+	
+	$(document).on('click', '.menu-builder-admin-tabs a', function(event) {
+		var $tab = $(this);
+		
+		if ($tab.parent().hasClass('elgg-state-selected')) {
+			return;
+		}
+		if ($tab.parent().attr('id') === 'menu-builder-add-menu') {
+			return;
+		}
+		
+		$tab.parents('.elgg-tabs').find('.elgg-state-selected').removeClass('elgg-state-selected');
+		
+		var rel = $tab.attr('rel');
+		$tab.parent().addClass('elgg-state-selected');
+		
+		$('.menu-builder-admin-menu').addClass('hidden');
+		$('.menu-builder-admin-menu[rel="' + rel + '"]').removeClass('hidden');
+	});
 });
