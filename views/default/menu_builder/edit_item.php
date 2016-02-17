@@ -115,7 +115,7 @@ $form_body .= elgg_view('input/checkbox', [
 	'checked' => $is_action,
 ]);
 
-$form_body .= '<td/></tr></table>';
+$form_body .= '</td></tr></table>';
 
 $form_body .= elgg_view('input/submit', ['value' => elgg_echo('save')]);
 
