@@ -22,9 +22,10 @@ $button_bank = elgg_view('output/url', [
 	'class' => 'elgg-button elgg-button-submit',
 ]);
 $button_bank .= elgg_view('output/url', [
-	'href' => 'admin/menu_builder/import',
+	'href' => 'ajax/view/menu_builder/import?menu_name=' . $menu,
 	'text' => elgg_echo('import'),
-	'class' => 'elgg-button elgg-button-submit',
+	'class' => 'elgg-button elgg-button-submit elgg-lightbox',
+	'data-colorbox-opts' => json_encode(['width' => '50%']),
 ]);
 $button_bank .= elgg_view('output/url', [
 	'href' => 'action/menu_builder/menu/delete?menu_name=' . $menu,

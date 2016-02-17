@@ -42,7 +42,7 @@ return array(
 	'menu_builder:add:action:tokens' => "Action",
 
 	// import
-	'menu_builder:import:warning:title' => "WARNING",
+	'menu_builder:import:title' => "Importing menu items for %s",
 	'menu_builder:import:warning' => "Importing a site menu will permanently and irreversably remove the current
 	  menu configuration.  Proceed with caution.<br><br>
 	After importing, check the links as hard-coded urls from another system may be still point at a wrong domain if not using

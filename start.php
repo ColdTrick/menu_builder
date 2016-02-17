@@ -20,6 +20,8 @@ function menu_builder_init() {
 	
 	elgg_register_event_handler('pagesetup', 'system', 'menu_builder_pagesetup');
 	elgg_register_event_handler('upgrade', 'system', '\ColdTrick\MenuBuilder\Upgrade::migrateEntitiesToJSON');
+	
+	elgg_register_ajax_view('menu_builder/import');
 }
 
 /**
@@ -49,7 +51,7 @@ elgg_register_event_handler('init', 'system', 'menu_builder_init');
 // register actions
 // elgg_register_action('menu_builder/reorder', dirname(__FILE__) . '/actions/reorder.php', 'admin');
 elgg_register_action('menu_builder/menu/export', dirname(__FILE__) . '/actions/menu/export.php', 'admin');
-// elgg_register_action('menu_builder/import', dirname(__FILE__) . '/actions/import.php', 'admin');
+elgg_register_action('menu_builder/menu/import', dirname(__FILE__) . '/actions/menu/import.php', 'admin');
 
 elgg_register_action('menu_builder/menu/edit', dirname(__FILE__) . '/actions/menu/edit.php', 'admin');
 elgg_register_action('menu_builder/menu/delete', dirname(__FILE__) . '/actions/menu/delete.php', 'admin');

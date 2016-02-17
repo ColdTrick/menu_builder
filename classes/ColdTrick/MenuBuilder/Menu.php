@@ -117,7 +117,7 @@ class Menu {
 	 *
 	 * @param array $config configuration of menu items
 	 */
-	private function setMenuConfig($config) {
+	public function setMenuConfig($config = []) {
 		elgg_set_plugin_setting("menu_{$this->name}_config", json_encode($config), 'menu_builder');
 		elgg_reset_system_cache();
 	}
