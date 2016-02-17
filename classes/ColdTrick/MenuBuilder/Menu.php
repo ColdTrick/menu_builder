@@ -92,6 +92,12 @@ class Menu {
 		
 			$menu_item['name'] = $name;
 		}
+
+		if (isset($menu_item['href'])) {
+			if (strpos($menu_item['href'], elgg_get_site_url()) === 0) {
+				$menu_item['href'] = substr($menu_item['href'], strlen(elgg_get_site_url()));
+			}
+		}
 		
 		$current_config[$name] = $menu_item;
 		

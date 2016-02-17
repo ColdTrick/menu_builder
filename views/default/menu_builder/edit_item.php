@@ -20,7 +20,11 @@ if ($menu_item->getName() == 'menu_builder_add') {
 } else {
 	$name = $menu_item->getName();
 	$text = $menu_item->getText();
-	$href = str_replace(elgg_get_site_url(), '', $menu_item->getHref());
+	
+	$href = $menu_item->getHref();
+	if (strpos($href, elgg_get_site_url()) === 0) {
+		$href = substr($href, strlen(elgg_get_site_url()));
+	}
 	$access_id = $menu_item->access_id;
 	$target = $menu_item->target;
 	$is_action = (boolean) $menu_item->is_action;
