@@ -1,6 +1,8 @@
 define(function(require) {
 	var $ = require('jquery');
 	var elgg = require('elgg');
+	
+	var already_sorted = false;
 
 	$(document).on('click', '.elgg-menu-item-menu-builder-add a', function(event) {
 		$(this).next().toggle();
@@ -60,4 +62,52 @@ define(function(require) {
 		$('.menu-builder-admin-menu').addClass('hidden');
 		$('.menu-builder-admin-menu[rel="' + rel + '"]').removeClass('hidden');
 	});
+	
+	$('.menu-builder-admin-menu ul').sortable({
+		connectWith: '.menu-builder-admin-menu ul',
+		items: ' > li:not(.elgg-menu-item-menu-builder-add)',
+		start: function(event, ui) {
+			$('.menu-builder-admin-menu .elgg-menu-item-placeholder').removeClass('hidden');
+		},
+		stop: function(event, ui) {
+			$('.menu-builder-admin-menu .elgg-menu-item-placeholder').addClass('hidden');
+			already_sorted = false;
+			
+		},
+		update: function(event, ui) {
+			if (already_sorted) {
+				return false;
+			}
+
+			var $item = $(ui.item);
+			var item_name = $item.attr('class').replace('elgg-menu-item-', '');
+			var parent_name = '';
+			if (!$item.parent().parent().hasClass('menu-builder-admin-menu')) {
+				parent_name = $item.parent().parent().attr('class').replace('elgg-menu-item-', '');
+			}
+			var menu_name = $item.parents('.menu-builder-admin-menu').attr('rel');			
+			
+			var items = [];
+			$item.parent().find('>li:not(.elgg-menu-item-placeholder)').each(function(elem){
+				var name = $(this).attr('class').replace('elgg-menu-item-', '');
+				items.push(name);
+			});
+			
+			elgg.action('menu_builder/menu/reorder', {
+				data : {
+					'menu_name' : menu_name,
+					'item_name' : item_name,
+					'parent_name' : parent_name,
+					'items' : items,
+				}
+			});
+
+			already_sorted = true;
+		},
+	});
+	
+//	$('.menu-builder-admin-menu li[class!="elgg-menu-item-menu-builder-add"][class!="elgg-menu-item-placeholder"]').on('mouseover', function(event) {
+//		console.log($(this));
+//		$(this).find(' > ul > .elgg-menu-item-placeholder').toggleClass('hidden');
+//	});
 });

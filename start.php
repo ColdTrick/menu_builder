@@ -49,7 +49,7 @@ function menu_builder_pagesetup() {
 elgg_register_event_handler('init', 'system', 'menu_builder_init');
 
 // register actions
-// elgg_register_action('menu_builder/reorder', dirname(__FILE__) . '/actions/reorder.php', 'admin');
+elgg_register_action('menu_builder/menu/reorder', dirname(__FILE__) . '/actions/menu/reorder.php', 'admin');
 elgg_register_action('menu_builder/menu/export', dirname(__FILE__) . '/actions/menu/export.php', 'admin');
 elgg_register_action('menu_builder/menu/import', dirname(__FILE__) . '/actions/menu/import.php', 'admin');
 

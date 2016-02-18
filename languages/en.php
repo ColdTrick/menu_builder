@@ -13,6 +13,7 @@ return array(
 	'menu_builder:admin:menu:add' => "New menu",
 	'menu_builder:admin:menu:add:internal_name' => "Internal menu name",
 	'menu_builder:admin:menu:delete' => "Delete menu",
+	'menu_builder:admin:menu:placeholder' => "This is a placeholder",
 
 	// views
 	// edit

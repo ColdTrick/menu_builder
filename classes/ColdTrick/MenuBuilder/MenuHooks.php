@@ -313,6 +313,14 @@ class MenuHooks {
 			if ($children) {
 				self::prepareMenuItemsEdit($children, $parent_options);
 			}
+			
+			// add a placeholder child menu item for sorting
+			$menu_item->addChild(\ElggMenuItem::factory([
+				'name' => 'placeholder',
+				'text' => elgg_echo('menu_builder:admin:menu:placeholder'),
+				'href' => '#',
+				'item_class' => 'hidden',
+			]));
 		}
 	}
 	
