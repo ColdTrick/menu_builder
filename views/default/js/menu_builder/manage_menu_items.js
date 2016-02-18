@@ -3,16 +3,6 @@ define(function(require) {
 	var elgg = require('elgg');
 	
 	var already_sorted = false;
-
-	$(document).on('click', '.elgg-menu-item-menu-builder-add a', function(event) {
-		$(this).next().toggle();
-		event.preventDefault();
-	});
-	
-	$(document).on('click', '.menu-builder-manage .elgg-icon-settings-alt', function(event) {
-		$(this).parent().parent().next('form').toggle();
-		event.preventDefault();
-	});
 	
 	$(document).on('click', '.menu-builder-manage .elgg-icon-delete', function(event) {
 		if (!confirm(elgg.echo('deleteconfirm'))) {

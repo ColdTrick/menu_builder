@@ -129,6 +129,55 @@ class Menu {
 	}
 	
 	/**
+	 * Returns an array of items to be used in edit forms of menu items
+	 *
+	 * @param string $skip_menu_item skip this menu item
+	 *
+	 * @return array
+	 */
+	public function getInputOptions($skip_menu_item) {
+		$menu = elgg_trigger_plugin_hook('register', "menu:{$this->name}", ['name' => $this->name], []);
+		$builder = new \ElggMenuBuilder($menu);
+		$menu = $builder->getMenu('priority');
+		
+		$menu = elgg_extract('default', $menu);
+		return $this->getIndentedOptions($menu, $skip_menu_item);
+	}
+	
+	/**
+	 * Returns an array of indented menu items
+	 *
+	 * @param array  $menu_items     array of menu items
+	 * @param string $skip_menu_item skip this menu item
+	 * @param int    $indent         number of indents
+	 *
+	 * @return array
+	 */
+	private function getIndentedOptions($menu_items, $skip_menu_item, $indent = 0) {
+		$result = [];
+		
+		foreach ($menu_items as $menu_item) {
+			if ($menu_item->getName() == $skip_menu_item) {
+				continue;
+			}
+			$text = str_repeat('-', $indent) . ' ' . $menu_item->getText();
+			$result[$menu_item->getName()] = $text;
+			
+			$children = $menu_item->getChildren();
+			if (empty($children)) {
+				continue;
+			}
+			
+			$children_options = $this->getIndentedOptions($children, $skip_menu_item, $indent + 1);
+			if (!empty($children_options)) {
+				$result = $result + $children_options;
+			}
+		}
+		
+		return $result;
+	}
+	
+	/**
 	 * Returns the name of the cachefile to be used
 	 *
 	 * @return string

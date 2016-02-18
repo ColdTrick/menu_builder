@@ -22,6 +22,7 @@ function menu_builder_init() {
 	elgg_register_event_handler('upgrade', 'system', '\ColdTrick\MenuBuilder\Upgrade::migrateEntitiesToJSON');
 	
 	elgg_register_ajax_view('menu_builder/import');
+	elgg_register_ajax_view('menu_builder/edit_item');
 }
 
 /**

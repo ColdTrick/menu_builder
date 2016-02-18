@@ -87,7 +87,6 @@ class MenuHooks {
 				if (empty($menu_item['href'])) {
 					$menu_item['href'] = false;
 				}
-					
 				$return[] = \ElggMenuItem::factory($menu_item);
 			}
 		}
@@ -97,7 +96,7 @@ class MenuHooks {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'menu_builder_add',
 				'text' => '<strong>+</strong>&nbsp;&nbsp;' . elgg_echo('menu_builder:edit_mode:add'),
-				'href' => '#',
+				'href' => 'ajax/view/menu_builder/edit_item?item_name=menu_builder_add&menu_name=' . $current_menu,
 				'link_class' => 'elgg-lightbox',
 				'menu_builder_menu_name' => $current_menu,
 				'priority' => time(),
@@ -142,9 +141,8 @@ class MenuHooks {
 		if (elgg_in_context('menu_builder_manage')) {
 	
 			$menu = elgg_extract('default', $return);
-			$parent_options = self::getParentOptions($menu);
 	
-			self::prepareMenuItemsEdit($menu, $parent_options);
+			self::prepareMenuItemsEdit($menu);
 		}
 	
 		return $return;
@@ -290,28 +288,37 @@ class MenuHooks {
 	/**
 	 * Prepares menu items to be edited
 	 *
-	 * @param array $menu           array of \ElggMenuItem objects
-	 * @param array $parent_options all parent options
+	 * @param array $menu array of \ElggMenuItem objects
 	 *
 	 * @return void
 	 */
-	private static function prepareMenuItemsEdit($menu, $parent_options) {
+	private static function prepareMenuItemsEdit($menu) {
 		foreach ($menu as $menu_item) {
 			$text = $menu_item->getText();
 	
-			if ($menu_item->getName() !== 'menu_builder_add') {
-				$text .= elgg_format_element('span', ['title' => elgg_echo('edit')], elgg_view_icon('settings-alt'));
-				$text .= elgg_format_element('span', ['title' => elgg_echo('delete')], elgg_view_icon('delete'));
+			$name = $menu_item->getName();
+			$menu_name = $menu_item->menu_builder_menu_name;
+			
+			if ($name == 'menu_builder_add') {
+				continue;
 			}
+			
+			$text .= elgg_format_element('span', [
+				'title' => elgg_echo('edit'),
+				'class' => 'elgg-lightbox',
+				'data-colorbox-opts' => json_encode(['href' => elgg_normalize_url('ajax/view/menu_builder/edit_item?item_name=' . $name . '&menu_name=' . $menu_name)]),
+			], elgg_view_icon('settings-alt'));
+			
+			$text .= elgg_format_element('span', ['title' => elgg_echo('delete')], elgg_view_icon('delete'));
+
 			$text = elgg_view('output/url', ['href' => '#', 'text' => $text]);
-				
-			$text .= elgg_view('menu_builder/edit_item', ['menu_item' => $menu_item, 'parent_options' => $parent_options]);
+
 			$menu_item->setText($text);
 			$menu_item->setHref(false);
 	
 			$children = $menu_item->getChildren();
 			if ($children) {
-				self::prepareMenuItemsEdit($children, $parent_options);
+				self::prepareMenuItemsEdit($children);
 			}
 			
 			// add a placeholder child menu item for sorting
@@ -358,31 +365,5 @@ class MenuHooks {
 		$item->setChildren($ordered_children);
 	
 		return $item;
-	}
-	
-	/**
-	 * Returns an array of parent items to be used in edit forms of menu items
-	 *
-	 * @param array $menu   array of \ElggMenuItem objects
-	 * @param int   $indent number of indents
-	 *
-	 * @return array
-	 */
-	private static function getParentOptions($menu, $indent = 0) {
-		$result = [];
-		foreach ($menu as $menu_item) {
-			if ($menu_item->getName() == 'menu_builder_add') {
-				continue;
-			}
-			$text = str_repeat('-', $indent) . $menu_item->getText();
-			$result[$menu_item->getName()] = $text;
-			$children = $menu_item->getChildren();
-			if ($children) {
-				$children_options = self::getParentOptions($children, $indent + 1);
-				$result = $result + $children_options;
-			}
-		}
-	
-		return $result;
 	}
 }
