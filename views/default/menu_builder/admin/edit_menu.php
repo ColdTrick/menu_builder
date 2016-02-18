@@ -10,7 +10,7 @@ elgg_push_context('menu_builder_manage');
 
 $menu_items = elgg_view_menu($menu, [
 	'sort_by' => 'priority',
-	'class' => 'elgg-admin-sidebar-menu menu-builder-manage',
+	'class' => 'menu-builder-manage',
 ]);
 
 elgg_pop_context();
