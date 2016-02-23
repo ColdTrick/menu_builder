@@ -67,6 +67,8 @@ return array(
 	'menu_builder:actions:import:complete' => "Menu import has been completed",
 
 	// settings
-	'menu_builder:htmlawed:filter' => "Filter url and titles through htmlawed?",
+	'menu_builder:settings:htmlawed:filter' => "Filter url and titles through htmlawed?",
+	'menu_builder:settings:regen_site_menu' => "With this link you can choose to regenerate the site menu. This will override the existing menu items registered on the site menu.",
+	'menu_builder:settings:regen_site_menu:button' => "Regen now!",
 
 );
