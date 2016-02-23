@@ -12,6 +12,10 @@ require_once(dirname(__FILE__) . '/lib/functions.php');
 function menu_builder_init() {
 
 	elgg_extend_view('css/admin', 'css/menu_builder/admin.css');
+	elgg_extend_view('css/elgg', 'css/menu_builder/site.css');
+	if (elgg_is_active_plugin('aalborg_theme')) {
+		elgg_extend_view('css/elgg', 'css/menu_builder/aalborg_theme.css');
+	}
 		
 	// take control of menu setup
 	elgg_unregister_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup');
