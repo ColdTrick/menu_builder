@@ -57,16 +57,16 @@ define(function(require) {
 			}
 
 			var $item = $(ui.item);
-			var item_name = $item.attr('class').replace('elgg-menu-item-', '');
+			var item_name = getMenuItemNameFromClass($item.attr('class'));
 			var parent_name = '';
 			if (!$item.parent().parent().hasClass('menu-builder-admin-menu')) {
-				parent_name = $item.parent().parent().attr('class').replace('elgg-menu-item-', '');
+				parent_name = getMenuItemNameFromClass($item.parent().parent().attr('class'));
 			}
 			var menu_name = $item.parents('.menu-builder-admin-menu').attr('rel');			
 			
 			var items = [];
 			$item.parent().find('>li:not(.elgg-menu-item-placeholder)').each(function(elem){
-				var name = $(this).attr('class').replace('elgg-menu-item-', '');
+				var name = getMenuItemNameFromClass($(this).attr('class'));
 				items.push(name);
 			});
 			
@@ -82,4 +82,17 @@ define(function(require) {
 			already_sorted = true;
 		},
 	});
+	
+	var getMenuItemNameFromClass = function(class_text) {
+		var result = class_text;
+		
+		classes = class_text.split(' ');
+		$.each(classes, function(index, item) {
+			if (item.search('elgg-menu-item-') === 0) {
+				result = item.replace('elgg-menu-item-', '');
+			}
+		});
+		
+		return result;
+	};
 });
