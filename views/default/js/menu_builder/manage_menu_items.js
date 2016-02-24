@@ -8,20 +8,7 @@ define(function(require) {
 		if (!confirm(elgg.echo('deleteconfirm'))) {
 			return false;
 		} else {
-			$form = $(this).parent().parent().next('form');
-			
-			var name = $form.find('input[name="name"]').val();
-			var menu_name = $form.find('input[name="menu_name"]').val();
-			
-			elgg.action('menu_builder/menu_item/delete', {
-				data : {
-					'name' : name,
-					'menu_name' : menu_name,
-				},
-				success: function(data) {
-					location.reload();
-				}
-			});
+			elgg.forward($(this).parent().data().href);
 		}
 	});
 	
@@ -95,9 +82,4 @@ define(function(require) {
 			already_sorted = true;
 		},
 	});
-	
-//	$('.menu-builder-admin-menu li[class!="elgg-menu-item-menu-builder-add"][class!="elgg-menu-item-placeholder"]').on('mouseover', function(event) {
-//		console.log($(this));
-//		$(this).find(' > ul > .elgg-menu-item-placeholder').toggleClass('hidden');
-//	});
 });

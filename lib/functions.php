@@ -40,7 +40,7 @@ function menu_builder_is_managed_menu($menu_name) {
  * @param string $menu_name  name of the menu item to delete
  * @param array  $menu_items array of menu items
  *
- * @return array
+ * @return void
  */
 function menu_builder_delete_menu_item($menu_name, &$menu_items) {
 	

@@ -309,10 +309,13 @@ class MenuHooks {
 			$text .= elgg_format_element('span', [
 				'title' => elgg_echo('edit'),
 				'class' => 'elgg-lightbox',
-				'data-colorbox-opts' => json_encode(['href' => elgg_normalize_url('ajax/view/menu_builder/edit_item?item_name=' . $name . '&menu_name=' . $menu_name)]),
+				'data-colorbox-opts' => json_encode(['href' => elgg_normalize_url("ajax/view/menu_builder/edit_item?item_name={$name}&menu_name={$menu_name}")]),
 			], elgg_view_icon('settings-alt'));
 			
-			$text .= elgg_format_element('span', ['title' => elgg_echo('delete')], elgg_view_icon('delete'));
+			$text .= elgg_format_element('span', [
+				'title' => elgg_echo('delete'),
+				'data-href' => elgg_add_action_tokens_to_url("action/menu_builder/menu_item/delete?item_name={$name}&menu_name={$menu_name}"),
+			], elgg_view_icon('delete'));
 
 			$text = elgg_view('output/url', ['href' => '#', 'text' => $text]);
 
