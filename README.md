@@ -1,6 +1,11 @@
 Menu Builder
 ============
 
+[![Build Status](https://scrutinizer-ci.com/g/ColdTrick/menu_builder/badges/build.png?b=master)](https://scrutinizer-ci.com/g/ColdTrick/menu_builder/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ColdTrick/menu_builder/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ColdTrick/menu_builder/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/coldtrick/menu_builder/v/stable.svg)](https://packagist.org/packages/coldtrick/menu_builder)
+[![License](https://poser.pugx.org/coldtrick/menu_builder/license.svg)](https://packagist.org/packages/coldtrick/menu_builder)
+
 More control options for the site menu items
 
 Features
