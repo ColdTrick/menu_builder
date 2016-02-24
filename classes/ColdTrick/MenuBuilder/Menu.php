@@ -185,9 +185,9 @@ class Menu {
 	private function getCacheName() {
 		$cache_name = "{$this->name}_logged_in";
 		if (!elgg_is_logged_in()) {
-			$cache_name = "{$this->_name}_logged_out";
+			$cache_name = "{$this->name}_logged_out";
 		} elseif (elgg_is_admin_logged_in()) {
-			$cache_name = "{$this->_name}_admin";
+			$cache_name = "{$this->name}_admin";
 		}
 	
 		return $cache_name;
