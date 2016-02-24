@@ -1,6 +1,49 @@
 Version Information
 ===================
 
+3.0 (2016-02-24):
+
+- added: activate script to add default menu items to the site menu so it can be configured
+- added: caching of menu items html
+- added: composer support
+- added: drag-n-drop reordering of menu-items on backend
+- added: plugin setting to reimport the site menu
+- added: reinstated the export feature
+- added: reinstated the import functionality
+- added: site menu child menus are now styled
+- added: upgrade of pre 2.0 Elgg menu items
+- added: option to delete menu items
+- added: set selected state on parent menu items
+- changed: export file name now contains the name of the site
+- changed: menu item editor form now shows in a lightbox
+- changed: now using new 1.11 function to check if language key exists
+- changed: refactored functions into classes
+- changed: reorganized new menu and menu delete action
+- changed: tabs now work switching menus in admin page
+- changed: moved menu hook registrations to page setup
+- changed: moved menu management to backend
+- changed: updated Dutch translation
+- fixed: correctly order menu items
+- fixed: delete old menu items after upgrade
+- fixed: do not add action tokens if managing menu items
+- fixed: empty hrefs should not have a href set
+- fixed: deprecated notice for requireconfirmation class fixed
+- fixed: correctly strip site url from the beginning of menu items on save
+- fixed: do not use cached menu data in admin context
+- fixed: invalid cell closure in table
+- fixed: menu item migration needed to ignore access when fetching items
+- fixed: menu items with an empty url should be handled as a elgg-non-link
+- fixed: menu not visible in admin context
+- fixed: no longer piggyback the admin sidebar menu class for styling
+- fixed: unset target to prevent all links to popup in blank
+- fixed: menu items now listen to access level
+- fixed: no longer normalize menu link when editing
+- fixed: only cache if needed
+- fixed: replace variable menu url parts after reading from optionally cached data
+- fixed: show correct access menu on menu items forms
+- removed: completely removed any traces of front end menu management
+- removed: unused hook
+
 2.0:
 
 - changes for Elgg 1.9
