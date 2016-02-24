@@ -3,14 +3,15 @@
 $name = get_input('item_name');
 $menu_name = get_input('menu_name');
 
-$menu_items = json_decode(elgg_get_plugin_setting("menu_{$menu_name}_config", 'menu_builder'), true);
+$menu = new \ColdTrick\MenuBuilder\Menu($menu_name);
+$menu_items = $menu->getMenuConfig();
 if (empty($menu_items)) {
 	return;
 }
 
 menu_builder_delete_menu_item($name, $menu_items);
 
-elgg_set_plugin_setting("menu_{$menu_name}_config", json_encode($menu_items), 'menu_builder');
+$menu->setMenuConfig($menu_items);
 
 system_message(elgg_echo('menu_builder:actions:delete:success'));
 forward("admin/appearance/menu_items?menu_name={$menu_name}");
