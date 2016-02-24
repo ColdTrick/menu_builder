@@ -255,7 +255,6 @@ class MenuHooks {
 		elgg_unset_plugin_setting('menu_site_config', 'menu_builder');
 		
 		$priority = 10;
-		$parent_name = null;
 
 		foreach ($return as $section => $items) {
 			$parent_name = null;
