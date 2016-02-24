@@ -16,5 +16,10 @@
 		<version>1.11</version>
 	</requires>
 	
+	<screenshot>
+		<description>Menu Configuration</description>
+		<path>screenshots/menu_configuration.png</path>
+	</screenshot>
+	
 	<category>ColdTrick</category>
 </plugin_manifest>
