@@ -5,6 +5,9 @@ elgg_require_js('menu_builder/manage_menu_items');
 $menus = menu_builder_get_managed_menus();
 
 $selected = get_input('menu_name');
+if (!empty($selected) && !menu_builder_is_managed_menu($selected)) {
+	$selected = null;
+}
 
 $tabs = [];
 if (!empty($menus)) {
