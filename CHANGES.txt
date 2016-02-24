@@ -1,6 +1,11 @@
 Version Information
 ===================
 
+3.0.1 (2016-02-24):
+
+- fixed: fallback to default tab if not a managed menu
+- fixed: get correct menu item name if li has multiple classes
+
 3.0 (2016-02-24):
 
 - added: activate script to add default menu items to the site menu so it can be configured
