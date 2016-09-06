@@ -11,7 +11,7 @@ if (empty($menu_name)) {
 $menu = new \ColdTrick\MenuBuilder\Menu($menu_name);
 $menu_config = $menu->getMenuConfig();
 
-$menu_item = elgg_extract($item_name, $menu_config);
+$menu_item = elgg_extract($item_name, $menu_config, []);
 
 $body_vars = [
 	'menu_name' => $menu_name,

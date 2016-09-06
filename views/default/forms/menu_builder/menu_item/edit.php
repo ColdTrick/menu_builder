@@ -1,6 +1,6 @@
 <?php
 
-$menu_item = elgg_extract('menu_item', $vars);
+$menu_item = elgg_extract('menu_item', $vars, []);
 
 $target_options = [
 	'0' => elgg_echo('menu_builder:add:form:target:self'),
