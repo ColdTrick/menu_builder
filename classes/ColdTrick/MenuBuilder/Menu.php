@@ -155,6 +155,9 @@ class Menu {
 	 */
 	private function getIndentedOptions($menu_items, $skip_menu_item, $indent = 0) {
 		$result = [];
+		if (empty($menu_items)) {
+			return $result;
+		}
 		
 		foreach ($menu_items as $menu_item) {
 			if ($menu_item->getName() == $skip_menu_item) {
