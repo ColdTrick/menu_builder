@@ -85,7 +85,7 @@ class Menu {
 		if (empty($name)) {
 			$time = time();
 			$name = "menu_name_{$time}";
-			while (in_array($name, $current_config)) {
+			while (array_key_exists($name, $current_config)) {
 				$time++;
 				$name = "menu_name_{$time}";
 			}
