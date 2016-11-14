@@ -7,6 +7,10 @@ if (menu_builder_is_managed_menu('site')) {
 	if (!elgg_in_context('admin')) {
 		elgg_load_css('menu_builder_site');
 	}
+
+	if (empty($vars['menu']['default'])) {
+		return;
+	}
 	
 	echo elgg_view('navigation/menu/default', $vars);
 	return;
