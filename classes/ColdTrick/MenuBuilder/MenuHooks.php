@@ -249,6 +249,12 @@ class MenuHooks {
 		}
 	
 		$menu = new \ColdTrick\MenuBuilder\Menu('site');
+		if (!empty($menu->getMenuConfig())) {
+			// found an already existing menu config... do not import
+			elgg_set_plugin_setting('menu_builder_default_imported', time(), 'menu_builder');
+			return;
+		}
+		
 		$menu->save();
 		
 		// remove potential existing menu items
