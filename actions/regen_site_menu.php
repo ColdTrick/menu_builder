@@ -7,9 +7,6 @@ elgg_push_context('admin');
 // register a hook to import the menu
 elgg_register_plugin_hook_handler('prepare', 'menu:site', '\ColdTrick\MenuBuilder\MenuHooks::prepareSiteMenu', 900);
 
-// triger pagesetup
-elgg_view('output/text', ['value' => '']);
-
 // restore unregistered function for the more menu
 elgg_register_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup');
 
