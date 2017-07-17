@@ -65,32 +65,38 @@ class MenuHooks {
 							break;
 					}
 				}
-					
+
 				if (!$can_add_menu_item) {
 					continue;
 				}
-					
+
 				// strip out deprecated use of [wwwroot] as menu items will be normalized by default
 				$menu_item['href'] = str_replace('[wwwroot]', '', $menu_item['href']);
-					
+
 				// add global replacable action tokens
 				if ($menu_item['is_action'] && !elgg_in_context('menu_builder_manage')) {
 					unset($menu_item['is_action']);
-	
+
 					$concat = '?';
 					if (stristr($menu_item['href'], '?')) {
 						$concat = '&';
 					}
 					$menu_item['href'] .= $concat . '__elgg_ts=[__elgg_ts]&__elgg_token[__elgg_token]';
 				}
-					
-				if (empty($menu_item['href'])) {
-					$menu_item['href'] = false;
-				}
+
+                if (empty($menu_item['href'])) {
+                    $menu_item['href'] = false;
+                }
+
+                $menu_item['item_class'] = "left";
+                if (!empty($menu_item['float'])) {
+                    $menu_item['item_class'] = $menu_item['float'];
+                }
+
 				$return[] = \ElggMenuItem::factory($menu_item);
 			}
 		}
-	
+
 		// add 'new menu item' menu item
 		if (elgg_in_context('menu_builder_manage')) {
 			$return[] = \ElggMenuItem::factory([

@@ -24,7 +24,8 @@ $menu->addMenuItem([
 	'target' => get_input('target'),
 	'is_action' => get_input('is_action', false),
 	'priority' => get_input('priority', time()),
-	'parent_name' => get_input('parent_name'),
+    'parent_name' => get_input('parent_name'),
+    'float' => get_input('float'),
 ]);
 
 system_message(elgg_echo('menu_builder:actions:edit:success'));

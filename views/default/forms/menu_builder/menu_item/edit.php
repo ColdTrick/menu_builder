@@ -12,7 +12,10 @@ $access_options = [
 	MENU_BUILDER_ACCESS_LOGGED_OUT => elgg_echo('LOGGED_OUT'),
 	ACCESS_PRIVATE => elgg_echo('menu_builder:add:access:admin_only'),
 ];
-
+$leftRight_options = [
+    "left" => elgg_echo("left"),
+    "right" => elgg_echo("right")
+];
 $parent_options = elgg_extract('parent_options', $vars);
 
 $href = elgg_extract('href', $menu_item);
@@ -82,6 +85,16 @@ if ($parent_options) {
 		'options_values' => $parent_options,
 	]);
 }
+
+$form_body .= '</td></tr><tr><td>';
+$form_body .= elgg_format_element('label', [], elgg_echo('menu_builder:add:form:float'));
+$form_body .= '</td><td>';
+
+$form_body .= elgg_view('input/access', [
+    'name' => 'float',
+    'value' => elgg_extract('float', $menu_item, 'left'),
+    'options_values' => $leftRight_options,
+]);
 
 $form_body .= '</td></tr><tr><td>';
 $form_body .= elgg_format_element('label', [], elgg_echo('menu_builder:add:action:tokens'));

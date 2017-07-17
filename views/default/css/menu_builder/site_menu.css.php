@@ -1,5 +1,15 @@
 <?php
 ?>
+.elgg-menu-site {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    float: left;
+    left: 0;
+    top: 0;
+    position: relative;
+    z-index: 50;
+    width: 100%;
+}
+
 .elgg-menu-site .elgg-child-menu {
 	background-color: #fff;
 	border: 1px solid #999;
@@ -85,4 +95,8 @@ if (!elgg_is_active_plugin('aalborg_theme')) {
 .elgg-menu-site .elgg-child-menu > li > a:hover {
 	background-color: #F0F0F0;
 	color: #444;
+}
+
+.elgg-menu-site li.right{
+    float: right;
 }

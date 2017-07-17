@@ -30,6 +30,7 @@ return array (
   'menu_builder:add:form:target:blank' => 'Nieuw venster',
   'menu_builder:add:form:parent' => 'Hoofd menu item',
   'menu_builder:add:form:access' => 'Wie kan dit menu item zien?',
+  'menu_builder:add:form:float' => "Menu uitlijning",
   'menu_builder:add:access:admin_only' => 'Enkel admins',
   'menu_builder:actions:edit:error:input' => 'Foutieve invoer',
   'menu_builder:actions:edit:success' => 'Menu item opgeslagen',

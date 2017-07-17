@@ -26,6 +26,7 @@ return array(
 	'menu_builder:add:form:access' => "Who can see this menu item?",
 	'menu_builder:add:access:admin_only' => "Admin only",
 	'menu_builder:add:action:tokens' => "Action",
+    'menu_builder:add:form:float' => "Align menu item",
 
 	// import
 	'menu_builder:import:title' => "Importing menu items for %s",
