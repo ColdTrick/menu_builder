@@ -30,3 +30,7 @@
 .menu-builder-manage .elgg-child-menu {
 	padding-left: 30px;
 }
+
+.menu-builder-manage .ui-sortable-helper .elgg-child-menu {
+	display: none;
+}
