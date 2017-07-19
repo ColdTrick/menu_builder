@@ -16,6 +16,6 @@
 		"coldtrick/releases": "dev-master"
 	},
 	"conflict": {
-		"elgg/elgg": "<1.11"
+		"elgg/elgg": "<2.3"
 	}
 }
