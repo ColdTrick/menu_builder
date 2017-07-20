@@ -8,6 +8,9 @@ if (empty($menu_name)) {
 	return;
 }
 
+// pushing context to prevent the use of menu cache
+elgg_push_context('admin');
+
 $menu = new \ColdTrick\MenuBuilder\Menu($menu_name);
 $menu_config = $menu->getMenuConfig();
 
@@ -20,3 +23,5 @@ $body_vars = [
 ];
 
 echo elgg_view_form('menu_builder/menu_item/edit', [], $body_vars);
+
+elgg_pop_context();

@@ -76,8 +76,6 @@ $fields = [
 	],
 ];
 
-
-
 if ($parent_options) {
 	array_unshift($parent_options, '');
 	
