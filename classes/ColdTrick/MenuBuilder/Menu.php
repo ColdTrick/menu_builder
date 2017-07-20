@@ -32,7 +32,26 @@ class Menu {
 		$menus[] = $this->name;
 		
 		elgg_set_plugin_setting('menu_names', json_encode($menus), 'menu_builder');
-		elgg_reset_system_cache();
+	}
+	
+	/**
+	 * Removes the menus
+	 *
+	 * @return void
+	 */
+	public function delete() {
+		$menus = menu_builder_get_managed_menus();
+		
+		if (!in_array($this->name, $menus)) {
+			return;
+		}
+		$key = array_search($this->name, $menus);
+		unset($menus[$key]);
+		
+		elgg_set_plugin_setting('menu_names', json_encode($menus), 'menu_builder');
+		elgg_unset_plugin_setting("menu_{$this->name}_config", 'menu_builder');
+		
+		$this->clearMenuCache();
 	}
 	
 	/**
@@ -125,7 +144,20 @@ class Menu {
 	 */
 	public function setMenuConfig($config = []) {
 		elgg_set_plugin_setting("menu_{$this->name}_config", json_encode($config), 'menu_builder');
-		elgg_reset_system_cache();
+		$this->clearMenuCache();
+	}
+	
+	/**
+	 * Clears all variants of menu cache files
+	 *
+	 * @return void
+	 */
+	protected function clearMenuCache() {
+		$system_cache = elgg_get_system_cache();
+		
+		$system_cache->delete("{$this->name}_logged_in");
+		$system_cache->delete("{$this->name}_logged_out");
+		$system_cache->delete("{$this->name}_admin");
 	}
 	
 	/**
