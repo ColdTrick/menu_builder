@@ -1,6 +1,13 @@
 Version history
 ===============
 
+4.0 (2017-07-31):
+
+- changed: only reset system_cache for the changed menu
+- changed: updated forms for new form field functions
+- changed: upped Elgg requirement to 2.3
+- fixed: menu item edit form should not use cache
+
 3.1 (2017-05-30):
 
 - changed: no longer use deprecated event
