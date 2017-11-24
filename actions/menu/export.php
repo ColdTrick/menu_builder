@@ -2,7 +2,7 @@
 
 $menu_name = get_input('menu_name');
 if (!$menu_name) {
-	register_error(elgg_echo('menu_builder:actions:missing_name'));
+	register_error(myvox_echo('menu_builder:actions:missing_name'));
 	forward(REFERER);
 }
 
@@ -12,11 +12,11 @@ $config = $menu->getMenuConfig();
 
 // make sure we have a menu to export
 if (empty($config)) {
-	register_error(elgg_echo('menu_builder:actions:export:error:empty'));
+	register_error(myvox_echo('menu_builder:actions:export:error:empty'));
 	forward(REFERER);
 }
 
-$export_name = 'menu_builder_export_' . elgg_get_friendly_title($menu_name) . '.json';
+$export_name = 'menu_builder_export_' . myvox_get_friendly_title($menu_name) . '.json';
 
 // export the array as JSON in a txt file
 $json = json_encode($config);

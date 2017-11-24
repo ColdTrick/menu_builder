@@ -14,7 +14,7 @@ function menu_builder_get_managed_menus() {
 	if (isset($result)) {
 		return $result;
 	}
-	$result = json_decode(elgg_get_plugin_setting('menu_names', 'menu_builder'), true);
+	$result = json_decode(myvox_get_plugin_setting('menu_names', 'menu_builder'), true);
 	return $result;
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-return array(
+$standard = array(
 
 	'menu_builder' => "Menu Builder",
 
@@ -55,5 +55,21 @@ return array(
 	'menu_builder:settings:htmlawed:filter' => "Filter url and titles through htmlawed?",
 	'menu_builder:settings:regen_site_menu' => "With this link you can choose to regenerate the site menu. This will override the existing menu items registered on the site menu.",
 	'menu_builder:settings:regen_site_menu:button' => "Regen now!",
+    'menu_builder:add:form:languagekey' => 'Language key',
+    'menu_builder:add:form:languagekey:info' => 'De taalsleutel wordt gebruikt om in het format "text:menu:[menu naam]:[languagekey]" een taal op te halen voor het menu item.',
+    'menu_builder:add:form:languagekey:info:more' => ' Voor dit menu item zou dat "text:menu:%s:%s" zijn.',
 
 );
+
+$menus = menu_builder_get_managed_menus();
+foreach ($menus as $menu) {
+    $menu_items = json_decode(myvox_get_plugin_setting("menu_{$menu}_config", 'menu_builder'), true);
+    foreach ($menu_items as $item) {
+        if (!empty($item['languagekey'])) {
+            $full_language_key = "text:menu:" . $menu . ":" . $item['languagekey'];
+            $standard[$full_language_key] = $full_language_key;
+        }
+    }
+}
+
+return $standard;

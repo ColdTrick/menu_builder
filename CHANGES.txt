@@ -29,7 +29,7 @@ Version history
 - added: reinstated the export feature
 - added: reinstated the import functionality
 - added: site menu child menus are now styled
-- added: upgrade of pre 2.0 Elgg menu items
+- added: upgrade of pre 2.0 MyVox menu items
 - added: option to delete menu items
 - added: set selected state on parent menu items
 - changed: export file name now contains the name of the site
@@ -50,7 +50,7 @@ Version history
 - fixed: do not use cached menu data in admin context
 - fixed: invalid cell closure in table
 - fixed: menu item migration needed to ignore access when fetching items
-- fixed: menu items with an empty url should be handled as a elgg-non-link
+- fixed: menu items with an empty url should be handled as a myvox-non-link
 - fixed: menu not visible in admin context
 - fixed: no longer piggyback the admin sidebar menu class for styling
 - fixed: unset target to prevent all links to popup in blank
@@ -64,14 +64,14 @@ Version history
 
 2.0:
 
-- changes for Elgg 1.9
+- changes for MyVox 1.9
 
 1.4 (2014-03-21):
 
 - added: multi level menu's
 - added: support for action property of links
 - added: option to export / import menu items configuration
-- changed: updated to Elgg coding standards
+- changed: updated to MyVox coding standards
 - fixed: only admins should be able to see menu edit options
 
 1.3 (2013-10-03):
@@ -89,7 +89,7 @@ Version history
 - changed: better use of core language keys
 - fixed: storage of menu items in site container
 - fixed: menu items with same order disappear
-- fixed: bad urls when elgg is installed in subfolder
+- fixed: bad urls when myvox is installed in subfolder
 - fixed: some php notices
 
 1.1.1 (2012-07-30):
@@ -105,7 +105,7 @@ Version history
 - changed: moved access write options to a hook
 
 1.0 (2012-02-20):
-- changed: more code cleanup and elgg code standardization
+- changed: more code cleanup and myvox code standardization
 - fixed: some minor issues	
 
 1.0 beta (2012-02-06):

@@ -5,14 +5,14 @@ $menu_name = get_input('menu_name');
 $contents = get_uploaded_file('import');
 
 if (empty($contents)) {
-	register_error(elgg_echo('menu_builder:actions:import:error:upload'));
+	register_error(myvox_echo('menu_builder:actions:import:error:upload'));
 	forward(REFERER);
 }
 
 $config = json_decode($contents, true);
 
 if (!is_array($config) || empty($config)) {
-	register_error(elgg_echo('menu_builder:actions:import:error:invalid:content'));
+	register_error(myvox_echo('menu_builder:actions:import:error:invalid:content'));
 	forward(REFERER);
 }
 
@@ -52,5 +52,5 @@ foreach ($config as $item) {
 	$menu->addMenuItem($item);
 }
 
-system_message(elgg_echo('menu_builder:actions:import:complete'));
+system_message(myvox_echo('menu_builder:actions:import:complete'));
 forward('admin/appearance/menu_items?menu_name=' . $menu_name);

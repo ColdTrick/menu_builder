@@ -10,7 +10,7 @@ $parent_name = get_input('parent_name');
 $items = get_input('items');
 
 if (empty($item_name) || empty($item_name) || empty($items)) {
-	register_error(elgg_echo('error:missing_data'));
+	register_error(myvox_echo('error:missing_data'));
 	return;
 }
 
@@ -18,7 +18,7 @@ $menu = new \ColdTrick\MenuBuilder\Menu($menu_name);
 $menu_config = $menu->getMenuConfig();
 
 if (empty($menu_config)) {
-	register_error(elgg_echo('error:missing_data'));
+	register_error(myvox_echo('error:missing_data'));
 	return;
 }
 
@@ -44,12 +44,12 @@ foreach ($menu_config as $key => $value) {
 }
 
 if (!$item_name_found) {
-	register_error(elgg_echo('error:missing_data'));
+	register_error(myvox_echo('error:missing_data'));
 	return;
 }
 
 if (!empty($parent_name) && !$parent_name_found) {
-	register_error(elgg_echo('error:missing_data'));
+	register_error(myvox_echo('error:missing_data'));
 	return;
 }
 
