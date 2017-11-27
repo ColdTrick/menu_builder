@@ -96,8 +96,11 @@ class MenuHooks {
                 if (!empty($menu_item['languagekey'])) {
                     $full_language_key = "text:menu:" . $current_menu . ":" . $menu_item['languagekey'];
 
-                    if (elgg_echo($full_language_key) != $full_language_key) {
-                        $menu_item['text'] = elgg_echo($full_language_key);
+                    $language_data = translation_editor_get_plugin(get_language(), "menu_builder");
+
+                    if (isset($language_data['current_language'][$full_language_key])
+                        && $language_data['current_language'][$full_language_key] != $full_language_key) {
+                        $menu_item['text'] = $language_data['current_language'][$full_language_key];
                     }
                 }
 
