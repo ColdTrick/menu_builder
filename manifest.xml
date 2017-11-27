@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin_manifest xmlns="http://www.myvox.nl/plugin_manifest/1.8">
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
 	<name>Menu Builder</name>
 	<author>ColdTrick IT Solutions</author>
 	<version>3.1</version>
@@ -12,7 +12,7 @@
 	<license>GNU General Public License version 2</license>
 	
 	<requires>
-		<type>myvox_release</type>
+		<type>elgg_release</type>
 		<version>1.11</version>
 	</requires>
 	

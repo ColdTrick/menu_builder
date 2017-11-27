@@ -1,8 +1,8 @@
 {
 	"name": "coldtrick/menu_builder",
 	"description": "More control options for the site menu items",
-	"type": "myvox-plugin",
-	"keywords": ["myvox", "plugin", "navigation"],
+	"type": "elgg-plugin",
+	"keywords": ["elgg", "plugin", "navigation"],
 	"license": "GPL-2.0",
 	"support": {
 		"source": "https://github.com/ColdTrick/menu_builder",
@@ -16,6 +16,6 @@
 		"coldtrick/releases": "dev-master"
 	},
 	"conflict": {
-		"myvox/myvox": "<1.11"
+		"elgg/elgg": "<1.11"
 	}
 }

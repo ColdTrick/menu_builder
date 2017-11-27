@@ -31,8 +31,8 @@ class Menu {
 		
 		$menus[] = $this->name;
 		
-		myvox_set_plugin_setting('menu_names', json_encode($menus), 'menu_builder');
-		myvox_reset_system_cache();
+		elgg_set_plugin_setting('menu_names', json_encode($menus), 'menu_builder');
+		elgg_reset_system_cache();
 	}
 	
 	/**
@@ -41,11 +41,11 @@ class Menu {
 	 * @return boolean|string
 	 */
 	public function getCachedData() {
-		if (!myvox_get_config('system_cache_enabled')) {
+		if (!elgg_get_config('system_cache_enabled')) {
 			return false;
 		}
 		
-		return myvox_load_system_cache($this->getCacheName()) ?: false;
+		return elgg_load_system_cache($this->getCacheName()) ?: false;
 	}
 	
 	/**
@@ -56,7 +56,7 @@ class Menu {
 	 * @return void
 	 */
 	public function saveToCache($data) {
-		myvox_save_system_cache($this->getCacheName(), $data);
+		elgg_save_system_cache($this->getCacheName(), $data);
 	}
 	
 	/**
@@ -81,7 +81,7 @@ class Menu {
 		
 		$current_config = $this->getMenuConfig();
 		
-		$name = myvox_extract('name', $menu_item);
+		$name = elgg_extract('name', $menu_item);
 		if (empty($name)) {
 			$time = time();
 			$name = "menu_name_{$time}";
@@ -94,8 +94,8 @@ class Menu {
 		}
 
 		if (isset($menu_item['href'])) {
-			if (strpos($menu_item['href'], myvox_get_site_url()) === 0) {
-				$menu_item['href'] = substr($menu_item['href'], strlen(myvox_get_site_url()));
+			if (strpos($menu_item['href'], elgg_get_site_url()) === 0) {
+				$menu_item['href'] = substr($menu_item['href'], strlen(elgg_get_site_url()));
 			}
 		}
 		
@@ -110,7 +110,7 @@ class Menu {
 	 * @return array
 	 */
 	public function getMenuConfig() {
-		$config = json_decode(myvox_get_plugin_setting("menu_{$this->name}_config", 'menu_builder'), true);
+		$config = json_decode(elgg_get_plugin_setting("menu_{$this->name}_config", 'menu_builder'), true);
 		if (!is_array($config)) {
 			$config = [];
 		}
@@ -124,8 +124,8 @@ class Menu {
 	 * @param array $config configuration of menu items
 	 */
 	public function setMenuConfig($config = []) {
-		myvox_set_plugin_setting("menu_{$this->name}_config", json_encode($config), 'menu_builder');
-		myvox_reset_system_cache();
+		elgg_set_plugin_setting("menu_{$this->name}_config", json_encode($config), 'menu_builder');
+		elgg_reset_system_cache();
 	}
 	
 	/**
@@ -136,11 +136,11 @@ class Menu {
 	 * @return array
 	 */
 	public function getInputOptions($skip_menu_item) {
-		$menu = myvox_trigger_plugin_hook('register', "menu:{$this->name}", ['name' => $this->name], []);
-		$builder = new \MyVoxMenuBuilder($menu);
+		$menu = elgg_trigger_plugin_hook('register', "menu:{$this->name}", ['name' => $this->name], []);
+		$builder = new \ElggMenuBuilder($menu);
 		$menu = $builder->getMenu('priority');
 		
-		$menu = myvox_extract('default', $menu);
+		$menu = elgg_extract('default', $menu);
 		return $this->getIndentedOptions($menu, $skip_menu_item);
 	}
 	
@@ -187,9 +187,9 @@ class Menu {
 	 */
 	private function getCacheName() {
 		$cache_name = "{$this->name}_logged_in";
-		if (!myvox_is_logged_in()) {
+		if (!elgg_is_logged_in()) {
 			$cache_name = "{$this->name}_logged_out";
-		} elseif (myvox_is_admin_logged_in()) {
+		} elseif (elgg_is_admin_logged_in()) {
 			$cache_name = "{$this->name}_admin";
 		}
 	

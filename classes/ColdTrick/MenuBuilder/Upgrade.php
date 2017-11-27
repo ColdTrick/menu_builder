@@ -10,7 +10,7 @@ class Upgrade {
 	 * @return void
 	 */
 	public static function migrateEntitiesToJSON() {
-		$ia = myvox_set_ignore_access(true);
+		$ia = elgg_set_ignore_access(true);
 		
 		$menu = new \ColdTrick\MenuBuilder\Menu('site');
 		$menu->save();
@@ -21,10 +21,10 @@ class Upgrade {
 			'limit' => false,
 		];
 		
-		$entities = myvox_get_entities($options);
+		$entities = elgg_get_entities($options);
 		
 		if (empty($entities)) {
-			myvox_set_ignore_access($ia);
+			elgg_set_ignore_access($ia);
 			return;
 		}
 		
@@ -55,6 +55,6 @@ class Upgrade {
 			$menu_item->delete();
 		}
 		
-		myvox_set_ignore_access($ia);
+		elgg_set_ignore_access($ia);
 	}
 }

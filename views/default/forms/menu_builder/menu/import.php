@@ -1,13 +1,13 @@
 <?php
 
-echo myvox_view('input/hidden', [
+echo elgg_view('input/hidden', [
 	'name' => 'menu_name',
-	'value' => myvox_extract('menu_name', $vars),
+	'value' => elgg_extract('menu_name', $vars),
 ]);
-echo myvox_view('input/file', ['name' => 'import']);
-echo myvox_view('output/longtext', [
-	'value' => myvox_echo('menu_builder:import:help'),
-	'class' => 'myvox-subtext',
+echo elgg_view('input/file', ['name' => 'import']);
+echo elgg_view('output/longtext', [
+	'value' => elgg_echo('menu_builder:import:help'),
+	'class' => 'elgg-subtext',
 ]);
 
-echo myvox_view('input/submit', ['value' => myvox_echo('import')]);
+echo elgg_view('input/submit', ['value' => elgg_echo('import')]);

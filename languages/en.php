@@ -63,7 +63,7 @@ $standard = array(
 
 $menus = menu_builder_get_managed_menus();
 foreach ($menus as $menu) {
-    $menu_items = json_decode(myvox_get_plugin_setting("menu_{$menu}_config", 'menu_builder'), true);
+    $menu_items = json_decode(elgg_get_plugin_setting("menu_{$menu}_config", 'menu_builder'), true);
     foreach ($menu_items as $item) {
         if (!empty($item['languagekey'])) {
             $full_language_key = "text:menu:" . $menu . ":" . $item['languagekey'];

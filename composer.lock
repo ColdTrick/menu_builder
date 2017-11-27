@@ -77,7 +77,7 @@
                 "croogo",
                 "dokuwiki",
                 "drupal",
-                "myvox",
+                "elgg",
                 "fuelphp",
                 "grav",
                 "installer",
@@ -139,12 +139,12 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ColdTrick/myvox-coding-standards.git",
+                "url": "https://github.com/ColdTrick/elgg-coding-standards.git",
                 "reference": "694bae972522ffbec467a7a9b6a2f4299beb47e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ColdTrick/myvox-coding-standards/zipball/694bae972522ffbec467a7a9b6a2f4299beb47e6",
+                "url": "https://api.github.com/repos/ColdTrick/elgg-coding-standards/zipball/694bae972522ffbec467a7a9b6a2f4299beb47e6",
                 "reference": "694bae972522ffbec467a7a9b6a2f4299beb47e6",
                 "shasum": ""
             },
@@ -154,11 +154,11 @@
             "type": "library",
             "autoload": {
                 "psr-0": {
-                    "MyVox_Sniffs_": "src/"
+                    "Elgg_Sniffs_": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "description": "MyVox coding standards",
+            "description": "Elgg coding standards",
             "time": "2015-02-17 14:47:25"
         },
         {

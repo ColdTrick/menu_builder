@@ -4,15 +4,15 @@
  */
 
 if (menu_builder_is_managed_menu('site')) {
-	if (!myvox_in_context('admin')) {
-		myvox_load_css('menu_builder_site');
+	if (!elgg_in_context('admin')) {
+		elgg_load_css('menu_builder_site');
 	}
 
 	if (empty($vars['menu']['default'])) {
 		return;
 	}
 	
-	echo myvox_view('navigation/menu/default', $vars);
+	echo elgg_view('navigation/menu/default', $vars);
 	return;
 }
 
@@ -25,22 +25,22 @@ if (menu_builder_is_managed_menu('site')) {
 * @uses $vars['menu']['more']
 */
 
-$default_items = myvox_extract('default', $vars['menu'], array());
-$more_items = myvox_extract('more', $vars['menu'], array());
+$default_items = elgg_extract('default', $vars['menu'], array());
+$more_items = elgg_extract('more', $vars['menu'], array());
 
-echo '<ul class="myvox-menu myvox-menu-site myvox-menu-site-default clearfix">';
+echo '<ul class="elgg-menu elgg-menu-site elgg-menu-site-default clearfix">';
 foreach ($default_items as $menu_item) {
-	echo myvox_view('navigation/menu/elements/item', array('item' => $menu_item));
+	echo elgg_view('navigation/menu/elements/item', array('item' => $menu_item));
 }
 
 if ($more_items) {
-	echo '<li class="myvox-more">';
+	echo '<li class="elgg-more">';
 
-	$more = myvox_echo('more');
+	$more = elgg_echo('more');
 	echo "<a href=\"#\">$more</a>";
 
-	echo myvox_view('navigation/menu/elements/section', array(
-		'class' => 'myvox-menu myvox-menu-site myvox-menu-site-more',
+	echo elgg_view('navigation/menu/elements/section', array(
+		'class' => 'elgg-menu elgg-menu-site elgg-menu-site-more',
 		'items' => $more_items,
 	));
 

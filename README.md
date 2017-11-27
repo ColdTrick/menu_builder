@@ -6,7 +6,7 @@ Menu Builder
 [![Latest Stable Version](https://poser.pugx.org/coldtrick/menu_builder/v/stable.svg)](https://packagist.org/packages/coldtrick/menu_builder)
 [![License](https://poser.pugx.org/coldtrick/menu_builder/license.svg)](https://packagist.org/packages/coldtrick/menu_builder)
 
-Manage your menu items with a lot more control then the default MyVox menu manager.
+Manage your menu items with a lot more control then the default Elgg menu manager.
 
 Features
 --------

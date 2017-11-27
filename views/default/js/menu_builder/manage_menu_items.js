@@ -1,40 +1,40 @@
 define(function(require) {
 	var $ = require('jquery');
-	var myvox = require('myvox');
+	var elgg = require('elgg');
 	
 	var already_sorted = false;
 	
-	$(document).on('click', '.menu-builder-manage .myvox-icon-delete', function(event) {
-		if (!confirm(myvox.echo('deleteconfirm'))) {
+	$(document).on('click', '.menu-builder-manage .elgg-icon-delete', function(event) {
+		if (!confirm(elgg.echo('deleteconfirm'))) {
 			return false;
 		} else {
-			myvox.forward($(this).parent().data().href);
+			elgg.forward($(this).parent().data().href);
 		}
 	});
 	
 	$(document).on('click' ,'#menu-builder-add-menu', function(event) {
-		var name = prompt(myvox.echo('menu_builder:admin:menu:add:internal_name'));
+		var name = prompt(elgg.echo('menu_builder:admin:menu:add:internal_name'));
 		if (!name) {
 			return false;
 		}
 		
-		myvox.forward(myvox.security.addToken('action/menu_builder/menu/edit?menu_name=' + name));
+		elgg.forward(elgg.security.addToken('action/menu_builder/menu/edit?menu_name=' + name));
 	});
 	
 	$(document).on('click', '.menu-builder-admin-tabs a', function(event) {
 		var $tab = $(this);
 		
-		if ($tab.parent().hasClass('myvox-state-selected')) {
+		if ($tab.parent().hasClass('elgg-state-selected')) {
 			return;
 		}
 		if ($tab.parent().attr('id') === 'menu-builder-add-menu') {
 			return;
 		}
 		
-		$tab.parents('.myvox-tabs').find('.myvox-state-selected').removeClass('myvox-state-selected');
+		$tab.parents('.elgg-tabs').find('.elgg-state-selected').removeClass('elgg-state-selected');
 		
 		var rel = $tab.attr('rel');
-		$tab.parent().addClass('myvox-state-selected');
+		$tab.parent().addClass('elgg-state-selected');
 		
 		$('.menu-builder-admin-menu').addClass('hidden');
 		$('.menu-builder-admin-menu[rel="' + rel + '"]').removeClass('hidden');
@@ -42,12 +42,12 @@ define(function(require) {
 	
 	$('.menu-builder-admin-menu ul').sortable({
 		connectWith: '.menu-builder-admin-menu ul',
-		items: ' > li:not(.myvox-menu-item-menu-builder-add)',
+		items: ' > li:not(.elgg-menu-item-menu-builder-add)',
 		start: function(event, ui) {
-			$('.menu-builder-admin-menu .myvox-menu-item-placeholder').removeClass('hidden');
+			$('.menu-builder-admin-menu .elgg-menu-item-placeholder').removeClass('hidden');
 		},
 		stop: function(event, ui) {
-			$('.menu-builder-admin-menu .myvox-menu-item-placeholder').addClass('hidden');
+			$('.menu-builder-admin-menu .elgg-menu-item-placeholder').addClass('hidden');
 			already_sorted = false;
 			
 		},
@@ -65,12 +65,12 @@ define(function(require) {
 			var menu_name = $item.parents('.menu-builder-admin-menu').attr('rel');			
 			
 			var items = [];
-			$item.parent().find('>li:not(.myvox-menu-item-placeholder)').each(function(elem){
+			$item.parent().find('>li:not(.elgg-menu-item-placeholder)').each(function(elem){
 				var name = getMenuItemNameFromClass($(this).attr('class'));
 				items.push(name);
 			});
 			
-			myvox.action('menu_builder/menu/reorder', {
+			elgg.action('menu_builder/menu/reorder', {
 				data : {
 					'menu_name' : menu_name,
 					'item_name' : item_name,
@@ -88,8 +88,8 @@ define(function(require) {
 		
 		classes = class_text.split(' ');
 		$.each(classes, function(index, item) {
-			if (item.search('myvox-menu-item-') === 0) {
-				result = item.replace('myvox-menu-item-', '');
+			if (item.search('elgg-menu-item-') === 0) {
+				result = item.replace('elgg-menu-item-', '');
 			}
 		});
 		

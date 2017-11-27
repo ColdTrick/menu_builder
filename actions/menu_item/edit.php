@@ -5,12 +5,12 @@ $menu_name = get_input('menu_name');
 $managed_menus = menu_builder_get_managed_menus();
 
 if (!in_array($menu_name, $managed_menus)) {
-	register_error(myvox_echo('menu_builder:actions:edit:error:input'));
+	register_error(elgg_echo('menu_builder:actions:edit:error:input'));
 	forward(REFERER);
 }
 
 $filter = true;
-if (myvox_get_plugin_setting('htmlawed_filter', 'menu_builder') == 'no') {
+if (elgg_get_plugin_setting('htmlawed_filter', 'menu_builder') == 'no') {
 	$filter = false;
 }
 
@@ -29,5 +29,5 @@ $menu->addMenuItem([
     'languagekey' => get_input('languagekey')
 ]);
 
-system_message(myvox_echo('menu_builder:actions:edit:success'));
+system_message(elgg_echo('menu_builder:actions:edit:success'));
 forward(REFERER);

@@ -13,5 +13,5 @@ menu_builder_delete_menu_item($name, $menu_items);
 
 $menu->setMenuConfig($menu_items);
 
-system_message(myvox_echo('menu_builder:actions:delete:success'));
+system_message(elgg_echo('menu_builder:actions:delete:success'));
 forward("admin/appearance/menu_items?menu_name={$menu_name}");
