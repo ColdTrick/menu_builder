@@ -7,10 +7,10 @@ $target_options = [
 	'_blank' => elgg_echo('menu_builder:add:form:target:blank'),
 ];
 $access_options = [
-	ACCESS_PUBLIC => elgg_echo('PUBLIC'),
-	ACCESS_LOGGED_IN => elgg_echo('LOGGED_IN'),
-	MENU_BUILDER_ACCESS_LOGGED_OUT => elgg_echo('LOGGED_OUT'),
-	ACCESS_PRIVATE => elgg_echo('menu_builder:add:access:admin_only'),
+	ACCESS_PUBLIC => elgg_echo('access:label:public'),
+	ACCESS_LOGGED_IN => elgg_echo('access:label:logged_in'),
+	MENU_BUILDER_ACCESS_LOGGED_OUT => elgg_echo('access:label:logged_out'),
+	ACCESS_PRIVATE => elgg_echo('access:admin_only'),
 ];
 
 $parent_options = elgg_extract('parent_options', $vars);
@@ -59,6 +59,7 @@ $fields = [
 		'name' => 'is_action',
 		'value' => 1,
 		'checked' => (bool) elgg_extract('is_action', $menu_item),
+		'switch' => true,
 	],
 	[
 		'#type' => 'access',

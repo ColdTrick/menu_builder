@@ -15,35 +15,17 @@ elgg_register_event_handler('init', 'system', 'menu_builder_init');
 function menu_builder_init() {
 
 	elgg_extend_view('css/admin', 'css/menu_builder/admin.css');
-	
-	// add our own css
-	elgg_register_css('menu_builder_site', elgg_get_simplecache_url('css', 'css/menu_builder/site_menu.css'));
-	
+
 	// plugin hooks
-	elgg_register_plugin_hook_handler('prepare', 'menu:site', '\ColdTrick\MenuBuilder\MenuHooks::prepareSiteMenu', 900);
-	
 	elgg_register_plugin_hook_handler('prepare', 'all', '\ColdTrick\MenuBuilder\MenuHooks::prepareMenuSetSelected', 9999);
+	elgg_register_plugin_hook_handler('prepare', 'menu:site', '\ColdTrick\MenuBuilder\MenuHooks::prepareSiteMenu', 900);
 	
 	// events
 	elgg_register_event_handler('ready', 'system', 'menu_builder_ready');
-	elgg_register_event_handler('upgrade', 'system', '\ColdTrick\MenuBuilder\Upgrade::migrateEntitiesToJSON');
 	
 	// ajax views
 	elgg_register_ajax_view('menu_builder/import');
 	elgg_register_ajax_view('menu_builder/edit_item');
-	
-	// register actions
-	elgg_register_action('menu_builder/regen_site_menu', dirname(__FILE__) . '/actions/regen_site_menu.php', 'admin');
-	
-	elgg_register_action('menu_builder/menu/reorder', dirname(__FILE__) . '/actions/menu/reorder.php', 'admin');
-	elgg_register_action('menu_builder/menu/export', dirname(__FILE__) . '/actions/menu/export.php', 'admin');
-	elgg_register_action('menu_builder/menu/import', dirname(__FILE__) . '/actions/menu/import.php', 'admin');
-	
-	elgg_register_action('menu_builder/menu/edit', dirname(__FILE__) . '/actions/menu/edit.php', 'admin');
-	elgg_register_action('menu_builder/menu/delete', dirname(__FILE__) . '/actions/menu/delete.php', 'admin');
-	elgg_register_action('menu_builder/menu_item/edit', dirname(__FILE__) . '/actions/menu_item/edit.php', 'admin');
-	elgg_register_action('menu_builder/menu_item/delete', dirname(__FILE__) . '/actions/menu_item/delete.php', 'admin');
-	
 }
 
 /**

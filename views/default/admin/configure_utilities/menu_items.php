@@ -37,12 +37,15 @@ if (!empty($menus)) {
 	$menu_list = elgg_echo('notfound');
 }
 
-$tabs[] = [
-	'text' => ' <strong>+</strong> ' . elgg_echo('menu_builder:admin:menu:add'),
+$menu = elgg_view('output/url', [
+	'text' => elgg_echo('menu_builder:admin:menu:add'),
+	'icon' => 'plus',
 	'id' => 'menu-builder-add-menu',
-	'href' => 'javascript:void(0)',
-];
+	'href' => false,
+]);
 
 $menu_list = elgg_view('navigation/tabs', ['tabs' => $tabs, 'class' => 'menu-builder-admin-tabs']) . $menu_list;
 
-echo elgg_view_module('inline', elgg_echo('menu_builder:admin:menu:list'), $menu_list);
+echo elgg_view_module('info', elgg_echo('menu_builder:admin:menu:list'), $menu_list, [
+	'menu' => $menu,
+]);

@@ -5,8 +5,7 @@ $menu_name = get_input('menu_name');
 $managed_menus = menu_builder_get_managed_menus();
 
 if (!in_array($menu_name, $managed_menus)) {
-	register_error(elgg_echo('menu_builder:actions:edit:error:input'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('menu_builder:actions:edit:error:input'));
 }
 
 $filter = true;
@@ -27,5 +26,4 @@ $menu->addMenuItem([
 	'parent_name' => get_input('parent_name'),
 ]);
 
-system_message(elgg_echo('menu_builder:actions:edit:success'));
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('menu_builder:actions:edit:success'));

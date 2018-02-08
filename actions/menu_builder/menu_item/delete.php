@@ -13,5 +13,4 @@ menu_builder_delete_menu_item($name, $menu_items);
 
 $menu->setMenuConfig($menu_items);
 
-system_message(elgg_echo('menu_builder:actions:delete:success'));
-forward("admin/appearance/menu_items?menu_name={$menu_name}");
+return elgg_ok_response('', elgg_echo('menu_builder:actions:delete:success'), "admin/configure_utilities/menu_items?menu_name={$menu_name}");

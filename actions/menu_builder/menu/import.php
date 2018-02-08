@@ -5,15 +5,13 @@ $menu_name = get_input('menu_name');
 $contents = get_uploaded_file('import');
 
 if (empty($contents)) {
-	register_error(elgg_echo('menu_builder:actions:import:error:upload'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('menu_builder:actions:import:error:upload'));
 }
 
 $config = json_decode($contents, true);
 
 if (!is_array($config) || empty($config)) {
-	register_error(elgg_echo('menu_builder:actions:import:error:invalid:content'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('menu_builder:actions:import:error:invalid:content'));
 }
 
 // assume we're good at this point, delete current menu
@@ -52,5 +50,4 @@ foreach ($config as $item) {
 	$menu->addMenuItem($item);
 }
 
-system_message(elgg_echo('menu_builder:actions:import:complete'));
-forward('admin/appearance/menu_items?menu_name=' . $menu_name);
+return elgg_ok_response('', elgg_echo('menu_builder:actions:import:complete'), "admin/configure_utilities/menu_items?menu_name={$menu_name}");

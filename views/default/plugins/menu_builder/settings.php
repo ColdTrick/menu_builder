@@ -2,19 +2,15 @@
 
 $plugin = elgg_extract('entity', $vars);
 
-$setting = elgg_echo('menu_builder:settings:htmlawed:filter');
-
-$setting .= elgg_view('input/dropdown', [
+echo elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('menu_builder:settings:htmlawed:filter'),
 	'name' => 'params[htmlawed_filter]',
-	'value' => $plugin->htmlawed_filter ? $plugin->htmlawed_filter : 'yes',
-	'options_values' => [
-		'yes' => elgg_echo('option:yes'),
-		'no' => elgg_echo('option:no'),
-	],
-	'class' => 'mls',
+	'checked' => $plugin->htmlawed_filter !== 'no',
+	'switch' => true,
+	'default' => 'no',
+	'value' => 'yes',
 ]);
-
-echo elgg_format_element('div', [], $setting);
 
 $setting = elgg_echo('menu_builder:settings:regen_site_menu') . ' ';
 $setting .= elgg_view('output/url', [
@@ -22,6 +18,5 @@ $setting .= elgg_view('output/url', [
 	'href' => 'action/menu_builder/regen_site_menu',
 	'confirm' => elgg_echo('question:areyousure'),
 ]);
-
 
 echo elgg_format_element('div', [], $setting);

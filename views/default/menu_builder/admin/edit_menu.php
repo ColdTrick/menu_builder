@@ -1,8 +1,5 @@
 <?php
 
-elgg_load_js('lightbox');
-elgg_load_css('lightbox');
-
 $menu = elgg_extract('menu', $vars);
 unset($vars['menu']);
 
@@ -28,12 +25,11 @@ $button_bank .= elgg_view('output/url', [
 	'href' => 'ajax/view/menu_builder/import?menu_name=' . $menu,
 	'text' => elgg_echo('import'),
 	'class' => 'elgg-button elgg-button-submit elgg-lightbox',
-	'data-colorbox-opts' => json_encode(['width' => '50%']),
 ]);
 $button_bank .= elgg_view('output/url', [
 	'href' => 'action/menu_builder/menu/delete?menu_name=' . $menu,
 	'text' => elgg_echo('delete'),
-	'confirm' => elgg_echo('question:areyousure'),
+	'confirm' => true,
 	'class' => 'elgg-button elgg-button-submit',
 ]);
 

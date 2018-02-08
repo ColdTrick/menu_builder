@@ -27,9 +27,6 @@ define(function(require) {
 		if ($tab.parent().hasClass('elgg-state-selected')) {
 			return;
 		}
-		if ($tab.parent().attr('id') === 'menu-builder-add-menu') {
-			return;
-		}
 		
 		$tab.parents('.elgg-tabs').find('.elgg-state-selected').removeClass('elgg-state-selected');
 		
