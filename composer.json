@@ -3,7 +3,7 @@
 	"description": "More control options for the site menu items",
 	"type": "elgg-plugin",
 	"keywords": ["elgg", "plugin", "navigation"],
-	"license": "GPL-2.0",
+	"license": "GPL-2.0-only",
 	"support": {
 		"source": "https://github.com/ColdTrick/menu_builder",
 		"issues": "https://github.com/ColdTrick/menu_builder/issues"
@@ -16,6 +16,6 @@
 		"coldtrick/releases": "dev-master"
 	},
 	"conflict": {
-		"elgg/elgg": "<2.3"
+		"elgg/elgg": "<3.0"
 	}
 }
