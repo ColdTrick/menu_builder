@@ -8,7 +8,7 @@ if (!elgg_in_context('admin')) {
 
 if ($data) {
 	echo $data;
-} elseif ($menu_name !== 'site') {
+} else {
 	echo elgg_view('navigation/menu/default', $vars);
 }
 
