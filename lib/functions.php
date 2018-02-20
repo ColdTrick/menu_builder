@@ -33,25 +33,3 @@ function menu_builder_is_managed_menu($menu_name) {
 	$menus = menu_builder_get_managed_menus();
 	return in_array($menu_name, $menus);
 }
-
-/**
- * Recursively deletes menu_items
- *
- * @param string $menu_name  name of the menu item to delete
- * @param array  $menu_items array of menu items
- *
- * @return void
- */
-function menu_builder_delete_menu_item($menu_name, &$menu_items) {
-	
-	if (empty($menu_name) || empty($menu_items)) {
-		return;
-	}
-	
-	unset($menu_items[$menu_name]);
-	foreach ($menu_items as $key => $item) {
-		if ($item['parent_name'] == $menu_name) {
-			menu_builder_delete_menu_item($key, $menu_items);
-		}
-	}
-}

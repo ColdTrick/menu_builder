@@ -124,6 +124,26 @@ class Menu {
 	}
 	
 	/**
+	 * Removes a menu item
+	 *
+	 * @param string $name name of the menu item to remove
+	 *
+	 * @return void
+	 */
+	public function removeMenuItem($name) {
+		
+		$current_config = $this->getMenuConfig();
+		unset($current_config[$name]);
+		$this->setMenuConfig($current_config);
+		
+		foreach ($current_config as $key => $item) {
+			if ($item['parent_name'] == $name) {
+				$this->removeMenuItem($key);
+			}
+		}
+	}
+	
+	/**
 	 * Returns the current menu items config
 	 *
 	 * @return array
