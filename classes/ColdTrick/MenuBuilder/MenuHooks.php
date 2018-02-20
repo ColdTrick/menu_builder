@@ -95,7 +95,7 @@ class MenuHooks {
 		if (elgg_in_context('menu_builder_manage')) {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'menu_builder_add',
-				'text' => '<strong>+</strong>&nbsp;&nbsp;' . elgg_echo('menu_builder:edit_mode:add'),
+				'text' => elgg_view_icon('plus', ['class' => 'mhm']) . elgg_echo('menu_builder:edit_mode:add'),
 				'href' => 'ajax/view/menu_builder/edit_item?item_name=menu_builder_add&menu_name=' . $current_menu,
 				'link_class' => 'elgg-lightbox',
 				'menu_builder_menu_name' => $current_menu,
@@ -313,16 +313,15 @@ class MenuHooks {
 			
 			$text .= elgg_format_element('span', [
 				'title' => elgg_echo('edit'),
-				'class' => 'elgg-lightbox',
+				'class' => ['elgg-lightbox', 'mls'],
 				'data-colorbox-opts' => json_encode(['href' => elgg_normalize_url("ajax/view/menu_builder/edit_item?item_name={$name}&menu_name={$menu_name}")]),
 			], elgg_view_icon('settings-alt'));
 			
 			$text .= elgg_format_element('span', [
 				'title' => elgg_echo('delete'),
+				'class' => 'mls',
 				'data-href' => elgg_add_action_tokens_to_url("action/menu_builder/menu_item/delete?item_name={$name}&menu_name={$menu_name}"),
 			], elgg_view_icon('delete'));
-
-			$text = elgg_view('output/url', ['href' => '#', 'text' => $text]);
 
 			$menu_item->setText($text);
 			$menu_item->setHref(false);
@@ -331,14 +330,6 @@ class MenuHooks {
 			if ($children) {
 				self::prepareMenuItemsEdit($children);
 			}
-			
-			// add a placeholder child menu item for sorting
-			$menu_item->addChild(\ElggMenuItem::factory([
-				'name' => 'placeholder',
-				'text' => elgg_echo('menu_builder:admin:menu:placeholder'),
-				'href' => '#',
-				'item_class' => 'hidden',
-			]));
 		}
 	}
 	
