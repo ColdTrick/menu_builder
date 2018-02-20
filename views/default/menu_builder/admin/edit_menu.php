@@ -15,25 +15,36 @@ $menu_items = elgg_view_menu($menu, [
 
 elgg_pop_context();
 
-$button_bank = elgg_view('output/url', [
-	'href' => 'action/menu_builder/menu/export?menu_name=' . $menu,
-	'is_action' => true,
-	'text' => elgg_echo('export'),
-	'class' => 'elgg-button elgg-button-submit',
-]);
-$button_bank .= elgg_view('output/url', [
-	'href' => 'ajax/view/menu_builder/import?menu_name=' . $menu,
-	'text' => elgg_echo('import'),
-	'class' => 'elgg-button elgg-button-submit elgg-lightbox',
-]);
-$button_bank .= elgg_view('output/url', [
-	'href' => 'action/menu_builder/menu/delete?menu_name=' . $menu,
-	'text' => elgg_echo('delete'),
-	'confirm' => true,
-	'class' => 'elgg-button elgg-button-submit',
+$button_bank = elgg_view_menu('menu-builder-menu-actions', [
+	'align' => 'right',
+	'class' => ['elgg-menu-hz', 'mtm'],
+	'item_class' => ['mrm'],
+	'items' => [
+		[
+			'name' => 'export',
+			'text' => elgg_echo('export'),
+			'class' => 'elgg-button elgg-button-submit',
+			'href' => elgg_generate_action_url('menu_builder/menu/export', [
+				'menu_name' => $menu,
+			]),
+		],
+		[
+			'name' => 'import',
+			'text' => elgg_echo('import'),
+			'class' => 'elgg-button elgg-button-submit elgg-lightbox',
+			'href' => 'ajax/view/menu_builder/import?menu_name=' . $menu,
+		],
+		[
+			'name' => 'delete',
+			'text' => elgg_echo('delete'),
+			'confirm' => true,
+			'class' => 'elgg-button elgg-button-delete',
+			'href' => elgg_generate_action_url('menu_builder/menu/delete', [
+				'menu_name' => $menu,
+			]),
+		],
+	],
 ]);
 
-$button_bank = elgg_format_element('div', ['class' => 'menu-builder-admin-button-bank'], $button_bank);
-
-echo elgg_format_element('div', $vars, $button_bank . $menu_items);
+echo elgg_format_element('div', $vars, $menu_items . $button_bank);
 

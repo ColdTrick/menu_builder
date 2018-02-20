@@ -1,15 +1,3 @@
-.menu-builder-admin-button-bank {
-	margin: 10px 0;
-	text-align: right;
-}
-
-.menu-builder-manage .ui-sortable-placeholder {
-	visibility: visible !important;
-	border: 1px dashed #ccc;
-    border-radius: 5px;
-    margin-bottom: 2px;
-}
-
 .menu-builder-manage a {
 	border: 1px solid red;
 	display: block;
