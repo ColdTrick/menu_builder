@@ -278,13 +278,12 @@ class MenuHooks {
 			}
 	
 			foreach ($items as $item) {
-				$menu->addMenuItem([
-					'name' => $item->getName(),
-					'text' => $item->getText(),
-					'href' => str_replace(elgg_get_site_url(), '', $item->getHref()),
-					'priority' => $priority,
-					'parent_name' => $parent_name,
-				]);
+				
+				$values = $item->getValues();
+				$values['priority'] = $priority;
+				$values['parent_name'] = $parent_name;
+				
+				$menu->addMenuItem($values);
 	
 				$priority += 10;
 			}

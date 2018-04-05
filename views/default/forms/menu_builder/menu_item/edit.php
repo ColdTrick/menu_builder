@@ -54,6 +54,12 @@ $fields = [
 		'value' => $href,
 	],
 	[
+		'#type' => 'text',
+		'#label' => elgg_echo('menu_builder:add:form:icon'),
+		'name' => 'icon',
+		'value' => elgg_extract('icon', $menu_item),
+	],
+	[
 		'#type' => 'checkbox',
 		'#label' => elgg_echo('menu_builder:add:action:tokens'),
 		'name' => 'is_action',

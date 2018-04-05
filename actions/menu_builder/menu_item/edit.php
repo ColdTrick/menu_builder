@@ -19,6 +19,7 @@ $menu->addMenuItem([
 	'name' => get_input('name'),
 	'text' => get_input('text', null, $filter),
 	'href' => get_input('href', null, $filter),
+	'icon' => get_input('icon', null),
 	'access_id' => (int) get_input('access_id', ACCESS_PUBLIC),
 	'target' => get_input('target'),
 	'is_action' => get_input('is_action', false),

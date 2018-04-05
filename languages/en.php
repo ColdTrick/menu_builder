@@ -19,6 +19,7 @@ return array(
 
 	// add
 	'menu_builder:add:form:url' => "URL",
+	'menu_builder:add:form:icon' => "Icon",
 	'menu_builder:add:form:target' => "Target",
 	'menu_builder:add:form:target:self' => "Same Window",
 	'menu_builder:add:form:target:blank' => "New Window",
