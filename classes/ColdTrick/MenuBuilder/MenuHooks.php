@@ -134,8 +134,8 @@ class MenuHooks {
 		}
 	
 		ksort($ordered);
-	
-		$return['default'] = $ordered;
+		
+		$return['default']->fill($ordered);
 	
 		// prepare menu items for edit
 		if (elgg_in_context('menu_builder_manage')) {
