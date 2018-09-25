@@ -56,7 +56,7 @@ define(function(require) {
 			var $item = $(ui.item);
 			var item_name = getMenuItemNameFromClass($item.attr('class'));
 			var parent_name = '';
-			if (!$item.parent().parent().hasClass('menu-builder-admin-menu')) {
+			if (!$item.parent().parent().hasClass('elgg-menu-container')) {
 				parent_name = getMenuItemNameFromClass($item.parent().parent().attr('class'));
 			}
 			var menu_name = $item.parents('.menu-builder-admin-menu').attr('rel');			

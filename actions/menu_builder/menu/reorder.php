@@ -8,7 +8,7 @@ $item_name = get_input('item_name');
 $parent_name = get_input('parent_name');
 $items = get_input('items');
 
-if (empty($item_name) || empty($item_name) || empty($items)) {
+if (empty($menu_name) || empty($item_name) || empty($items)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
