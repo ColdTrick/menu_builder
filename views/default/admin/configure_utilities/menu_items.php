@@ -30,7 +30,7 @@ if (!empty($menus)) {
 			'text' => elgg_echo('menu:' . elgg_get_friendly_title($menu) . ':header:default'),
 			'selected' => ($menu === $selected),
 			'rel' => $menu,
-			'href' => 'javascript:void(0)',
+			'href' => false,
 		];
 	}
 } else {
