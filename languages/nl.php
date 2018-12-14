@@ -1,15 +1,15 @@
 <?php
 /**
- * This file was created by Translation Editor v4.0
- * On 2016-02-24 11:59
+ * This file was created by Translation Editor v7.0-beta
+ * On 2018-12-14 15:27
  */
 
 return array (
+  'menu_builder:add:form:icon' => 'Icoon',
   'menu_builder:import:title' => 'Importeer menu items voor %s',
   'menu_builder:actions:missing_name' => 'Ontbrekende menu naam',
   'menu_builder:settings:regen_site_menu:button' => 'Opnieuw aanmaken!',
   'menu_builder:settings:regen_site_menu' => 'Met deze link kun je er voor kiezen om het site menu opnieuw te genereren. Dit zal het bestaande site menu overschrijven met de standaard geregistreerde menu items.',
-  'menu_builder:admin:menu:placeholder' => 'Enkel aanwezig voor sortering',
   'menu_builder:admin:menu:list' => 'Beheersbare menu\'s',
   'menu_builder:admin:menu:add' => 'Nieuw menu',
   'menu_builder:admin:menu:add:internal_name' => 'Interne menu naam',
@@ -30,7 +30,6 @@ return array (
   'menu_builder:add:form:target:blank' => 'Nieuw venster',
   'menu_builder:add:form:parent' => 'Hoofd menu item',
   'menu_builder:add:form:access' => 'Wie kan dit menu item zien?',
-  'menu_builder:add:access:admin_only' => 'Enkel admins',
   'menu_builder:actions:edit:error:input' => 'Foutieve invoer',
   'menu_builder:actions:edit:success' => 'Menu item opgeslagen',
   'menu_builder:actions:delete:success' => 'Menu item verwijderd',
