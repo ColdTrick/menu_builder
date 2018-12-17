@@ -131,16 +131,16 @@ class MenuHooks {
 				}
 				$ordered[$priority] = $menu_item;
 			}
-		}
-	
-		ksort($ordered);
 		
-		$return['default']->fill($ordered);
-	
+			ksort($ordered);
+			
+			$return['default']->fill($ordered);
+		}
+		
 		// prepare menu items for edit
 		if (elgg_in_context('menu_builder_manage')) {
 	
-			$menu = elgg_extract('default', $return);
+			$menu = elgg_extract('default', $return, []);
 	
 			self::prepareMenuItemsEdit($menu);
 		}
