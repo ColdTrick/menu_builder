@@ -42,7 +42,7 @@ foreach ($config as $item) {
 	
 	// only import supported data
 	foreach ($item as $key => $value) {
-		if (!in_array($key, ['name', 'text', 'href', 'access_id', 'target', 'is_action', 'priority', 'parent_name'])) {
+		if (!in_array($key, ['name', 'text', 'href', 'access_id', 'target', 'is_action', 'priority', 'parent_name', 'icon'])) {
 			unset($item[$key]);
 		}
 	}
