@@ -2,13 +2,13 @@
 
 $menu_name = get_input('menu_name');
 
-$contents = get_uploaded_file('import');
+$file = elgg_get_uploaded_file('import');
 
-if (empty($contents)) {
+if (empty($file)) {
 	return elgg_error_response(elgg_echo('menu_builder:actions:import:error:upload'));
 }
 
-$config = json_decode($contents, true);
+$config = json_decode(file_get_contents($file), true);
 
 if (!is_array($config) || empty($config)) {
 	return elgg_error_response(elgg_echo('menu_builder:actions:import:error:invalid:content'));
