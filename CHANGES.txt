@@ -1,6 +1,15 @@
 Version history
 ===============
 
+5.0 (2019-03-27):
+
+- added: ability to add/edit icon of menu item
+- changed: minimal requirements now require Elgg 3.0
+- changed: removing a menu item now is a class function
+- changed: updates for Elgg 3.0
+- fix: only try reordering menu if there is one during prepare hook
+- fixed: allow import of icon attribute for menu items
+
 4.0 (2017-07-31):
 
 - changed: only reset system_cache for the changed menu
