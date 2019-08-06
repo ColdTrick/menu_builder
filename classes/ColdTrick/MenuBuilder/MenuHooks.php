@@ -6,15 +6,12 @@ class MenuHooks {
 	/**
 	 * Adds the menu items to the menus managed by menu_builder
 	 *
-	 * @param string  $hook   name of the hook
-	 * @param string  $type   type of the hook
-	 * @param unknown $return return value
-	 * @param unknown $params hook parameters
+	 * @param \Elgg\Hook $hook 'register', "menu:{$menu_name}"
 	 *
 	 * @return array
 	 */
-	public static function registerAllMenu($hook, $type, $return, $params) {
-		$current_menu = $params['name'];
+	public static function registerAllMenu(\Elgg\Hook $hook) {
+		$current_menu = $hook->getParam('name');
 		$return = []; // need to reset as there should be no other way to add menu items
 	
 		$menu = new \ColdTrick\MenuBuilder\Menu($current_menu);
@@ -109,18 +106,16 @@ class MenuHooks {
 	/**
 	 * Makes menus managable if needed
 	 *
-	 * @param string  $hook   name of the hook
-	 * @param string  $type   type of the hook
-	 * @param unknown $return return value
-	 * @param unknown $params hook parameters
+	 * @param \Elgg\Hook $hook 'prepare', "menu:{$menu_name}"
 	 *
 	 * @return array
 	 */
-	public static function prepareAllMenu($hook, $type, $return, $params) {
+	public static function prepareAllMenu(\Elgg\Hook $hook) {
 	
 		// update order
 		$ordered = [];
-	
+		$return = $hook->getValue();
+		
 		if (isset($return['default'])) {
 			foreach ($return['default'] as $menu_item) {
 	
@@ -151,33 +146,30 @@ class MenuHooks {
 	/**
 	 * Caches menus
 	 *
-	 * @param string  $hook   name of the hook
-	 * @param string  $type   type of the hook
-	 * @param unknown $return return value
-	 * @param unknown $params hook parameters
+	 * @param \Elgg\Hook $hook 'view', "navigation/menu/{$menu_name}"
 	 *
 	 * @return void
 	 */
-	public static function viewMenu($hook, $type, $return, $params) {
+	public static function viewMenu(\Elgg\Hook $hook) {
 		if (elgg_in_context('admin')) {
 			return;
 		}
-	
-		$menu = new \ColdTrick\MenuBuilder\Menu($params['vars']['name']);
-		$menu->saveToCache($return);
+
+		$name = elgg_extract('name', $hook->getParam('vars'));
+		
+		$menu = new \ColdTrick\MenuBuilder\Menu($name);
+		$menu->saveToCache($hook->getValue());
 	}
 	
 	/**
 	 * Replaces dynamic data in menu's
 	 *
-	 * @param string  $hook   name of the hook
-	 * @param string  $type   type of the hook
-	 * @param unknown $return return value
-	 * @param unknown $params hook parameters
+	 * @param \Elgg\Hook $hook 'view', "navigation/menu/{$menu_name}"
 	 *
 	 * @return void
 	 */
-	public static function afterViewMenu($hook, $type, $return, $params) {
+	public static function afterViewMenu(\Elgg\Hook $hook) {
+		$return = $hook->getValue();
 		if (empty($return)) {
 			return $return;
 		}
@@ -205,27 +197,20 @@ class MenuHooks {
 	/**
 	 * Make sure all items are selected correctly
 	 *
-	 * @param string  $hook   name of the hook
-	 * @param string  $type   type of the hook
-	 * @param unknown $return return value
-	 * @param unknown $params hook parameters
+	 * @param \Elgg\Hook $hook 'prepare', 'all'
 	 *
 	 * @return array
 	 */
-	public static function prepareMenuSetSelected($hook, $type, $return, $params) {
+	public static function prepareMenuSetSelected(\Elgg\Hook $hook) {
 	
-		if (strpos($type, 'menu:') !== 0) {
-			return $return;
-		}
-	
-		if (empty($params) || !is_array($params)) {
-			return $return;
+		if (strpos($hook->getType(), 'menu:') !== 0) {
+			return;
 		}
 	
 		// set selected state on parent menu items
-		$item = elgg_extract('selected_item', $params);
-		if (empty($item) || !($item instanceof \ElggMenuItem)) {
-			return $return;
+		$item = $hook->getParam('selected_item');
+		if (!$item instanceof \ElggMenuItem) {
+			return;
 		}
 	
 		while ($item && ($item = $item->getParent())) {
@@ -236,14 +221,11 @@ class MenuHooks {
 	/**
 	 * Loads initially the site menu into the menu_builder config.
 	 *
-	 * @param string  $hook   name of the hook
-	 * @param string  $type   type of the hook
-	 * @param unknown $return return value
-	 * @param unknown $params hook parameters
+	 * @param \Elgg\Hook $hook 'prepare', 'menu:site'
 	 *
 	 * @return array
 	 */
-	public static function prepareSiteMenu($hook, $type, $return, $params) {
+	public static function prepareSiteMenu(\Elgg\Hook $hook) {
 		if (elgg_get_plugin_setting('menu_builder_default_imported', 'menu_builder', false)) {
 			return;
 		}
@@ -261,7 +243,8 @@ class MenuHooks {
 		elgg_unset_plugin_setting('menu_site_config', 'menu_builder');
 		
 		$priority = 10;
-
+		
+		$return = $hook->getValue();
 		foreach ($return as $section => $items) {
 			$parent_name = null;
 	
