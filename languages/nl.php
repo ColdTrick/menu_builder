@@ -1,10 +1,11 @@
 <?php
 /**
- * This file was created by Translation Editor v7.0-beta
- * On 2018-12-14 15:27
+ * This file was created by Translation Editor v7.0.4
+ * On 2019-08-28 10:36
  */
 
 return array (
+  'menu_builder:add:lightbox' => 'Toon in lightbox',
   'menu_builder:add:form:icon' => 'Icoon',
   'menu_builder:import:title' => 'Importeer menu items voor %s',
   'menu_builder:actions:missing_name' => 'Ontbrekende menu naam',
@@ -13,7 +14,7 @@ return array (
   'menu_builder:admin:menu:list' => 'Beheersbare menu\'s',
   'menu_builder:admin:menu:add' => 'Nieuw menu',
   'menu_builder:admin:menu:add:internal_name' => 'Interne menu naam',
-  'menu_builder:add:action:tokens' => 'Actie',
+  'menu_builder:add:action:tokens' => 'Voeg actie tokens toe',
   'menu_builder:import:warning' => 'Het importeren van het site menu overschrijft het huidige menu, dit is niet ongedaan te maken. Ga verder op eigen risico.<br><br>Na het importeren controleer de links op hard-coded urls, aangezien deze nog naar het verkeerde domein kunnen wijzen als je geen gebruik hebt gemaakt van relatieve links, of als je importeert vanaf een systeem in een subfolder of importeert naar een systeem in een subfolder',
   'menu_builder:import:help' => 'Upload een bestand van een geëxporteerd menu',
   'menu_builder:actions:export:error:empty' => 'Er zijn geen menu items beschikbaar om te exporteren',

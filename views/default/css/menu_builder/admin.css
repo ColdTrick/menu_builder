@@ -1,24 +1,32 @@
-.menu-builder-manage a {
-	border: 1px solid red;
-	display: block;
-	padding: 5px;
-	color: #333;
-	cursor: pointer;
-	text-decoration: none;
-	margin-bottom: 2px;
-	border: 1px solid #CCC;
-	border-radius: 5px;
-}
-.menu-builder-manage a:hover {
-	text-decoration: none;
-	background: black;
-	color: white;
-	border: 1px solid black;
-}
-.menu-builder-manage .elgg-child-menu {
-	padding-left: 30px;
-}
+.menu-builder-manage {
+	a {
+		border: 1px solid red;
+		display: block;
+		padding: 5px;
+		color: #333;
+		cursor: pointer;
+		text-decoration: none;
+		margin-bottom: 2px;
+		border: 1px solid #CCC;
+		border-radius: 5px;
+		
+		&:hover {
+			text-decoration: none;
+			background: black;
+			color: white;
+			border: 1px solid black;
+		}
+	}
+	
+	.elgg-child-menu {
+		padding-left: 30px;
+	}
 
-.menu-builder-manage .ui-sortable-helper .elgg-child-menu {
-	display: none;
+	.ui-sortable-helper .elgg-child-menu {
+		display: none;
+	}
+	
+	span.menu-builder-action:hover {
+		cursor: pointer;
+	}
 }

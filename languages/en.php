@@ -24,7 +24,8 @@ return array(
 	'menu_builder:add:form:target:blank' => "New Window",
 	'menu_builder:add:form:parent' => "Parent menu item",
 	'menu_builder:add:form:access' => "Who can see this menu item?",
-	'menu_builder:add:action:tokens' => "Action",
+	'menu_builder:add:action:tokens' => "Add action tokens",
+	'menu_builder:add:lightbox' => "Open in lightbox",
 
 	// import
 	'menu_builder:import:title' => "Importing menu items for %s",

@@ -23,6 +23,7 @@ $menu->addMenuItem([
 	'access_id' => (int) get_input('access_id', ACCESS_PUBLIC),
 	'target' => get_input('target'),
 	'is_action' => get_input('is_action', false),
+	'lightbox' => get_input('lightbox', false),
 	'priority' => get_input('priority', time()),
 	'parent_name' => get_input('parent_name'),
 ]);

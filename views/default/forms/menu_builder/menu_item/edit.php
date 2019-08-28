@@ -68,6 +68,14 @@ $fields = [
 		'switch' => true,
 	],
 	[
+		'#type' => 'checkbox',
+		'#label' => elgg_echo('menu_builder:add:lightbox'),
+		'name' => 'lightbox',
+		'value' => 1,
+		'checked' => (bool) elgg_extract('lightbox', $menu_item),
+		'switch' => true,
+	],
+	[
 		'#type' => 'access',
 		'#label' => elgg_echo('menu_builder:add:form:access'),
 		'name' => 'access_id',

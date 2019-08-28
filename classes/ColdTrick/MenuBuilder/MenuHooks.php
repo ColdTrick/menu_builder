@@ -3,6 +3,7 @@
 namespace ColdTrick\MenuBuilder;
 
 class MenuHooks {
+	
 	/**
 	 * Adds the menu items to the menus managed by menu_builder
 	 *
@@ -37,11 +38,6 @@ class MenuHooks {
 				if (elgg_in_context('menu_builder_manage')) {
 					$menu_item['menu_builder_menu_name'] = $current_menu;
 				} else {
-						
-					if (empty($menu_item['target'])) {
-						unset($menu_item['target']);
-					}
-	
 					$access_id = $menu_item['access_id'];
 					unset($menu_item['access_id']);
 					switch($access_id) {
@@ -66,24 +62,36 @@ class MenuHooks {
 				if (!$can_add_menu_item) {
 					continue;
 				}
-					
+				
+				if (empty($menu_item['target'])) {
+					unset($menu_item['target']);
+				}
+				
 				// strip out deprecated use of [wwwroot] as menu items will be normalized by default
 				$menu_item['href'] = str_replace('[wwwroot]', '', $menu_item['href']);
-					
+				
 				// add global replacable action tokens
-				if ($menu_item['is_action'] && !elgg_in_context('menu_builder_manage')) {
-					unset($menu_item['is_action']);
-	
+				$is_action = (bool) elgg_extract('is_action', $menu_item, false);
+				unset($menu_item['is_action']);
+				if ($is_action && !elgg_in_context('menu_builder_manage')) {
 					$concat = '?';
 					if (stristr($menu_item['href'], '?')) {
 						$concat = '&';
 					}
 					$menu_item['href'] .= $concat . '__elgg_ts=[__elgg_ts]&__elgg_token[__elgg_token]';
 				}
-					
+				
+				// open in lightbox
+				$lightbox = (bool) elgg_extract('lightbox', $menu_item, false);
+				unset($menu_item['lightbox']);
+				if ($lightbox) {
+					$menu_item['link_class'] = ['elgg-lightbox'];
+				}
+				
 				if (empty($menu_item['href'])) {
 					$menu_item['href'] = false;
 				}
+				
 				$return[] = \ElggMenuItem::factory($menu_item);
 			}
 		}
@@ -92,8 +100,12 @@ class MenuHooks {
 		if (elgg_in_context('menu_builder_manage')) {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'menu_builder_add',
-				'text' => elgg_view_icon('plus', ['class' => 'mhm']) . elgg_echo('menu_builder:edit_mode:add'),
-				'href' => 'ajax/view/menu_builder/edit_item?item_name=menu_builder_add&menu_name=' . $current_menu,
+				'icon' => 'plus',
+				'text' => elgg_echo('menu_builder:edit_mode:add'),
+				'href' => elgg_http_add_url_query_elements('ajax/view/menu_builder/edit_item', [
+					'item_name' => 'menu_builder_add',
+					'menu_name' => $current_menu,
+				]),
 				'link_class' => 'elgg-lightbox',
 				'menu_builder_menu_name' => $current_menu,
 				'priority' => time(),
@@ -166,7 +178,7 @@ class MenuHooks {
 	 *
 	 * @param \Elgg\Hook $hook 'view', "navigation/menu/{$menu_name}"
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public static function afterViewMenu(\Elgg\Hook $hook) {
 		$return = $hook->getValue();
@@ -278,7 +290,7 @@ class MenuHooks {
 	/**
 	 * Prepares menu items to be edited
 	 *
-	 * @param array $menu array of \ElggMenuItem objects
+	 * @param \ElggMenuItem[] $menu array of \ElggMenuItem objects
 	 *
 	 * @return void
 	 */
@@ -295,14 +307,22 @@ class MenuHooks {
 			
 			$text .= elgg_format_element('span', [
 				'title' => elgg_echo('edit'),
-				'class' => ['elgg-lightbox', 'mls'],
-				'data-colorbox-opts' => json_encode(['href' => elgg_normalize_url("ajax/view/menu_builder/edit_item?item_name={$name}&menu_name={$menu_name}")]),
+				'class' => ['elgg-lightbox', 'mls', 'menu-builder-action'],
+				'data-colorbox-opts' => json_encode([
+					'href' => elgg_http_add_url_query_elements('ajax/view/menu_builder/edit_item', [
+						'item_name' => $name,
+						'menu_name' => $menu_name,
+					]),
+				]),
 			], elgg_view_icon('settings-alt'));
 			
 			$text .= elgg_format_element('span', [
 				'title' => elgg_echo('delete'),
-				'class' => 'mls',
-				'data-href' => elgg_add_action_tokens_to_url("action/menu_builder/menu_item/delete?item_name={$name}&menu_name={$menu_name}"),
+				'class' => ['mls', 'menu-builder-action'],
+				'data-href' => elgg_generate_action_url('menu_builder/menu_item/delete', [
+					'item_name' => $name,
+					'menu_name' => $menu_name,
+				]),
 			], elgg_view_icon('delete'));
 
 			$menu_item->setText($text);

@@ -93,6 +93,7 @@ class Menu {
 		$defaults = [
 			'access_id' => ACCESS_PUBLIC,
 			'is_action' => false,
+			'lightbox' => false,
 			'priority' => time(),
 		];
 		
