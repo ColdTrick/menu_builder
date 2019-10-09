@@ -42,13 +42,6 @@ function menu_builder_ready() {
 	foreach ($managed_menus as $menu_name) {
 		elgg_register_plugin_hook_handler('register', "menu:{$menu_name}", '\ColdTrick\MenuBuilder\MenuHooks::registerAllMenu', 999);
 		elgg_register_plugin_hook_handler('prepare', "menu:{$menu_name}", '\ColdTrick\MenuBuilder\MenuHooks::prepareAllMenu', 999);
-		
-		if (!elgg_in_context('admin')) {
-			// extend view for cache output
-			elgg_extend_view("navigation/menu/{$menu_name}", 'menu_builder/menu_cache', 400);
-			
-			elgg_register_plugin_hook_handler('view', "navigation/menu/{$menu_name}", '\ColdTrick\MenuBuilder\MenuHooks::afterViewMenu', 9999);
-		}
 	}
 }
 

@@ -16,11 +16,6 @@ class MenuHooks {
 		$return = []; // need to reset as there should be no other way to add menu items
 	
 		$menu = new \ColdTrick\MenuBuilder\Menu($current_menu);
-		
-		if (!elgg_in_context('admin') && $menu->getCachedData()) {
-			// don't get menu as it will be handle by the cache @see menu_builder_view_navigation_menu_default_hook
-			return $return;
-		}
 	
 		// fix menu name if needed
 		$lang_key = 'menu:' . elgg_get_friendly_title($current_menu) . ':header:default';
@@ -74,11 +69,7 @@ class MenuHooks {
 				$is_action = (bool) elgg_extract('is_action', $menu_item, false);
 				unset($menu_item['is_action']);
 				if ($is_action && !elgg_in_context('menu_builder_manage')) {
-					$concat = '?';
-					if (stristr($menu_item['href'], '?')) {
-						$concat = '&';
-					}
-					$menu_item['href'] .= $concat . '__elgg_ts=[__elgg_ts]&__elgg_token[__elgg_token]';
+					$menu_item['is_action'] = true;
 				}
 				
 				// open in lightbox
@@ -90,6 +81,8 @@ class MenuHooks {
 				
 				if (empty($menu_item['href'])) {
 					$menu_item['href'] = false;
+				} else {
+					$menu_item['href'] = self::replacePlaceholders($menu_item['href']);
 				}
 				
 				$return[] = \ElggMenuItem::factory($menu_item);
@@ -144,64 +137,12 @@ class MenuHooks {
 			$return['default']->fill($ordered);
 		}
 		
+		$menu = elgg_extract('default', $return, []);
+	
 		// prepare menu items for edit
 		if (elgg_in_context('menu_builder_manage')) {
-	
-			$menu = elgg_extract('default', $return, []);
-	
 			self::prepareMenuItemsEdit($menu);
 		}
-	
-		return $return;
-	}
-	
-	/**
-	 * Caches menus
-	 *
-	 * @param \Elgg\Hook $hook 'view', "navigation/menu/{$menu_name}"
-	 *
-	 * @return void
-	 */
-	public static function viewMenu(\Elgg\Hook $hook) {
-		if (elgg_in_context('admin')) {
-			return;
-		}
-
-		$name = elgg_extract('name', $hook->getParam('vars'));
-		
-		$menu = new \ColdTrick\MenuBuilder\Menu($name);
-		$menu->saveToCache($hook->getValue());
-	}
-	
-	/**
-	 * Replaces dynamic data in menu's
-	 *
-	 * @param \Elgg\Hook $hook 'view', "navigation/menu/{$menu_name}"
-	 *
-	 * @return string
-	 */
-	public static function afterViewMenu(\Elgg\Hook $hook) {
-		$return = $hook->getValue();
-		if (empty($return)) {
-			return $return;
-		}
-	
-		// fill in username/userguid
-		$user = elgg_get_logged_in_user_entity();
-		if ($user) {
-			$return = str_replace('[username]', $user->username, $return);
-			$return = str_replace('[userguid]', $user->guid, $return);
-		} else {
-			$return = str_replace('[username]', '', $return);
-			$return = str_replace('[userguid]', '', $return);
-		}
-	
-		// add in tokens
-		$elgg_ts = time();
-		$elgg_token = generate_action_token($elgg_ts);
-	
-		$return = str_replace('[__elgg_ts]', $elgg_ts, $return);
-		$return = str_replace('[__elgg_token]', $elgg_token, $return);
 	
 		return $return;
 	}
@@ -285,6 +226,28 @@ class MenuHooks {
 		}
 	
 		elgg_set_plugin_setting('menu_builder_default_imported', time(), 'menu_builder');
+	}
+	
+	/**
+	 * Replaces placeholders in a string with actual information
+	 *
+	 * @param string $text the text to replace items in
+	 *
+	 * @return string
+	 */
+	private static function replacePlaceholders($text) {
+		$user = elgg_get_logged_in_user_entity();
+				
+		// fill in username/userguid
+		if ($user) {
+			$text = str_replace('[username]', $user->username, $text);
+			$text = str_replace('[userguid]', $user->guid, $text);
+		} else {
+			$text = str_replace('[username]', '', $text);
+			$text = str_replace('[userguid]', '', $text);
+		}
+		
+		return $text;
 	}
 	
 	/**

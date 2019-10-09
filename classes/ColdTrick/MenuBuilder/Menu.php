@@ -50,32 +50,6 @@ class Menu {
 		
 		elgg_set_plugin_setting('menu_names', json_encode($menus), 'menu_builder');
 		elgg_unset_plugin_setting("menu_{$this->name}_config", 'menu_builder');
-		
-		$this->clearMenuCache();
-	}
-	
-	/**
-	 * Checks if cached menu html is available and returns the html if it is available
-	 *
-	 * @return boolean|string
-	 */
-	public function getCachedData() {
-		if (!elgg_get_config('system_cache_enabled')) {
-			return false;
-		}
-		
-		return elgg_load_system_cache($this->getCacheName()) ?: false;
-	}
-	
-	/**
-	 * Saves data to cache location
-	 *
-	 * @param string $data data to be saved
-	 *
-	 * @return void
-	 */
-	public function saveToCache($data) {
-		elgg_save_system_cache($this->getCacheName(), $data);
 	}
 	
 	/**
@@ -165,20 +139,6 @@ class Menu {
 	 */
 	public function setMenuConfig($config = []) {
 		elgg_set_plugin_setting("menu_{$this->name}_config", json_encode($config), 'menu_builder');
-		$this->clearMenuCache();
-	}
-	
-	/**
-	 * Clears all variants of menu cache files
-	 *
-	 * @return void
-	 */
-	protected function clearMenuCache() {
-		$system_cache = elgg_get_system_cache();
-		
-		$system_cache->delete("{$this->name}_logged_in");
-		$system_cache->delete("{$this->name}_logged_out");
-		$system_cache->delete("{$this->name}_admin");
 	}
 	
 	/**
@@ -231,21 +191,5 @@ class Menu {
 		}
 		
 		return $result;
-	}
-	
-	/**
-	 * Returns the name of the cachefile to be used
-	 *
-	 * @return string
-	 */
-	private function getCacheName() {
-		$cache_name = "{$this->name}_logged_in";
-		if (!elgg_is_logged_in()) {
-			$cache_name = "{$this->name}_logged_out";
-		} elseif (elgg_is_admin_logged_in()) {
-			$cache_name = "{$this->name}_admin";
-		}
-	
-		return $cache_name;
 	}
 }
