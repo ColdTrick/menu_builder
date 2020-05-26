@@ -1,6 +1,12 @@
 Version history
 ===============
 
+6.0 (2020-05-26):
+
+- changed: increased minimal Elgg requirement to 3.3
+- changed: moved start.php to Bootstrap and elgg-plugin.php
+- removed: obsolete html caching logic
+
 5.1 (2019-09-04):
 
 - added: option to open menu items in lightbox
