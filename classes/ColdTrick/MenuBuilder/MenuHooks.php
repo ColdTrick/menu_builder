@@ -41,7 +41,7 @@ class MenuHooks {
 								$can_add_menu_item = false;
 							}
 							break;
-						case MENU_BUILDER_ACCESS_LOGGED_OUT:
+						case \ColdTrick\MenuBuilder\Menu::ACCESS_LOGGED_OUT:
 							if (elgg_is_logged_in()) {
 								$can_add_menu_item = false;
 							}
@@ -179,21 +179,22 @@ class MenuHooks {
 	 * @return array
 	 */
 	public static function prepareSiteMenu(\Elgg\Hook $hook) {
-		if (elgg_get_plugin_setting('menu_builder_default_imported', 'menu_builder', false)) {
+		$plugin = elgg_get_plugin_from_id('menu_builder');
+		if ($plugin->getSetting('menu_builder_default_imported', false)) {
 			return;
 		}
 	
 		$menu = new \ColdTrick\MenuBuilder\Menu('site');
 		if (!empty($menu->getMenuConfig())) {
 			// found an already existing menu config... do not import
-			elgg_set_plugin_setting('menu_builder_default_imported', time(), 'menu_builder');
+			$plugin->setSetting('menu_builder_default_imported', time());
 			return;
 		}
 		
 		$menu->save();
 		
 		// remove potential existing menu items
-		elgg_unset_plugin_setting('menu_site_config', 'menu_builder');
+		$plugin->unsetSetting('menu_site_config');
 		
 		$priority = 10;
 		
@@ -225,7 +226,7 @@ class MenuHooks {
 			}
 		}
 	
-		elgg_set_plugin_setting('menu_builder_default_imported', time(), 'menu_builder');
+		$plugin->setSetting('menu_builder_default_imported', time());
 	}
 	
 	/**
@@ -235,7 +236,7 @@ class MenuHooks {
 	 *
 	 * @return string
 	 */
-	private static function replacePlaceholders($text) {
+	protected static function replacePlaceholders($text) {
 		$user = elgg_get_logged_in_user_entity();
 				
 		// fill in username/userguid
@@ -257,7 +258,7 @@ class MenuHooks {
 	 *
 	 * @return void
 	 */
-	private static function prepareMenuItemsEdit($menu) {
+	protected static function prepareMenuItemsEdit($menu) {
 		foreach ($menu as $menu_item) {
 			$text = $menu_item->getText();
 	
@@ -306,7 +307,7 @@ class MenuHooks {
 	 *
 	 * @return \ElggMenuItem
 	 */
-	private static function orderMenuItem(\ElggMenuItem $item, $depth) {
+	protected static function orderMenuItem(\ElggMenuItem $item, $depth) {
 	
 		$depth = (int) $depth;
 		$children = $item->getChildren();

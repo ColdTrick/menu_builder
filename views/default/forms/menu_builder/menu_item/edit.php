@@ -9,7 +9,7 @@ $target_options = [
 $access_options = [
 	ACCESS_PUBLIC => elgg_echo('access:label:public'),
 	ACCESS_LOGGED_IN => elgg_echo('access:label:logged_in'),
-	MENU_BUILDER_ACCESS_LOGGED_OUT => elgg_echo('access:label:logged_out'),
+	\ColdTrick\MenuBuilder\Menu::ACCESS_LOGGED_OUT => elgg_echo('access:label:logged_out'),
 	ACCESS_PRIVATE => elgg_echo('access:admin_only'),
 ];
 

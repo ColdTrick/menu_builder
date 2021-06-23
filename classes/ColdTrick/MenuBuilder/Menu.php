@@ -7,7 +7,9 @@ namespace ColdTrick\MenuBuilder;
  */
 class Menu {
 	
-	private $name;
+	const ACCESS_LOGGED_OUT = -5;
+	
+	protected $name;
 	
 	public function __construct($menu_name) {
 		$this->name = $menu_name;
@@ -18,12 +20,8 @@ class Menu {
 	 *
 	 * @return void
 	 */
-	public function save() {
+	public function save(): void {
 		$menus = menu_builder_get_managed_menus();
-		if (!is_array($menus)) {
-			$menus = [];
-		}
-		
 		if (in_array($this->name, $menus)) {
 			// already exists
 			return;
@@ -31,7 +29,7 @@ class Menu {
 		
 		$menus[] = $this->name;
 		
-		elgg_set_plugin_setting('menu_names', json_encode($menus), 'menu_builder');
+		elgg_get_plugin_from_id('menu_builder')->menu_names = json_encode($menus);
 	}
 	
 	/**
@@ -39,17 +37,18 @@ class Menu {
 	 *
 	 * @return void
 	 */
-	public function delete() {
+	public function delete(): void {
 		$menus = menu_builder_get_managed_menus();
-		
 		if (!in_array($this->name, $menus)) {
 			return;
 		}
+		
 		$key = array_search($this->name, $menus);
 		unset($menus[$key]);
 		
-		elgg_set_plugin_setting('menu_names', json_encode($menus), 'menu_builder');
-		elgg_unset_plugin_setting("menu_{$this->name}_config", 'menu_builder');
+		$plugin = elgg_get_plugin_from_id('menu_builder');
+		$plugin->menu_names = json_encode($menus);
+		$plugin->unsetSetting("menu_{$this->name}_config");
 	}
 	
 	/**
@@ -59,7 +58,7 @@ class Menu {
 	 *
 	 * @return void
 	 */
-	public function addMenuItem($params = []) {
+	public function addMenuItem(array $params = []): void {
 		if (empty($params)) {
 			return;
 		}
@@ -105,7 +104,7 @@ class Menu {
 	 *
 	 * @return void
 	 */
-	public function removeMenuItem($name) {
+	public function removeMenuItem(string $name): void {
 		
 		$current_config = $this->getMenuConfig();
 		unset($current_config[$name]);
@@ -123,22 +122,20 @@ class Menu {
 	 *
 	 * @return array
 	 */
-	public function getMenuConfig() {
+	public function getMenuConfig(): array {
 		$config = json_decode(elgg_get_plugin_setting("menu_{$this->name}_config", 'menu_builder'), true);
-		if (!is_array($config)) {
-			$config = [];
-		}
-		
-		return $config;
+		return is_array($config) ? $config : [];
 	}
 	
 	/**
 	 * Saves the menu configuration
 	 *
 	 * @param array $config configuration of menu items
+	 *
+	 * @return void
 	 */
-	public function setMenuConfig($config = []) {
-		elgg_set_plugin_setting("menu_{$this->name}_config", json_encode($config), 'menu_builder');
+	public function setMenuConfig(array $config = []): void {
+		elgg_get_plugin_from_id('menu_builder')->{"menu_{$this->name}_config"} = json_encode($config);
 	}
 	
 	/**
@@ -148,7 +145,7 @@ class Menu {
 	 *
 	 * @return array
 	 */
-	public function getInputOptions($skip_menu_item) {
+	public function getInputOptions(string $skip_menu_item = ''): array {
 		$menu = elgg_trigger_plugin_hook('register', "menu:{$this->name}", ['name' => $this->name], []);
 		$builder = new \ElggMenuBuilder($menu);
 		$menu = $builder->getMenu('priority');
@@ -166,12 +163,12 @@ class Menu {
 	 *
 	 * @return array
 	 */
-	private function getIndentedOptions($menu_items, $skip_menu_item, $indent = 0) {
-		$result = [];
+	protected function getIndentedOptions($menu_items, string $skip_menu_item = '', int $indent = 0): array {
 		if (empty($menu_items)) {
-			return $result;
+			return [];
 		}
 		
+		$result = [];
 		foreach ($menu_items as $menu_item) {
 			if ($menu_item->getName() == $skip_menu_item) {
 				continue;

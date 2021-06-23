@@ -22,6 +22,7 @@ $button_bank = elgg_view_menu('menu-builder-menu-actions', [
 	'items' => [
 		[
 			'name' => 'export',
+			'icon' => 'download',
 			'text' => elgg_echo('export'),
 			'class' => 'elgg-button elgg-button-submit',
 			'href' => elgg_generate_action_url('menu_builder/menu/export', [
@@ -30,12 +31,14 @@ $button_bank = elgg_view_menu('menu-builder-menu-actions', [
 		],
 		[
 			'name' => 'import',
+			'icon' => 'upload',
 			'text' => elgg_echo('import'),
 			'class' => 'elgg-button elgg-button-submit elgg-lightbox',
 			'href' => 'ajax/view/menu_builder/import?menu_name=' . $menu,
 		],
 		[
 			'name' => 'delete',
+			'icon' => 'delete',
 			'text' => elgg_echo('delete'),
 			'confirm' => true,
 			'class' => 'elgg-button elgg-button-delete',

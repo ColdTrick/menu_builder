@@ -15,8 +15,8 @@ echo elgg_view_field([
 $setting = elgg_echo('menu_builder:settings:regen_site_menu') . ' ';
 $setting .= elgg_view('output/url', [
 	'text' => elgg_echo('menu_builder:settings:regen_site_menu:button'),
-	'href' => 'action/menu_builder/regen_site_menu',
-	'confirm' => elgg_echo('question:areyousure'),
+	'href' => elgg_generate_action_url('menu_builder/regen_site_menu'),
+	'confirm' => true,
 ]);
 
-echo elgg_format_element('div', [], $setting);
+echo elgg_view_field(['#html' => $setting]);

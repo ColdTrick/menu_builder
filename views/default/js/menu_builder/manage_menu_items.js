@@ -1,8 +1,7 @@
-define(function(require) {
-	var $ = require('jquery');
-	var elgg = require('elgg');
-	
+define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function($, elgg, Ajax) {
+
 	var already_sorted = false;
+	var ajax = new Ajax();
 	
 	$(document).on('click', '.menu-builder-manage .elgg-icon-delete', function(event) {
 		if (!confirm(elgg.echo('deleteconfirm'))) {
@@ -67,7 +66,7 @@ define(function(require) {
 				items.push(name);
 			});
 			
-			elgg.action('menu_builder/menu/reorder', {
+			ajax.action('menu_builder/menu/reorder', {
 				data : {
 					'menu_name' : menu_name,
 					'item_name' : item_name,

@@ -2,11 +2,12 @@
 
 use ColdTrick\MenuBuilder\Bootstrap;
 
-define('MENU_BUILDER_ACCESS_LOGGED_OUT', -5);
-
 require_once(__DIR__ . '/lib/functions.php');
 
 return [
+	'plugin' => [
+		'version' => '6.0',
+	],
 	'bootstrap' => Bootstrap::class,
 	'actions' => [
 		'menu_builder/regen_site_menu' => ['access' => 'admin'],
@@ -36,5 +37,9 @@ return [
 		'admin.css' => [
 			'css/menu_builder/admin.css' => [],
 		],
+	],
+	'view_options' => [
+		'menu_builder/import' => ['ajax' => true],
+		'menu_builder/edit_item' => ['ajax' => true],
 	],
 ];

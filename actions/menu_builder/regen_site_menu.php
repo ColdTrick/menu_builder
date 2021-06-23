@@ -1,6 +1,7 @@
 <?php
 
-elgg_unset_plugin_setting('menu_builder_default_imported', 'menu_builder');
+$plugin = elgg_get_plugin_from_id('menu_builder');
+$plugin->unsetSetting('menu_builder_default_imported');
 
 elgg_push_context('admin');
 
@@ -8,7 +9,7 @@ elgg_push_context('admin');
 elgg_register_plugin_hook_handler('prepare', 'menu:site', '\ColdTrick\MenuBuilder\MenuHooks::prepareSiteMenu', 900);
 
 // restore unregistered function for the more menu
-elgg_register_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup');
+elgg_register_plugin_hook_handler('prepare', 'menu:site', 'Elgg\Menus\Site::reorderItems');
 
 // unregister existing menu hooks
 elgg_unregister_plugin_hook_handler('register', 'menu:site', '\ColdTrick\MenuBuilder\MenuHooks::registerAllMenu');

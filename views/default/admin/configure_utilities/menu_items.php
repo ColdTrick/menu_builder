@@ -5,7 +5,7 @@ elgg_require_js('menu_builder/manage_menu_items');
 $menus = menu_builder_get_managed_menus();
 
 $selected = get_input('menu_name');
-if (!empty($selected) && !menu_builder_is_managed_menu($selected)) {
+if (!empty($selected) && !in_array($selected, $menus)) {
 	$selected = null;
 }
 
@@ -42,6 +42,7 @@ $menu = elgg_view('output/url', [
 	'icon' => 'plus',
 	'id' => 'menu-builder-add-menu',
 	'href' => false,
+	'class' => ['elgg-button', 'elgg-button-action'],
 ]);
 
 $menu_list = elgg_view('navigation/tabs', ['tabs' => $tabs, 'class' => 'menu-builder-admin-tabs']) . $menu_list;

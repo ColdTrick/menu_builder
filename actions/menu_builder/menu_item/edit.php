@@ -1,10 +1,7 @@
 <?php
 
 $menu_name = get_input('menu_name');
-
-$managed_menus = menu_builder_get_managed_menus();
-
-if (!in_array($menu_name, $managed_menus)) {
+if (!in_array($menu_name, menu_builder_get_managed_menus())) {
 	return elgg_error_response(elgg_echo('menu_builder:actions:edit:error:input'));
 }
 
