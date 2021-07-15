@@ -23,7 +23,7 @@ foreach ($config as $item) {
 		$item['name'] = $item['guid'];
 		unset($item['guid']);
 	}
-	if (isset($item['title'])) {
+	if (!empty($item['title'])) {
 		$item['text'] = $item['title'];
 		unset($item['title']);
 	}
@@ -46,7 +46,7 @@ foreach ($config as $item) {
 			unset($item[$key]);
 		}
 	}
-	
+	error_log(var_export($item, true));
 	$menu->addMenuItem($item);
 }
 
