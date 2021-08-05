@@ -46,7 +46,7 @@ foreach ($config as $item) {
 			unset($item[$key]);
 		}
 	}
-	error_log(var_export($item, true));
+	
 	$menu->addMenuItem($item);
 }
 
