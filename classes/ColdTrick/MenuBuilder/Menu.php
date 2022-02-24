@@ -123,7 +123,12 @@ class Menu {
 	 * @return array
 	 */
 	public function getMenuConfig(): array {
-		$config = json_decode(elgg_get_plugin_setting("menu_{$this->name}_config", 'menu_builder'), true);
+		$setting = elgg_get_plugin_setting("menu_{$this->name}_config", 'menu_builder');
+		if (empty($setting)) {
+			return [];
+		}
+		
+		$config = json_decode($setting, true);
 		return is_array($config) ? $config : [];
 	}
 	
