@@ -1,10 +1,10 @@
-define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function($, elgg, Ajax) {
+define(['jquery', 'elgg', 'elgg/i18n', 'elgg/security', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function($, elgg, i18n, security, Ajax) {
 
 	var already_sorted = false;
 	var ajax = new Ajax();
 	
 	$(document).on('click', '.menu-builder-manage .elgg-icon-delete', function(event) {
-		if (!confirm(elgg.echo('deleteconfirm'))) {
+		if (!confirm(i18n.echo('deleteconfirm'))) {
 			return false;
 		} else {
 			elgg.forward($(this).parent().data().href);
@@ -12,12 +12,12 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function($
 	});
 	
 	$(document).on('click' ,'#menu-builder-add-menu', function(event) {
-		var name = prompt(elgg.echo('menu_builder:admin:menu:add:internal_name'));
+		var name = prompt(i18n.echo('menu_builder:admin:menu:add:internal_name'));
 		if (!name) {
 			return false;
 		}
 		
-		elgg.forward(elgg.security.addToken('action/menu_builder/menu/edit?menu_name=' + name));
+		elgg.forward(security.addToken('action/menu_builder/menu/edit?menu_name=' + name));
 	});
 	
 	$(document).on('click', '.menu-builder-admin-tabs a', function(event) {
