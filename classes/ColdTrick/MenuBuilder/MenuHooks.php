@@ -20,7 +20,7 @@ class MenuHooks {
 		// fix menu name if needed
 		$lang_key = 'menu:' . elgg_get_friendly_title($current_menu) . ':header:default';
 		if (!elgg_language_key_exists($lang_key)) {
-			add_translation(get_current_language(), [$lang_key => $current_menu]);
+			elgg()->translator->addTranslation(elgg_get_current_language(), [$lang_key => $current_menu]);
 		}
 	
 		// add configured menu items
