@@ -2,6 +2,8 @@
 
 namespace ColdTrick\MenuBuilder;
 
+use Elgg\Menu\MenuItems;
+
 /**
  * Menu
  */
@@ -151,7 +153,7 @@ class Menu {
 	 * @return array
 	 */
 	public function getInputOptions(string $skip_menu_item = ''): array {
-		$menu = elgg_trigger_plugin_hook('register', "menu:{$this->name}", ['name' => $this->name], []);
+		$menu = elgg_trigger_plugin_hook('register', "menu:{$this->name}", ['name' => $this->name], new MenuItems());
 		$builder = new \ElggMenuBuilder($menu);
 		$menu = $builder->getMenu('priority');
 		

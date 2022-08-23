@@ -2,6 +2,8 @@
 
 namespace ColdTrick\MenuBuilder;
 
+use Elgg\Menu\MenuItems;
+
 class MenuHooks {
 	
 	/**
@@ -9,12 +11,14 @@ class MenuHooks {
 	 *
 	 * @param \Elgg\Hook $hook 'register', "menu:{$menu_name}"
 	 *
-	 * @return array
+	 * @return MenuItems
 	 */
 	public static function registerAllMenu(\Elgg\Hook $hook) {
 		$current_menu = $hook->getParam('name');
-		$return = []; // need to reset as there should be no other way to add menu items
-	
+		/* @var $return MenuItems */
+		$return = $hook->getValue();
+		$return->fill([]); // need to reset as there should be no other way to add menu items
+		
 		$menu = new \ColdTrick\MenuBuilder\Menu($current_menu);
 	
 		// fix menu name if needed
@@ -24,7 +28,7 @@ class MenuHooks {
 		}
 	
 		// add configured menu items
-		$menu_items = json_decode(elgg_get_plugin_setting("menu_{$current_menu}_config", 'menu_builder'), true);
+		$menu_items = $menu->getMenuConfig();
 	
 		if (is_array($menu_items)) {
 			foreach ($menu_items as $menu_item) {
