@@ -1,6 +1,11 @@
 Version history
 ===============
 
+9.0 (2022-08-24):
+
+- changed: updated for Elgg 4.3
+- fixed: use correct variable type for menu items
+
 8.0 (2022-06-01):
 
 - changed: updated for Elgg 4.2
