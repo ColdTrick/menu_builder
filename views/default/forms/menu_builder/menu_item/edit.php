@@ -15,7 +15,7 @@ $access_options = [
 
 $parent_options = elgg_extract('parent_options', $vars);
 
-$href = elgg_extract('href', $menu_item);
+$href = (string) elgg_extract('href', $menu_item);
 if (strpos($href, elgg_get_site_url()) === 0) {
 	$href = substr($href, strlen(elgg_get_site_url()));
 }

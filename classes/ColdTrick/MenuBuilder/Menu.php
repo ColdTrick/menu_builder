@@ -11,9 +11,14 @@ class Menu {
 	
 	const ACCESS_LOGGED_OUT = -5;
 	
-	protected $name;
+	protected string $name;
 	
-	public function __construct($menu_name) {
+	/**
+	 * Constructor
+	 *
+	 * @param string $menu_name name of the menu
+	 */
+	public function __construct(string $menu_name) {
 		$this->name = $menu_name;
 	}
 	
@@ -153,12 +158,17 @@ class Menu {
 	 * @return array
 	 */
 	public function getInputOptions(string $skip_menu_item = ''): array {
-		$menu = elgg_trigger_plugin_hook('register', "menu:{$this->name}", ['name' => $this->name], new MenuItems());
+		$menu = elgg_trigger_event_results('register', "menu:{$this->name}", ['name' => $this->name], new MenuItems());
 		$builder = new \ElggMenuBuilder($menu);
 		$menu = $builder->getMenu('priority');
 		
-		$menu = elgg_extract('default', $menu);
-		return $this->getIndentedOptions($menu, $skip_menu_item);
+		$items = [];
+		$default = elgg_extract('default', $menu);
+		if ($default instanceof \Elgg\Menu\MenuSection) {
+			$items = $default->getItems();
+		}
+		
+		return $this->getIndentedOptions($items, $skip_menu_item);
 	}
 	
 	/**
@@ -170,16 +180,17 @@ class Menu {
 	 *
 	 * @return array
 	 */
-	protected function getIndentedOptions($menu_items, string $skip_menu_item = '', int $indent = 0): array {
+	protected function getIndentedOptions(array $menu_items, string $skip_menu_item = '', int $indent = 0): array {
 		if (empty($menu_items)) {
 			return [];
 		}
 		
 		$result = [];
 		foreach ($menu_items as $menu_item) {
-			if ($menu_item->getName() == $skip_menu_item) {
+			if ($menu_item->getName() === $skip_menu_item) {
 				continue;
 			}
+			
 			$text = str_repeat('-', $indent) . ' ' . $menu_item->getText();
 			$result[$menu_item->getName()] = $text;
 			

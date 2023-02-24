@@ -19,15 +19,15 @@ return [
 		'menu_builder/menu_item/edit' => ['access' => 'admin'],
 		'menu_builder/menu_item/delete' => ['access' => 'admin'],
 	],
-	'hooks' => [
+	'events' => [
 		'prepare' => [
 			'all' => [
-				'\ColdTrick\MenuBuilder\MenuHooks::prepareMenuSetSelected' => [
+				'\ColdTrick\MenuBuilder\Menus::prepareMenuSetSelected' => [
 					'priority' => 9999,
 				],
 			],
 			'menu:site' => [
-				'\ColdTrick\MenuBuilder\MenuHooks::prepareSiteMenu' => [
+				'\ColdTrick\MenuBuilder\Menus::prepareSiteMenu' => [
 					'priority' => 900,
 				],
 			],

@@ -1,4 +1,7 @@
 .menu-builder-manage {
+	flex-direction: column;
+	margin: unset;
+	
 	a {
 		border: 1px solid red;
 		display: block;

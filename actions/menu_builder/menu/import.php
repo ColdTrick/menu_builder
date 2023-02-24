@@ -23,18 +23,22 @@ foreach ($config as $item) {
 		$item['name'] = $item['guid'];
 		unset($item['guid']);
 	}
+	
 	if (!empty($item['title'])) {
 		$item['text'] = $item['title'];
 		unset($item['title']);
 	}
+	
 	if (isset($item['url'])) {
 		$item['href'] = $item['url'];
 		unset($item['url']);
 	}
+	
 	if (isset($item['order'])) {
 		$item['priority'] = $item['order'];
 		unset($item['order']);
 	}
+	
 	if (isset($item['parent_guid'])) {
 		$item['parent_name'] = $item['parent_guid'];
 		unset($item['parent_guid']);

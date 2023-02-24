@@ -58,7 +58,8 @@ define(['jquery', 'elgg', 'elgg/i18n', 'elgg/security', 'elgg/Ajax', 'jquery-ui/
 			if (!$item.parent().parent().hasClass('elgg-menu-container')) {
 				parent_name = getMenuItemNameFromClass($item.parent().parent().attr('class'));
 			}
-			var menu_name = $item.parents('.menu-builder-admin-menu').attr('rel');			
+			
+			var menu_name = $item.parents('.menu-builder-admin-menu').attr('rel');
 			
 			var items = [];
 			$item.parent().find('>li:not(.elgg-menu-item-placeholder)').each(function(elem){
@@ -67,11 +68,11 @@ define(['jquery', 'elgg', 'elgg/i18n', 'elgg/security', 'elgg/Ajax', 'jquery-ui/
 			});
 			
 			ajax.action('menu_builder/menu/reorder', {
-				data : {
-					'menu_name' : menu_name,
-					'item_name' : item_name,
-					'parent_name' : parent_name,
-					'items' : items,
+				data: {
+					'menu_name': menu_name,
+					'item_name': item_name,
+					'parent_name': parent_name,
+					'items': items,
 				}
 			});
 
@@ -79,7 +80,7 @@ define(['jquery', 'elgg', 'elgg/i18n', 'elgg/security', 'elgg/Ajax', 'jquery-ui/
 		},
 	});
 	
-	var getMenuItemNameFromClass = function(class_text) {
+	function getMenuItemNameFromClass(class_text) {
 		var result = class_text;
 		
 		classes = class_text.split(' ');
@@ -90,5 +91,5 @@ define(['jquery', 'elgg', 'elgg/i18n', 'elgg/security', 'elgg/Ajax', 'jquery-ui/
 		});
 		
 		return result;
-	};
+	}
 });

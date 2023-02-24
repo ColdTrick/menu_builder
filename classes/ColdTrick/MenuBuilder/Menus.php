@@ -4,19 +4,22 @@ namespace ColdTrick\MenuBuilder;
 
 use Elgg\Menu\MenuItems;
 
-class MenuHooks {
+/**
+ * Menu related callbacks
+ */
+class Menus {
 	
 	/**
 	 * Adds the menu items to the menus managed by menu_builder
 	 *
-	 * @param \Elgg\Hook $hook 'register', "menu:{$menu_name}"
+	 * @param \Elgg\Event $event 'register', "menu:{$menu_name}"
 	 *
 	 * @return MenuItems
 	 */
-	public static function registerAllMenu(\Elgg\Hook $hook) {
-		$current_menu = $hook->getParam('name');
+	public static function registerAllMenu(\Elgg\Event $event) {
+		$current_menu = $event->getParam('name');
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		$return->fill([]); // need to reset as there should be no other way to add menu items
 		
 		$menu = new \ColdTrick\MenuBuilder\Menu($current_menu);
@@ -39,7 +42,7 @@ class MenuHooks {
 				} else {
 					$access_id = $menu_item['access_id'];
 					unset($menu_item['access_id']);
-					switch($access_id) {
+					switch ($access_id) {
 						case ACCESS_PRIVATE:
 							if (!elgg_is_admin_logged_in()) {
 								$can_add_menu_item = false;
@@ -115,24 +118,24 @@ class MenuHooks {
 	/**
 	 * Makes menus managable if needed
 	 *
-	 * @param \Elgg\Hook $hook 'prepare', "menu:{$menu_name}"
+	 * @param \Elgg\Event $event 'prepare', "menu:{$menu_name}"
 	 *
 	 * @return array
 	 */
-	public static function prepareAllMenu(\Elgg\Hook $hook) {
+	public static function prepareAllMenu(\Elgg\Event $event) {
 	
 		// update order
 		$ordered = [];
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		if (isset($return['default'])) {
 			foreach ($return['default'] as $menu_item) {
-	
 				$menu_item = self::orderMenuItem($menu_item, 2);
 				$priority = $menu_item->getPriority();
 				while (array_key_exists($priority, $ordered)) {
 					$priority++;
 				}
+				
 				$ordered[$priority] = $menu_item;
 			}
 		
@@ -145,7 +148,7 @@ class MenuHooks {
 	
 		// prepare menu items for edit
 		if (elgg_in_context('menu_builder_manage')) {
-			self::prepareMenuItemsEdit($menu);
+			self::prepareMenuItemsEdit($menu->getItems());
 		}
 	
 		return $return;
@@ -154,18 +157,18 @@ class MenuHooks {
 	/**
 	 * Make sure all items are selected correctly
 	 *
-	 * @param \Elgg\Hook $hook 'prepare', 'all'
+	 * @param \Elgg\Event $event 'prepare', 'all'
 	 *
 	 * @return array
 	 */
-	public static function prepareMenuSetSelected(\Elgg\Hook $hook) {
+	public static function prepareMenuSetSelected(\Elgg\Event $event) {
 	
-		if (strpos($hook->getType(), 'menu:') !== 0) {
+		if (strpos($event->getType(), 'menu:') !== 0) {
 			return;
 		}
 	
 		// set selected state on parent menu items
-		$item = $hook->getParam('selected_item');
+		$item = $event->getParam('selected_item');
 		if (!$item instanceof \ElggMenuItem) {
 			return;
 		}
@@ -178,11 +181,11 @@ class MenuHooks {
 	/**
 	 * Loads initially the site menu into the menu_builder config.
 	 *
-	 * @param \Elgg\Hook $hook 'prepare', 'menu:site'
+	 * @param \Elgg\Event $event 'prepare', 'menu:site'
 	 *
 	 * @return array
 	 */
-	public static function prepareSiteMenu(\Elgg\Hook $hook) {
+	public static function prepareSiteMenu(\Elgg\Event $event) {
 		$plugin = elgg_get_plugin_from_id('menu_builder');
 		if ($plugin->getSetting('menu_builder_default_imported', false)) {
 			return;
@@ -202,7 +205,7 @@ class MenuHooks {
 		
 		$priority = 10;
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		foreach ($return as $section => $items) {
 			$parent_name = null;
 	
@@ -219,7 +222,6 @@ class MenuHooks {
 			}
 	
 			foreach ($items as $item) {
-				
 				$values = $item->getValues();
 				$values['priority'] = $priority;
 				$values['parent_name'] = $parent_name;
@@ -240,7 +242,7 @@ class MenuHooks {
 	 *
 	 * @return string
 	 */
-	protected static function replacePlaceholders($text) {
+	protected static function replacePlaceholders(string $text): string {
 		$user = elgg_get_logged_in_user_entity();
 				
 		// fill in username/userguid
@@ -262,7 +264,7 @@ class MenuHooks {
 	 *
 	 * @return void
 	 */
-	protected static function prepareMenuItemsEdit($menu) {
+	protected static function prepareMenuItemsEdit(array $menu): void {
 		foreach ($menu as $menu_item) {
 			$text = $menu_item->getText();
 	
@@ -311,9 +313,7 @@ class MenuHooks {
 	 *
 	 * @return \ElggMenuItem
 	 */
-	protected static function orderMenuItem(\ElggMenuItem $item, $depth) {
-	
-		$depth = (int) $depth;
+	protected static function orderMenuItem(\ElggMenuItem $item, int $depth): \ElggMenuItem {
 		$children = $item->getChildren();
 		if (empty($children)) {
 			return $item;
@@ -323,15 +323,16 @@ class MenuHooks {
 		$ordered_children = [];
 	
 		foreach ($children as $child) {
-	
 			$child = self::orderMenuItem($child, $depth + 1);
 	
 			$child_priority = $child->getPriority();
 			while (array_key_exists($child_priority, $ordered_children)) {
 				$child_priority++;
 			}
+			
 			$ordered_children[$child_priority] = $child;
 		}
+		
 		ksort($ordered_children);
 	
 		$item->setChildren($ordered_children);

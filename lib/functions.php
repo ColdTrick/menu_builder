@@ -12,7 +12,7 @@ function menu_builder_get_managed_menus(): array {
 	static $result;
 	
 	if (!isset($result)) {
-		$result = (array) json_decode(elgg_get_plugin_setting('menu_names', 'menu_builder'), true);
+		$result = (array) json_decode((string) elgg_get_plugin_setting('menu_names', 'menu_builder'), true);
 	}
 	
 	return $result;
