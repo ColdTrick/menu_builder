@@ -112,13 +112,12 @@ class Menu {
 	 * @return void
 	 */
 	public function removeMenuItem(string $name): void {
-		
 		$current_config = $this->getMenuConfig();
 		unset($current_config[$name]);
 		$this->setMenuConfig($current_config);
 		
 		foreach ($current_config as $key => $item) {
-			if ($item['parent_name'] == $name) {
+			if (elgg_extract('parent_name', $item) === $name) {
 				$this->removeMenuItem($key);
 			}
 		}
