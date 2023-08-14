@@ -221,14 +221,27 @@ class Menus {
 				$priority += 10;
 			}
 	
+			/* @var $item \ElggMenuItem */
 			foreach ($items as $item) {
 				$values = $item->getValues();
+				$values['name'] = $item->getName();
 				$values['priority'] = $priority;
 				$values['parent_name'] = $parent_name;
 				
 				$menu->addMenuItem($values);
 	
 				$priority += 10;
+				
+				foreach ($item->getChildren() as $child_item) {
+					$values = $child_item->getValues();
+					$values['name'] = $child_item->getName();
+					$values['priority'] = $priority;
+					$values['parent_name'] = $item->getName();
+					
+					$menu->addMenuItem($values);
+					
+					$priority += 10;
+				}
 			}
 		}
 	
