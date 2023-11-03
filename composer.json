@@ -9,15 +9,7 @@
 		"source": "https://github.com/ColdTrick/menu_builder",
 		"issues": "https://github.com/ColdTrick/menu_builder/issues"
 	},
-	"require": {
-		"composer/installers": "^1.0.8"
-	},
 	"conflict": {
 		"elgg/elgg": "<5.0"
-	},
-	"config": {
-		"allow-plugins": {
-			"composer/installers": true
-		}
 	}
 }
