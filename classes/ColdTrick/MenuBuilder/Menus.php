@@ -116,7 +116,7 @@ class Menus {
 	}
 
 	/**
-	 * Makes menus managable if needed
+	 * Makes menus manageable if needed
 	 *
 	 * @param \Elgg\Event $event 'prepare', "menu:{$menu_name}"
 	 *
@@ -159,7 +159,7 @@ class Menus {
 	 *
 	 * @param \Elgg\Event $event 'prepare', 'all'
 	 *
-	 * @return array
+	 * @return void
 	 */
 	public static function prepareMenuSetSelected(\Elgg\Event $event) {
 	
@@ -183,7 +183,7 @@ class Menus {
 	 *
 	 * @param \Elgg\Event $event 'prepare', 'menu:site'
 	 *
-	 * @return array
+	 * @return void
 	 */
 	public static function prepareSiteMenu(\Elgg\Event $event) {
 		$plugin = elgg_get_plugin_from_id('menu_builder');

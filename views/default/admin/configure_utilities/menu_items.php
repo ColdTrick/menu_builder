@@ -1,6 +1,6 @@
 <?php
 
-elgg_require_js('admin/configure_utilities/menu_items');
+elgg_import_esm('admin/configure_utilities/menu_items');
 
 $menus = menu_builder_get_managed_menus();
 

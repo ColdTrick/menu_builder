@@ -10,6 +10,6 @@
 		"issues": "https://github.com/ColdTrick/menu_builder/issues"
 	},
 	"conflict": {
-		"elgg/elgg": "<5.0"
+		"elgg/elgg": "<6.0"
 	}
 }

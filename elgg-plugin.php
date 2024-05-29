@@ -35,7 +35,7 @@ return [
 	],
 	'view_extensions' => [
 		'admin.css' => [
-			'css/menu_builder/admin.css' => [],
+			'menu_builder/admin.css' => [],
 		],
 	],
 	'view_options' => [
