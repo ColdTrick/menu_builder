@@ -6,7 +6,7 @@ require_once(__DIR__ . '/lib/functions.php');
 
 return [
 	'plugin' => [
-		'version' => '10.0.2',
+		'version' => '11.0',
 	],
 	'bootstrap' => Bootstrap::class,
 	'actions' => [
