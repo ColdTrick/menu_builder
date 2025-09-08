@@ -32,68 +32,65 @@ class Menus {
 	
 		// add configured menu items
 		$menu_items = $menu->getMenuConfig();
-	
-		if (is_array($menu_items)) {
-			foreach ($menu_items as $menu_item) {
-				$can_add_menu_item = true;
-					
-				if (elgg_in_context('menu_builder_manage')) {
-					$menu_item['menu_builder_menu_name'] = $current_menu;
-				} else {
-					$access_id = $menu_item['access_id'];
-					unset($menu_item['access_id']);
-					switch ($access_id) {
-						case ACCESS_PRIVATE:
-							if (!elgg_is_admin_logged_in()) {
-								$can_add_menu_item = false;
-							}
-							break;
-						case \ColdTrick\MenuBuilder\Menu::ACCESS_LOGGED_OUT:
-							if (elgg_is_logged_in()) {
-								$can_add_menu_item = false;
-							}
-							break;
-						case ACCESS_LOGGED_IN:
-							if (!elgg_is_logged_in()) {
-								$can_add_menu_item = false;
-							}
-							break;
-					}
+		foreach ($menu_items as $menu_item) {
+			$can_add_menu_item = true;
+
+			if (elgg_in_context('menu_builder_manage')) {
+				$menu_item['menu_builder_menu_name'] = $current_menu;
+			} else {
+				$access_id = $menu_item['access_id'];
+				unset($menu_item['access_id']);
+				switch ($access_id) {
+					case ACCESS_PRIVATE:
+						if (!elgg_is_admin_logged_in()) {
+							$can_add_menu_item = false;
+						}
+						break;
+					case \ColdTrick\MenuBuilder\Menu::ACCESS_LOGGED_OUT:
+						if (elgg_is_logged_in()) {
+							$can_add_menu_item = false;
+						}
+						break;
+					case ACCESS_LOGGED_IN:
+						if (!elgg_is_logged_in()) {
+							$can_add_menu_item = false;
+						}
+						break;
 				}
-					
-				if (!$can_add_menu_item) {
-					continue;
-				}
-				
-				if (empty($menu_item['target'])) {
-					unset($menu_item['target']);
-				}
-				
-				// strip out deprecated use of [wwwroot] as menu items will be normalized by default
-				$menu_item['href'] = str_replace('[wwwroot]', '', $menu_item['href']);
-				
-				// add global replacable action tokens
-				$is_action = (bool) elgg_extract('is_action', $menu_item, false);
-				unset($menu_item['is_action']);
-				if ($is_action && !elgg_in_context('menu_builder_manage')) {
-					$menu_item['is_action'] = true;
-				}
-				
-				// open in lightbox
-				$lightbox = (bool) elgg_extract('lightbox', $menu_item, false);
-				unset($menu_item['lightbox']);
-				if ($lightbox) {
-					$menu_item['link_class'] = ['elgg-lightbox'];
-				}
-				
-				if (empty($menu_item['href'])) {
-					$menu_item['href'] = false;
-				} else {
-					$menu_item['href'] = self::replacePlaceholders($menu_item['href']);
-				}
-				
-				$return[] = \ElggMenuItem::factory($menu_item);
 			}
+
+			if (!$can_add_menu_item) {
+				continue;
+			}
+
+			if (empty($menu_item['target'])) {
+				unset($menu_item['target']);
+			}
+
+			// strip out deprecated use of [wwwroot] as menu items will be normalized by default
+			$menu_item['href'] = str_replace('[wwwroot]', '', $menu_item['href']);
+
+			// add global replaceable action tokens
+			$is_action = (bool) elgg_extract('is_action', $menu_item, false);
+			unset($menu_item['is_action']);
+			if ($is_action && !elgg_in_context('menu_builder_manage')) {
+				$menu_item['is_action'] = true;
+			}
+
+			// open in lightbox
+			$lightbox = (bool) elgg_extract('lightbox', $menu_item, false);
+			unset($menu_item['lightbox']);
+			if ($lightbox && !elgg_in_context('menu_builder_manage')) {
+				$menu_item['link_class'] = ['elgg-lightbox'];
+			}
+
+			if (empty($menu_item['href'])) {
+				$menu_item['href'] = false;
+			} else {
+				$menu_item['href'] = self::replacePlaceholders($menu_item['href']);
+			}
+
+			$return[] = \ElggMenuItem::factory($menu_item);
 		}
 	
 		// add 'new menu item' menu item

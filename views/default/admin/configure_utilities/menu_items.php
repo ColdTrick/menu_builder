@@ -13,6 +13,9 @@ $tabs = [];
 if (!empty($menus)) {
 	$menu_list = '';
 	foreach ($menus as $menu) {
+		$lang_key = 'menu:' . elgg_get_friendly_title($menu) . ':header:default';
+		$tab_text = elgg_language_key_exists($lang_key) ? elgg_echo($lang_key) : $menu;
+
 		if (empty($selected)) {
 			$selected = $menu;
 		}
@@ -24,7 +27,7 @@ if (!empty($menus)) {
 		]);
 		
 		$tabs[] = [
-			'text' => elgg_echo('menu:' . elgg_get_friendly_title($menu) . ':header:default'),
+			'text' => $tab_text,
 			'selected' => ($menu === $selected),
 			'rel' => $menu,
 			'href' => false,

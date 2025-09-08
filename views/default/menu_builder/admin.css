@@ -3,7 +3,6 @@
 	margin: unset;
 	
 	a {
-		border: 1px solid red;
 		display: block;
 		padding: 5px;
 		color: #333;
@@ -27,9 +26,5 @@
 
 	.ui-sortable-helper .elgg-child-menu {
 		display: none;
-	}
-	
-	span.menu-builder-action:hover {
-		cursor: pointer;
 	}
 }

@@ -16,14 +16,11 @@ $access_options = [
 $parent_options = elgg_extract('parent_options', $vars);
 
 $href = (string) elgg_extract('href', $menu_item);
-if (strpos($href, elgg_get_site_url()) === 0) {
+if (str_starts_with($href, elgg_get_site_url())) {
 	$href = substr($href, strlen(elgg_get_site_url()));
 }
 
-$default_access_id = ACCESS_PUBLIC;
-if (elgg_get_config('walled_garden')) {
-	$default_access_id = ACCESS_LOGGED_IN;
-}
+$default_access_id = elgg_get_config('walled_garden') ? ACCESS_LOGGED_IN : ACCESS_PUBLIC;
 
 $fields = [
 	[
@@ -60,20 +57,16 @@ $fields = [
 		'value' => elgg_extract('icon', $menu_item),
 	],
 	[
-		'#type' => 'checkbox',
+		'#type' => 'switch',
 		'#label' => elgg_echo('menu_builder:add:action:tokens'),
 		'name' => 'is_action',
-		'value' => 1,
-		'checked' => (bool) elgg_extract('is_action', $menu_item),
-		'switch' => true,
+		'value' => elgg_extract('is_action', $menu_item),
 	],
 	[
-		'#type' => 'checkbox',
+		'#type' => 'switch',
 		'#label' => elgg_echo('menu_builder:add:lightbox'),
 		'name' => 'lightbox',
-		'value' => 1,
-		'checked' => (bool) elgg_extract('lightbox', $menu_item),
-		'switch' => true,
+		'value' => elgg_extract('lightbox', $menu_item),
 	],
 	[
 		'#type' => 'access',
