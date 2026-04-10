@@ -10,7 +10,7 @@ use Elgg\DefaultPluginBootstrap;
 class Bootstrap extends DefaultPluginBootstrap {
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function ready() {
 		$events = $this->elgg()->events;

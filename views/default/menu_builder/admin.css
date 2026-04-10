@@ -1,6 +1,6 @@
 .menu-builder-manage {
 	flex-direction: column;
-	margin: unset;
+	margin: 12px 0 0;
 	
 	a {
 		display: block;
