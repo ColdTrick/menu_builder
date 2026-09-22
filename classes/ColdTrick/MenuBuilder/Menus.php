@@ -18,7 +18,7 @@ class Menus {
 	 */
 	public static function registerAllMenu(\Elgg\Event $event) {
 		$current_menu = $event->getParam('name');
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		$return->fill([]); // need to reset as there should be no other way to add menu items
 		
@@ -220,7 +220,7 @@ class Menus {
 				$priority += 10;
 			}
 	
-			/* @var $item \ElggMenuItem */
+			/** @var \ElggMenuItem $item */
 			foreach ($items as $item) {
 				$values = $item->getValues();
 				$values['name'] = $item->getName();
