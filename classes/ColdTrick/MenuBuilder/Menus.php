@@ -99,7 +99,9 @@ class Menus {
 				'name' => 'menu_builder_add',
 				'icon' => 'plus',
 				'text' => elgg_echo('menu_builder:edit_mode:add'),
-				'href' => elgg_http_add_url_query_elements('ajax/view/menu_builder/edit_item', [
+				'href' => elgg_generate_url('ajax', [
+					'type' => 'view',
+					'segments' => 'menu_builder/edit_item',
 					'item_name' => 'menu_builder_add',
 					'menu_name' => $current_menu,
 				]),
@@ -289,7 +291,9 @@ class Menus {
 				'title' => elgg_echo('edit'),
 				'class' => ['elgg-lightbox', 'mls', 'menu-builder-action'],
 				'data-colorbox-opts' => json_encode([
-					'href' => elgg_http_add_url_query_elements('ajax/view/menu_builder/edit_item', [
+					'href' => elgg_generate_url('ajax', [
+						'type' => 'view',
+						'segments' => 'menu_builder/edit_item',
 						'item_name' => $name,
 						'menu_name' => $menu_name,
 					]),
