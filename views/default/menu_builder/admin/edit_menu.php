@@ -34,7 +34,11 @@ $button_bank = elgg_view_menu('menu-builder-menu-actions', [
 			'icon' => 'upload',
 			'text' => elgg_echo('import'),
 			'class' => 'elgg-button elgg-button-submit elgg-lightbox',
-			'href' => 'ajax/view/menu_builder/import?menu_name=' . $menu,
+			'href' => elgg_generate_url('ajax', [
+				'type' => 'view',
+				'segments' => 'menu_builder/import',
+				'menu_name' => $menu,
+			]),
 		],
 		[
 			'name' => 'delete',
